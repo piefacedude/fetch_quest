@@ -1,0 +1,70 @@
+-- Motion Planning --
+* Attack: Jump
+Character is going to move across the screen to just in front of the enemy (80%?)
+Character Jumps, traveling just above the head of the enemy before landing on it's head
+?? SPLIT ??
+Character bounces, arcing the same distance into the air as the first jump, before hitting
+the enemy's head again.
+
+OR // THEN
+
+Character bounces backwards in the same arc (backwards)
+Character runs to starting positions
+
+CODE:
+stage 1:
+find difference between character's bottom position, and the enemy's.
+distance / time to walk = speed in x
+end stage 1
+
+stage 2:
+find difference between character's bottom potion and the enemy's head
+x dif is the x speed
+y speed = difference + 10%, with acceleration pulling it down to the creature's head (10%?)
+end stage 2
+
+stage 3:
+if (QTE = done) {
+10% of screen, same as height of jump on with down acel = 10% * 2 / time OR when foot y = head y
+end stage 3
+}
+else {
+end stage 3
+}
+
+stage 4:
+diff in x & x + 10%, same acel down, x acel * -1
+end stage 4
+
+stage 5:
+end vel of 4 / 2, same down, for 3
+end stage 5
+
+stage 6:
+end x - current x / time as stage 1 - 20% (bounces)
+end stage 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// needs whitespace //
