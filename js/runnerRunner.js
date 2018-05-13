@@ -432,11 +432,11 @@ function update(dt){
 		renderEntity(endScreen);
 		deathspeed = 0;
 	}
-		document.getElementById('lives').innerHTML = lives;
+		/*document.getElementById('lives').innerHTML = lives;
 		document.getElementById('timer').innerHTML = timer;
 		document.getElementById('minutes').innerHTML = minutes;
 		document.getElementById('minmark').innerHTML = minmark;
-		document.getElementById('points').innerHTML = points;
+		document.getElementById('points').innerHTML = points;*/
 	}
 
 

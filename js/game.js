@@ -15,6 +15,7 @@ resources.load([
     //comma separated array
     'images/HeroStuff/heromain.png',
     'images/Backgrounds/CaveBackground.png',
+    'images/HeroStuff/heroStand.png',
 ]);
 resources.onReady(init); //callback function which halts progress until all the images are ready
 
@@ -29,12 +30,18 @@ var player = {
 //('images/player.png', [0, 0], [64, 123], 10, [0, 1, 2, 1])
 //img, pos_in_img[x,y], size_in_img[x,y],anim_speed, anim_frames, dir[hor default], anim_repeat[def once], opacity[def 1]
 hero = {
-  pos: [200, 500],
+  pos: [100, 500],
   speed: 10,
   jump: 'NO',
-  sprite: new Sprite('images/HeroStuff/heromain.png', [0, 0], [64, 64], 10, [0, 1], 'vertical')
+  run: false,
+  sprite: new Sprite('images/HeroStuff/heroStand.png', [0, 0], [64, 64])
 }
 
+background = {
+  pos: [0, 0],
+  speed: 0,
+  sprite: new Sprite('images/Backgrounds/CaveBackground.png', [0, 0], [800, 600])
+}
 
 function init(){
 
@@ -70,7 +77,7 @@ function init(){
   };
 
   function update(dt){
-
+    hero.sprite.update(dt);
     //handle inputs
     // - apart from click which comes elsewhere
     handleInput(dt);
@@ -78,10 +85,36 @@ function init(){
 
 	//what to render
 	function render(){
-		gameCanvas.clear();
-	}
+    //start by clearing the old stuff
+    gameCanvas.clear();
+    //then add background first
+    renderEntity(background);
 
+    //then the rest in order
+    renderEntity(hero);
+	}
+  var anim1 = true;
+  var timer = 0;
+  var sum = 0
   function handleInput(dt) {
-  	if(input.isDown('SPACE')){
+  	if(input.isDown('RIGHT')){
+      if (anim1 == true);
+        if (timer < 50) {
+          hero.pos[0] += -.00308*(Math.pow(timer, 2) - (100 * timer));
+        }
+        timer++;
+      }
+      /*
+      if (hero.run == false) {
+        hero.sprite = new Sprite('images/HeroStuff/heromain.png', [0, 0], [64, 64], 10, [0, 1], 'vertical')
+        hero.run = true;
+      }
+      else {
+        hero.run = true;
+      }
+      */
+    else {
+      hero.run = false;
+      hero.sprite = new Sprite('images/HeroStuff/heroStand.png', [0, 0], [64, 64]);
     }
   }

@@ -44,12 +44,34 @@ stage 6:
 end x - current x / time as stage 1 - 20% (bounces)
 end stage 6
 
-Banana Orange
+-- COLOUR SCHEMES --
+#1:
+Cool Blue
+#222831
+#393E46
+#00ADB5
+#EEEEEE
 
+#2:
+Beach
+#33425B
+#3498DB
+#FCC29A
+#ECF0F1
 
+#3:
+Midnight
+#212121
+#323232
+#0D7377
+#14FFEC
 
-
-
+#4:
+Sunrise
+#222831
+#393E46
+#FF5722
+#EEEEEE
 
 
 
