@@ -75,8 +75,32 @@ Sunrise
 
 
 
+BEGIN
+  INPUT number
+  if INPUT ! null
+    count <- count + 1
+    numberArray <- INPUT
+    INPUT number
+    sum <- sum + INPUT
+  END IF
+  average <- sum / count
+  for i <- 0 TO count - 1
+    if min > i
+      min <- i
+    END IF
+    if max < i
+      min <- i
+    END IF
+  END FOR
+  return count, average, min, max
+END
 
-
+BEGIN
+c <- a
+a <- b
+b <- c
+return a,b
+END
 
 
 
