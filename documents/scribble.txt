@@ -102,7 +102,62 @@ b <- c
 return a,b
 END
 
+BEGIN
+  INPUT number
+  if INPUT is not "="
+    count++
+    inputtedWord <- INPUT
+  END IF
+  if inputtedWord length > 18 || < 8
+    for i - inputtedWord length
 
+      if TYPE of INPUT[i] is INT:
+        sum += INPUT
+      END IF
+
+      if TYPE of INPUT[i] is ALPHA:
+        append INPUT to string
+      END IF
+
+      ELSE
+        non++
+      END
+
+    END FOR
+  END IF
+  ELSE
+    display error message
+  end else
+
+  if sum < 0
+    display "no numbers in password"
+  END IF
+
+  if string = null
+    display "no letters in password"
+  END IF
+
+  RETURN count, sum, string, non
+END
+
+BEGIN
+  FOREACH recipe AS rKey -> rValue
+
+    IF pantry[rkey] < rvalue *quantity then
+      shopping[] = {rkey, }
+    ENDIF
+    FOREACH pantry AS pKey -> pValue
+      IF rKey is same as pKey
+        IF rValue > pValue
+          return "There is not enough " + pKey
+          return "You need " + (rValue - pValue) + " more " pKey
+        END IF
+        ELSE
+          END IF
+        END ELSE
+      END IF
+    END FOREACH
+END
 
 
 

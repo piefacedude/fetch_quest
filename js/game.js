@@ -103,6 +103,11 @@ function render() {
   //then the rest in order
   renderEntity(hero);
   renderEntity(enemy);
+
+  
+
+  gameCanvas.context.font = "30px Arial";
+  gameCanvas.context.fillText("Hello World",10,50);
 }
 var anim1 = false;
 var timer = 0;
@@ -189,11 +194,6 @@ function handleInput(dt) {
       }
       else {
         hero.run = true;
-      }
-
-      if (timer <= 180) {
-        gameCanvas.context.font = "30px Arial";
-        gameCanvas.context.fillText("Hello World",10,50);
       }
     }
     if (anim1 == false) {
