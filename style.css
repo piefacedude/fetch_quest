@@ -77,15 +77,13 @@ body {
 	float: left;
 }
 
-.imageHead {
+.imageHeader {
   position: relative;
   text-align: left;
   color: white;
 }
 .overImage {
   position: absolute;
-  top: 8px;
-  left: 16px;
 }
 .underImage {
 	width: 100%;

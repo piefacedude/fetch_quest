@@ -29,13 +29,15 @@
         </div>
       </nav>
       <div id="body" class="pt-5">
-        <div class="imageHead">
-          <img src="imgs/CaveBackground.png" class="underImage">
-            <h1 style="font-size:100px;">
-              Just a dog,
-              <br>
-              chasing a dude.
-            </h1>
+        <div class="imageHeader">
+          <!--<img src="imgs/CaveBackground.png" class="underImage">-->
+            <div class="overImage">
+              <h1 style="font-size:100px;">
+                Just a dog,
+                <br>
+                chasing a dude.
+              </h1>
+            </div>
           <!--<form action="password.php" method="post">
             <input type="text" name="password"></input>
             <input type="submit"></input>
