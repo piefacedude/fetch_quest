@@ -79,10 +79,15 @@ function init() {
 }
 
 function reset() {
+  //function runs once at the start of each game
   for (var i = 0; i < 4; i++) {
+      //x display location (top left pixel)
       var X = 0;
+      //y display
       var Y = 0;
+      //action taken when button is selected
       var action = 0;
+      //sprite used for button
       var sprite;
       switch (i) {
         case 0:
