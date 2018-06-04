@@ -94,13 +94,13 @@ function reset() {
         case 1:
           X = (800 / 4) - (26 * 3);
           Y = (600 / 2) - 30;
-          action = "attack v2";
+          action = "special";
           sprite = new Sprite('images/Misc/coin_blue.png', [0, 0], [26, 30]);
         break;
         case 2:
           X = (800 / 4);
           Y = (600 / 2);
-          action = "null";
+          action = "";
           sprite = new Sprite('images/Misc/coin_green.png', [0, 0], [26, 30]);
         break;
         case 3:
@@ -513,7 +513,13 @@ if (input.isDown('RIGHT') || menuRight == true) {
                     \
         */
         hero.pos[1] += (dt / 3.5) * (Math.pow(anim1TimeRef - 25, 3));
-        if (anim1Timer >= 180 && input.isDown('LEFT')) {
+        console.log(anim1Timer);
+        console.log(input.isDown('A'));
+        //if the player hits "a" during the part where the hero bounces, bounce again
+        if (anim1Timer <= 100 && input.isDown('A')) {
+          hero.bounce = false;
+        }
+        else if (input.isDown('A') && hero.bounce == "unset") {
           hero.bounce = true;
         }
         if (anim1Timer == 150) {
@@ -522,7 +528,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
       }
     //bounce1
       else if (anim1Timer <= 200) {
-        if (input.isDown('LEFT') || hero.bounce == true) {
+        if (input.isDown('A') || hero.bounce == true) {
           hero.bounce = true;
           anim1TimeRef = anim1Timer - 150;
           hero.pos[1] += .001 * (Math.pow(anim1TimeRef - 25, 3));
@@ -538,6 +544,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
       }
     //bounce back
       else if (anim1Timer <= 300) {
+        hero.bounce = "unset";
         anim1TimeRef = anim1Timer - 250;
         anim1TimeRef = anim1TimeRef * .85
         hero.pos[0] -= (10000 / 50) * dt;
@@ -563,7 +570,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
       else {
         hero.pos[0] = 100;
         hero.run = false;
-        hero.bounce = false;
+        hero.bounce = "unset";
         hero.sprite = new Sprite('images/HeroStuff/heroStand.png', [0, 0], [64, 64]);
         anim1 = false;
       }
