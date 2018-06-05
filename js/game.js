@@ -40,7 +40,8 @@ hero = {
   speed: 10,
   dx: 0,
   dy: 0,
-  hp: 20,
+  maxHp: 20,
+  currentHp: 20,
   jmpDmg: 5,
   ground: {slide: "slippery"},
   jump: 'NO',
@@ -56,10 +57,18 @@ background = {
 }
 
 enemy = {
+  id: 1,
   pos: [450, 354],
   speed: 0,
-  hp: 20,
-  sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 10, [0, 1, 2, 3, 4, 5], 'vertical', false, 0)
+  maxHp: 20,
+  currentHp: 20,
+  sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 10, [0, 1, 2, 3, 4, 5], 'vertical', false, 0),
+}
+
+indicator = {
+  pos: [800,600],
+  key: "null",
+  sprite: new Sprite('images/Misc/coin_green.png', [0, 0], [26, 30]),
 }
 
 var menu = [];
@@ -93,8 +102,8 @@ function reset() {
         case 0:
           X = (800 / 4);
           Y = (600 / 2) - 60;
-          action = "attack";
-          sprite = new Sprite('images/Misc/coin_yellow.png', [0, 0], [26, 30]);
+          action = "flee";
+          sprite = new Sprite('images/Misc/coin_green.png', [0, 0], [26, 30]);
         break;
         case 1:
           X = (800 / 4) - (26 * 3);
@@ -105,29 +114,15 @@ function reset() {
         case 2:
           X = (800 / 4);
           Y = (600 / 2);
-          action = "";
-          sprite = new Sprite('images/Misc/coin_green.png', [0, 0], [26, 30]);
+          action = "attack";
+          sprite = new Sprite('images/Misc/coin_yellow.png', [0, 0], [26, 30]);
         break;
         case 3:
           X = (800 / 4) + (26 * 3);
           Y = (600 / 2) - 30;
-          action = "null";
+          action = "items";
           sprite = new Sprite('images/Misc/coin_red.png', [0, 0], [26, 30]);
         break;
-      }
-
-      if (i == 0) {
-        lastPos = 3;
-      }
-      else {
-        lastPos = i - 1;
-      }
-
-      if (i == 3) {
-        nextPos = 0;
-      }
-      else {
-        nextPos = i + 1;
       }
     menu.push({
       pos: [X, Y],
@@ -135,8 +130,6 @@ function reset() {
       dy: 0,
       speed: 12,
       renderOrder:i,
-      nextPos: nextPos,
-      lastPos: lastPos,
       action: action,
       sprite: sprite
     });
@@ -178,7 +171,14 @@ function render() {
   //then the rest in order
   renderEntity(hero);
   renderEntity(enemy);
+  if (enemy.currentHp > 0) {
+    gameCanvas.context.fillStyle="#FF0000";
+    gameCanvas.context.fillRect(480, 550, 200, 10);
+    gameCanvas.context.fillStyle="#00FF00";
+    gameCanvas.context.fillRect(480, 550, 200 * (enemy.currentHp/enemy.maxHp), 10)
+  }
 }
+
 var anim1 = false;
 var anim1Timer = 0;
 var anim1TimeRef;
@@ -226,50 +226,32 @@ function handleInput(dt) {
   if (input.isDown('LEFT') || menuLeft == true) {
   //for each menu icon
   for (var i = 0; i < menu.length; i++) {
-    //find end point
-    switch (menu[i].lastPos) {
-      case 0:
-        endX = (800 / 4);
-        endY = (600 / 2) - (30 * 2);
-        break;
-      case 1:
-        endX = (800 / 4) - (26 * 3);
-        endY = (600 / 2) - (30);
 
-        break;
-      case 2:
-        endX = (800 / 4);
-        endY = (600 / 2);
-
-        break;
-      case 3:
-        endX = (800 / 4) + (26 * 3);
-        endY = (600 / 2) - (30);
-
-        break;
-      default:
-    }
-
-    //find start point
+    //find start & end point
     switch (menu[i].renderOrder) {
       case 0:
         presetX = (800 / 4);
         presetY = (600 / 2) - (30 * 2);
+        endX = (800 / 4) + (26 * 3);
+        endY = (600 / 2) - (30);
         break;
       case 1:
         presetX = (800 / 4) - (26 * 3);
         presetY = (600 / 2) - (30);
-
+        endX = (800 / 4);
+        endY = (600 / 2) - (30 * 2);
         break;
       case 2:
         presetX = (800 / 4);
         presetY = (600 / 2);
-
+        endX = (800 / 4) - (26 * 3);
+        endY = (600 / 2) - (30);
         break;
       case 3:
         presetX = (800 / 4) + (26 * 3);
         presetY = (600 / 2) - (30);
-
+        endX = (800 / 4);
+        endY = (600 / 2);
         break;
       default:
     }
@@ -293,19 +275,11 @@ function handleInput(dt) {
       //set acel to 0
       menu[i].dx = 0;
       menu[i].dy = 0;
-      //and change the relevent position values (redunant values, as it could all run off of renderOrder, might change later)
+      //and change the relevent position values
       menu[i].renderOrder -= 1;
-      menu[i].lastPos -= 1;
-      menu[i].nextPos -= 1;
       //make sure non of the values are invalid, if they are icons will act erraticly
       if (menu[i].renderOrder == -1) {
         menu[i].renderOrder = 3
-      }
-      if (menu[i].lastPos == -1) {
-        menu[i].lastPos = 3
-      }
-      if (menu[i].nextPos == -1) {
-        menu[i].nextPos = 3
       }
     }
     //else if the movement is still running
@@ -326,16 +300,8 @@ function handleInput(dt) {
       menu[i].pos[0] = endX;
       menu[i].pos[1] = endY;
       menu[i].renderOrder -= 1;
-      menu[i].lastPos -= 1;
-      menu[i].nextPos -= 1;
       if (menu[i].renderOrder == -1) {
         menu[i].renderOrder = 3
-      }
-      if (menu[i].lastPos == -1) {
-        menu[i].lastPos = 3
-      }
-      if (menu[i].nextPos == -1) {
-        menu[i].nextPos = 3
       }
     }
   }
@@ -348,105 +314,73 @@ function handleInput(dt) {
 
 //this code is the exact same as above, but reversed. see (input.isDown("LEFT")) for details
 if (input.isDown('RIGHT') || menuRight == true) {
-  for (var i = 0; i < menu.length; i++) {
-    switch (menu[i].nextPos) {
-      case 0:
-        endX = (800 / 4);
-        endY = (600 / 2) - (30 * 2);
-        break;
-      case 1:
-        endX = (800 / 4) - (26 * 3);
-        endY = (600 / 2) - (30);
+    for (var i = 0; i < menu.length; i++) {
 
-        break;
-      case 2:
-        endX = (800 / 4);
-        endY = (600 / 2);
+      switch (menu[i].renderOrder) {
+        case 0:
+          presetX = (800 / 4);
+          presetY = (600 / 2) - (30 * 2);
+          endX = (800 / 4) - (26 * 3);
+          endY = (600 / 2) - (30);
+          break;
+        case 1:
+          presetX = (800 / 4) - (26 * 3);
+          presetY = (600 / 2) - (30);
+          endX = (800 / 4);
+          endY = (600 / 2);
+          break;
+        case 2:
+          presetX = (800 / 4);
+          presetY = (600 / 2);
+          endX = (800 / 4) + (26 * 3);
+          endY = (600 / 2) - (30);
+          break;
+        case 3:
+          presetX = (800 / 4) + (26 * 3);
+          presetY = (600 / 2) - (30);
+          endX = (800 / 4);
+          endY = (600 / 2) - (30 * 2);
+          break;
+        default:
+      }
+      var difX = 0;
+      var difY = 0;
+      if (menu[i].dx == 0 && menu[i].dy == 0) {
+        difX = endX - presetX;
+        difY = endY - presetY;
+        menu[i].dx = difX / menu[i].speed;
+        menu[i].dy = difY / menu[i].speed;
+      }
 
-        break;
-      case 3:
-        endX = (800 / 4) + (26 * 3);
-        endY = (600 / 2) - (30);
-
-        break;
-      default:
+      if (menuTimer == -1) {
+        menu[i].pos[0] = endX;
+        menu[i].pos[1] = endY;
+        menu[i].dx = 0;
+        menu[i].dy = 0;
+        menu[i].renderOrder += 1;
+        if (menu[i].renderOrder >= 4) {
+          menu[i].renderOrder = 0
+        }
+      } else if (menuTimer < 12) {
+        menuRight = true;
+        menu[i].pos[0] += menu[i].dx;
+        menu[i].pos[1] += menu[i].dy;
+      } else {
+        menuTimer = -1;
+        menu[i].dx = 0;
+        menu[i].dy = 0;
+        menu[i].pos[0] = endX;
+        menu[i].pos[1] = endY;
+        menu[i].renderOrder += 1;
+        if (menu[i].renderOrder == 4) {
+          menu[i].renderOrder = 0
+        }
+      }
     }
-    switch (menu[i].renderOrder) {
-      case 0:
-        presetX = (800 / 4);
-        presetY = (600 / 2) - (30 * 2);
-        break;
-      case 1:
-        presetX = (800 / 4) - (26 * 3);
-        presetY = (600 / 2) - (30);
-
-        break;
-      case 2:
-        presetX = (800 / 4);
-        presetY = (600 / 2);
-
-        break;
-      case 3:
-        presetX = (800 / 4) + (26 * 3);
-        presetY = (600 / 2) - (30);
-
-        break;
-      default:
-    }
-    var difX = 0;
-    var difY = 0;
-    if (menu[i].dx == 0 && menu[i].dy == 0) {
-      difX = endX - presetX;
-      difY = endY - presetY;
-      menu[i].dx = difX / menu[i].speed;
-      menu[i].dy = difY / menu[i].speed;
-    }
-
     if (menuTimer == -1) {
-      menu[i].pos[0] = endX;
-      menu[i].pos[1] = endY;
-      menu[i].dx = 0;
-      menu[i].dy = 0;
-      menu[i].renderOrder += 1;
-      menu[i].lastPos += 1;
-      menu[i].nextPos += 1;
-      if (menu[i].renderOrder >= 4) {
-        menu[i].renderOrder = 0
-      }
-      if (menu[i].nextPos >= 4) {
-        menu[i].nextPos = 0
-      }
-      if (menu[i].lastPos >= 4) {
-        menu[i].lastPos = 0
-      }
-    } else if (menuTimer < 12) {
-      menuRight = true;
-      menu[i].pos[0] += menu[i].dx;
-      menu[i].pos[1] += menu[i].dy;
-    } else {
-      menuTimer = -1;
-      menu[i].dx = 0;
-      menu[i].dy = 0;
-      menu[i].pos[0] = endX;
-      menu[i].pos[1] = endY;
-      menu[i].renderOrder += 1;
-      menu[i].lastPos += 1;
-      menu[i].nextPos += 1;
-      if (menu[i].renderOrder == 4) {
-        menu[i].renderOrder = 0
-      }
-      if (menu[i].nextPos == 4) {
-        menu[i].nextPos = 0
-      }
-      if (menu[i].lastPos == 4) {
-        menu[i].lastPos = 0
-      }
+      menuRight = false;
     }
-  }
-  if (menuTimer == -1) {
-    menuRight = false;
-  }
-  menuTimer++;
+    menuTimer++;
 }
   //if the user chooses an option
   if (input.isDown('ENTER')) {
@@ -488,6 +422,8 @@ if (input.isDown('RIGHT') || menuRight == true) {
         //make sure the player is in the right spot (the animation is reletive to starting position)
         hero.pos[0] = 100;
         hero.pos[1] = 500;
+        indicator.pos[0] = 700;
+        indicator.pos[1] = 300;
       }
       if (anim1Timer <= 50) {
         //anim1TimeRef is the reletive time within each "chunk" of the animation.
@@ -503,6 +439,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
       }
     //jump
       else if (anim1Timer <= 150) {
+        indicator.sprite = new Sprite("images/Misc/coin_red.png", [0, 0], [26, 30]);
         //most complex bit yet
         anim1TimeRef = anim1Timer - 100;
         //i decided the animation went too far, so i squashed it in a bit
@@ -518,8 +455,6 @@ if (input.isDown('RIGHT') || menuRight == true) {
                     \
         */
         hero.pos[1] += (dt / 3.5) * (Math.pow(anim1TimeRef - 25, 3));
-        console.log(anim1Timer);
-        console.log(input.isDown('A'));
         //if the player hits "a" during the part where the hero bounces, bounce again
         if (anim1Timer <= 100 && input.isDown('A')) {
           hero.bounce = false;
@@ -528,7 +463,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
           hero.bounce = true;
         }
         if (anim1Timer == 150) {
-          enemy.hp -= hero.jmpDmg;
+          enemy.currentHp -= hero.jmpDmg;
         }
       }
     //bounce1
@@ -549,6 +484,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
       }
     //bounce back
       else if (anim1Timer <= 300) {
+        indicator.sprite = new Sprite("images/Misc/coin_green.png", [0, 0], [26, 30]);
         hero.bounce = "unset";
         anim1TimeRef = anim1Timer - 250;
         anim1TimeRef = anim1TimeRef * .85
@@ -569,6 +505,8 @@ if (input.isDown('RIGHT') || menuRight == true) {
       }
       else if (anim1Timer <= 450) {
         anim1TimeRef = anim1Timer - 400;
+        indicator.pos[0] = 800;
+        indicator.pos[1] = 600;
         hero.run = false;
         hero.sprite = new Sprite('images/HeroStuff/heroStand.png', [0, 0], [64, 64]);
       }
@@ -600,5 +538,18 @@ if (input.isDown('RIGHT') || menuRight == true) {
 }
 
 function handleEnemy() {
-
+  if(enemy.currentHp <= 0) {
+    enemyDeath();
+  }
 };
+var deathTimer = 0;
+function enemyDeath() {
+  deathTimer++;
+  if (deathTimer < 100) {
+    //img, pos_in_img[x,y], size_in_img[x,y],anim_speed, anim_frames, dir[hor default], anim_repeat[def once], opacity[def 1]
+    enemy.sprite.fade = "true";
+    enemy.sprite.facing = deathTimer / 100;
+    enemy.pos[0] += 1;
+    enemy.pos[1] += 1;
+  }
+}
