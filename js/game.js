@@ -56,15 +56,6 @@ background = {
   sprite: new Sprite('images/Backgrounds/CaveBackground.png', [0, 0], [800, 600])
 }
 
-enemy = {
-  id: 1,
-  pos: [450, 354],
-  speed: 0,
-  maxHp: 20,
-  currentHp: 20,
-  sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 10, [0, 1, 2, 3, 4, 5], 'vertical', false, 0),
-}
-
 indicator = {
   pos: [800,600],
   key: "null",
@@ -72,6 +63,7 @@ indicator = {
 }
 
 var menu = [];
+var enemies = [];
 
 
 function init() {
@@ -134,6 +126,14 @@ function reset() {
       sprite: sprite
     });
   }
+  enemies.push({
+    id: enemies.length,
+    pos: [450, 354],
+    speed: 0,
+    maxHp: 20,
+    currentHp: 20,
+    sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 10, [0, 1, 2, 3, 4, 5], 'vertical', false, 0),
+  })
 
 }
 
@@ -155,7 +155,9 @@ function gameLoop() {
 
 function update(dt) {
   hero.sprite.update(dt);
-  enemy.sprite.update(dt);
+  for (var i = 0; i < enemies.length; i++) {
+    enemies[i].sprite.update(dt);
+  }
   //handle inputs
   // - apart from click which comes elsewhere
   handleInput(dt);
@@ -170,14 +172,18 @@ function render() {
   renderEntities(menu);
   //then the rest in order
   renderEntity(hero);
-  renderEntity(enemy);
-  if (enemy.currentHp > 0) {
-    gameCanvas.context.fillStyle="#FF0000";
-    gameCanvas.context.fillRect(480, 550, 200, 10);
-    gameCanvas.context.fillStyle="#00FF00";
-    gameCanvas.context.fillRect(480, 550, 200 * (enemy.currentHp/enemy.maxHp), 10)
+  renderEntities(enemies);
+  for (var i = 0; i < enemies.length; i++) {
+    if (enemies[i].currentHp > 0) {
+      gameCanvas.context.fillStyle="#FF0000";
+      gameCanvas.context.fillRect(enemies[i].pos[0] + 30, enemies[i].pos[1] + 196, 200, 10);
+      gameCanvas.context.fillStyle="#00FF00";
+      gameCanvas.context.fillRect(enemies[i].pos[0] + 30, enemies[i].pos[1] + 196, 200 * (enemies[i].currentHp/enemies[i].maxHp), 10)
+    }
+
   }
 }
+
 
 var anim1 = false;
 var anim1Timer = 0;
@@ -463,7 +469,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
           hero.bounce = true;
         }
         if (anim1Timer == 150) {
-          enemy.currentHp -= hero.jmpDmg;
+          enemies[0].currentHp -= hero.jmpDmg;
         }
       }
     //bounce1
@@ -538,7 +544,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
 }
 
 function handleEnemy() {
-  if(enemy.currentHp <= 0) {
+  if(enemies[0].currentHp <= 0) {
     enemyDeath();
   }
 };
@@ -547,9 +553,9 @@ function enemyDeath() {
   deathTimer++;
   if (deathTimer < 100) {
     //img, pos_in_img[x,y], size_in_img[x,y],anim_speed, anim_frames, dir[hor default], anim_repeat[def once], opacity[def 1]
-    enemy.sprite.fade = "true";
-    enemy.sprite.facing = deathTimer / 100;
-    enemy.pos[0] += 1;
-    enemy.pos[1] += 1;
+    enemies[0].sprite.fade = "true";
+    enemies[0].sprite.facing = deathTimer / 100;
+    enemies[0].pos[0] += 1;
+    enemies[0].pos[1] += 1;
   }
 }
