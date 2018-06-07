@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>FetchQuest Homepage</title>
-    <link href="https://fonts.googleapis.com/css?family=Itim|PT+Sans|Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Itim|Press+Start+2P|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="icon" href="dog.ico" type="image/x-icon" />
