@@ -159,7 +159,23 @@ BEGIN
     END FOREACH
 END
 
-
+BEGIN
+  INPUT array of numbers
+  sum = 0;
+  for i = 0; i < AoN.length; i++;
+    sum += AoN[i];
+  end FOR
+  mean = sum / AoN.length;
+  diffMeanArray = [];
+  meanDif = 0;
+  for i = 0; i < AoN.length; i++;
+    diffMean.push(mean - AoN[i])
+    diffMean[i] = diffMean[i] squared;
+    meanDif += diffMean[i];
+  end FOR
+  stdDev = sqrt(meanDif);
+  return stdDev;
+END
 
 
 
