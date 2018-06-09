@@ -537,7 +537,6 @@ if (input.isDown('RIGHT') || menuRight == true) {
       }
       anim1Timer++;
 
-
       if (hero.run == false) {
         hero.sprite = new Sprite('images/HeroStuff/heromain.png', [0, 0], [64, 64], 10, [0, 1], 'vertical')
         hero.run = true;
