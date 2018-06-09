@@ -42,6 +42,8 @@ hero = {
   dy: 0,
   maxHp: 20,
   currentHp: 20,
+  currentPawPower: 20,
+  maxPawPower: 20,
   jmpDmg: 5,
   ground: {slide: "slippery"},
   jump: 'NO',
@@ -54,6 +56,11 @@ background = {
   pos: [0, 0],
   speed: 0,
   sprite: new Sprite('images/Backgrounds/CaveBackground.png', [0, 0], [800, 600])
+}
+
+battle = {
+  possibleEnemies: ["bat", 60, "gat", 40],
+  battleAreaWidth: 800,
 }
 
 indicator = {
@@ -116,7 +123,7 @@ function reset() {
           sprite = new Sprite('images/Misc/coin_red.png', [0, 0], [26, 30]);
         break;
       }
-    menu.push({
+      menu.push({
       pos: [X, Y],
       dx: 0,
       dy: 0,
@@ -126,15 +133,19 @@ function reset() {
       sprite: sprite
     });
   }
-  enemies.push({
-    id: enemies.length,
-    pos: [450, 354],
-    speed: 0,
-    maxHp: 20,
-    currentHp: 20,
-    sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 10, [0, 1, 2, 3, 4, 5], 'vertical', false, 0),
-  })
-
+  var numOfEnemies = Math.floor(Math.random() * 2) + 1;
+  for (var i = 0; i < numOfEnemies; i++) {
+    var enemyType = "esch";
+    var xPos = battle.battleAreaWidth / (numOfEnemies + 1);
+    enemies.push({
+      id: enemies.length,
+      pos: [xPos * (i+1), 354],
+      speed: 0,
+      maxHp: 20,
+      currentHp: 20,
+      sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 10, [0, 1, 2, 3, 4, 5], 'vertical', false, 0),
+    })
+  }
 }
 
 function gameLoop() {
@@ -413,9 +424,10 @@ if (input.isDown('RIGHT') || menuRight == true) {
       }
     }
     //if the selected action is "attack"
-    if (action == "attack") {
+    if (action == "attack" && anim1 != true) {
       //activate the "attack" animation
       anim1 = true;
+      hero.currentPawPower -= 2;
     }
   }
 
