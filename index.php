@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>FetchQuest Homepage</title>
-    <link href="https://fonts.googleapis.com/css?family=Itim|PT+Sans|Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Itim|Press+Start+2P|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="icon" href="dog.ico" type="image/x-icon" />
@@ -29,13 +29,15 @@
         </div>
       </nav>
       <div id="body" class="pt-5">
-        <div class="imageHead">
-          <img src="imgs/CaveBackground.png" class="underImage">
-            <h1 style="font-size:100px;">
-              Just a dog,
-              <br>
-              chasing a dude.
-            </h1>
+        <div class="imageHeader">
+          <!--<img src="imgs/CaveBackground.png" class="underImage">-->
+            <div class="overImage">
+              <h1 style="font-size:100px;">
+                Just a dog,
+                <br>
+                chasing a dude.
+              </h1>
+            </div>
           <!--<form action="password.php" method="post">
             <input type="text" name="password"></input>
             <input type="submit"></input>

@@ -50,11 +50,11 @@ font-family: 'Itim', cursive;
 
 /* non-reset styling */
 h1 {
-  font-family: 'PT Sans', sans-serif;
+  font-family: 'Press Start 2P', cursive;
 	font-size: 24pt;
 }
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
 	color: #ECF0F1;
 	background-color: #33425B;
 	padding-top: 2%;
@@ -77,15 +77,13 @@ body {
 	float: left;
 }
 
-.imageHead {
+.imageHeader {
   position: relative;
   text-align: left;
   color: white;
 }
 .overImage {
   position: absolute;
-  top: 8px;
-  left: 16px;
 }
 .underImage {
 	width: 100%;
