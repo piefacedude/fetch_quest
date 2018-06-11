@@ -59,7 +59,7 @@ background = {
 }
 
 battle = {
-  possibleEnemies: ["bat", 60, "gat", 40],
+  possibleEnemies: ["bat", 200, "dp", 1],
   battleAreaWidth: 800,
 }
 
@@ -133,13 +133,29 @@ function reset() {
       sprite: sprite
     });
   }
-  var numOfEnemies = Math.floor(Math.random() * 2) + 1;
+  var numOfEnemies = Math.floor(Math.random() * 0) + 1;
   for (var i = 0; i < numOfEnemies; i++) {
+    var potEnem = battle.possibleEnemies;
+    var totalChance = 0;
+    for (var j = 0; j < potEnem.length / 2; j++) {
+      totalChance += potEnem[(2 * j) + 1];
+    }
+    var monsterCheck = Math.random() * totalChance;
+    var scaleCheck = 0;
+    var enemyType;
+    for (var j = 0; j < potEnem.length / 2; j++) {
+      scaleCheck += potEnem[2*j + 1];
+      if (monsterCheck <= scaleCheck) {
+        enemyType = potEnem[2*j];
+        j = potEnem.length;
+      }
+    }
+
     var enemyType = "esch";
     var xPos = battle.battleAreaWidth / (numOfEnemies + 1);
     enemies.push({
       id: enemies.length,
-      pos: [xPos * (i+1), 354],
+      pos: [xPos * (i+1),200],
       speed: 0,
       maxHp: 20,
       currentHp: 20,
@@ -180,18 +196,18 @@ function render() {
   gameCanvas.clear();
   //then add background first
   renderEntity(background);
-  renderEntities(menu);
   //then the rest in order
+  renderEntities(menu);
+  renderEntity(indicator);
   renderEntity(hero);
   renderEntities(enemies);
   for (var i = 0; i < enemies.length; i++) {
     if (enemies[i].currentHp > 0) {
       gameCanvas.context.fillStyle="#FF0000";
-      gameCanvas.context.fillRect(enemies[i].pos[0] + 30, enemies[i].pos[1] + 196, 200, 10);
+      gameCanvas.context.fillRect(enemies[i].pos[0] + ((enemies[i].sprite.size[0] * enemies[i].sprite.scale.x) / 2) - 50, enemies[i].pos[1] + (enemies[i].sprite.size[1] * enemies[i].sprite.scale.y), 100, 10);
       gameCanvas.context.fillStyle="#00FF00";
-      gameCanvas.context.fillRect(enemies[i].pos[0] + 30, enemies[i].pos[1] + 196, 200 * (enemies[i].currentHp/enemies[i].maxHp), 10)
+      gameCanvas.context.fillRect(enemies[i].pos[0] + ((enemies[i].sprite.size[0] * enemies[i].sprite.scale.x) / 2) - 50, enemies[i].pos[1] + (enemies[i].sprite.size[1] * enemies[i].sprite.scale.y), 100 * (enemies[i].currentHp/enemies[i].maxHp), 10)
     }
-
   }
 }
 
@@ -206,6 +222,8 @@ var downPressTimer = 0;
 var menuLeft = false;
 var menuRight = false;
 var menuTimer = 0;
+var yRef;
+var changeY;
 
 function handleInput(dt) {
 
@@ -399,6 +417,10 @@ if (input.isDown('RIGHT') || menuRight == true) {
     }
     menuTimer++;
 }
+  if (input.isDown('ENTER')) {
+
+  }
+
   //if the user chooses an option
   if (input.isDown('ENTER')) {
     //find which menu item is selected
@@ -442,6 +464,9 @@ if (input.isDown('RIGHT') || menuRight == true) {
         hero.pos[1] = 500;
         indicator.pos[0] = 700;
         indicator.pos[1] = 300;
+        changeY = hero.pos[1] - enemies[0].pos[1];
+        modY = (Math.pow((changeY-400)/-0.001024,1/4)) + 25;
+        modY = modY / 50;
       }
       if (anim1Timer <= 50) {
         //anim1TimeRef is the reletive time within each "chunk" of the animation.
@@ -460,10 +485,9 @@ if (input.isDown('RIGHT') || menuRight == true) {
         indicator.sprite = new Sprite("images/Misc/coin_red.png", [0, 0], [26, 30]);
         //most complex bit yet
         anim1TimeRef = anim1Timer - 100;
-        //i decided the animation went too far, so i squashed it in a bit
-        anim1TimeRef = anim1TimeRef * .95
+        anim1TimeRef = anim1TimeRef * modY;
         //his horizontal speed won't change
-        hero.pos[0] += (10000 / 50) * dt;
+        hero.pos[0] += (100 / 50);
         //his vertical jump is mapped by a -x^3 graph
         /*
               \
@@ -472,7 +496,7 @@ if (input.isDown('RIGHT') || menuRight == true) {
                    \  //moves down
                     \
         */
-        hero.pos[1] += (dt / 3.5) * (Math.pow(anim1TimeRef - 25, 3));
+        hero.pos[1] += 0.004096*(Math.pow(anim1TimeRef - 25, 3));
         //if the player hits "a" during the part where the hero bounces, bounce again
         if (anim1Timer <= 100 && input.isDown('A')) {
           hero.bounce = false;
@@ -505,9 +529,10 @@ if (input.isDown('RIGHT') || menuRight == true) {
         indicator.sprite = new Sprite("images/Misc/coin_green.png", [0, 0], [26, 30]);
         hero.bounce = "unset";
         anim1TimeRef = anim1Timer - 250;
-        anim1TimeRef = anim1TimeRef * .85
+        anim1TimeRef = 51 - anim1TimeRef;
+        anim1TimeRef = anim1TimeRef * modY;
         hero.pos[0] -= (10000 / 50) * dt;
-        hero.pos[1] += .0027 * (Math.pow(anim1TimeRef - 20, 3));
+        hero.pos[1] -= 0.004096*(Math.pow(anim1TimeRef - 25, 3));
         if (anim1Timer == 300) {
           hero.pos[1] = 500;
         }
@@ -555,18 +580,20 @@ if (input.isDown('RIGHT') || menuRight == true) {
 }
 
 function handleEnemy() {
-  if(enemies[0].currentHp <= 0) {
-    enemyDeath();
+  for (var i = 0; i < enemies.length; i++) {
+    if(enemies[i].currentHp <= 0) {
+      enemyDeath(i);
+    }
   }
 };
 var deathTimer = 0;
-function enemyDeath() {
+function enemyDeath(i) {
   deathTimer++;
   if (deathTimer < 100) {
     //img, pos_in_img[x,y], size_in_img[x,y],anim_speed, anim_frames, dir[hor default], anim_repeat[def once], opacity[def 1]
-    enemies[0].sprite.fade = "true";
-    enemies[0].sprite.facing = deathTimer / 100;
-    enemies[0].pos[0] += 1;
-    enemies[0].pos[1] += 1;
+    enemies[i].sprite.fade = "true";
+    enemies[i].sprite.facing = deathTimer / 100;
+    enemies[i].pos[0] += 1;
+    enemies[i].pos[1] += 1;
   }
 }
