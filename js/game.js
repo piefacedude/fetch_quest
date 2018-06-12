@@ -22,6 +22,7 @@ resources.load([
   'images/Misc/coin_blue.png',
   'images/Misc/coin_green.png',
   'images/HeroStuff/dog_still_large.png',
+  'images/Prompts/attack.png'
 ]);
 resources.onReady(init); //callback function which halts progress until all the images are ready
 
@@ -66,7 +67,14 @@ battle = {
 indicator = {
   pos: [800,600],
   key: "null",
-  sprite: new Sprite('images/Misc/coin_green.png', [0, 0], [26, 30]),
+  sprite: new Sprite('images/Prompts/attack.png', [0, 0], [106, 14]),
+}
+
+selector = {
+  pos: [800, 600],
+  selectedEnemy: 0,
+  attackType: "any",
+  sprite: new Sprite('images/Misc/coin_red.png', [0, 0], [26, 30])
 }
 
 var menu = [];
@@ -114,7 +122,7 @@ function reset() {
           X = (800 / 4);
           Y = (600 / 2);
           action = "attack";
-          sprite = new Sprite('images/Misc/coin_yellow.png', [0, 0], [26, 30]);
+          sprite = new Sprite('images/Prompts/attack.png', [0, 0], [121, 19]);
         break;
         case 3:
           X = (800 / 4) + (26 * 3);
