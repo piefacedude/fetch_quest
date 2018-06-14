@@ -5,44 +5,17 @@
     <title>FetchQuest Homepage</title>
     <link href="https://fonts.googleapis.com/css?family=Itim|Press+Start+2P|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="icon" href="dog.ico" type="image/x-icon" />
   </head>
   <body>
-    <div id="container">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <img src="imgs/dog.ico" class="navbar-brand pr-3">
-        <a class="navbar-brand" href="#">FetchQuest</a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="navbar-collapse collapse" id="navbarColor01" style="">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <div class="container-fluid">
+      <?php
+      include 'snippets/navbar.php';
+      include 'snippets/featureImage.php';
+      ?>
       <div id="body" class="pt-5">
-        <div class="imageHeader">
-          <!--<img src="imgs/CaveBackground.png" class="underImage">-->
-            <div class="overImage">
-              <h1 style="font-size:100px;">
-                Just a dog,
-                <br>
-                chasing a dude.
-              </h1>
-            </div>
-          <!--<form action="password.php" method="post">
-            <input type="text" name="password"></input>
-            <input type="submit"></input>
-          </form>-->
-        </div>
+
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
