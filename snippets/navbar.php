@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <img src="imgs/dog.ico" class="navbar-brand pr-3">
-  <a class="navbar-brand" href="#"><h1>FetchQuest</h1></a>
+  <a class="navbar-brand" href="#"><h1 class="feature-text">FetchQuest</h1></a>
   <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
