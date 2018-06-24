@@ -13,7 +13,6 @@
     <div class="container-fluid">
       <?php
       include 'snippets/navbar.php';
-      include 'snippets/featureImage.php';
       ?>
       <div id="body" class="pt-5">
 

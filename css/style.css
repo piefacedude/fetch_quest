@@ -43,20 +43,24 @@ table {
 }
 
 /*
+font-family: 'Press Start 2P', cursive;
 font-family: 'Raleway', sans-serif;
 font-family: 'PT Sans', sans-serif;
-font-family: 'Itim', cursive;
 */
 
 /* non-reset styling */
-h1 {
+.feature-text {
   font-family: 'Press Start 2P', cursive;
+	font-size: 24pt;
+}
+h1 {
+	font-family: 'PT Sans', sans-serif;
 	font-size: 24pt;
 }
 body {
   font-family: 'Roboto', sans-serif;
-	color: #ECF0F1;
-	background-color: #33425B;
+	color: #EEEEEE;
+	background-color: #222831;
 	padding-top: 2%;
 	padding-left: 2%;
 	padding-right: 2%;
@@ -85,11 +89,14 @@ body {
 
 .feature-image {
     position: relative;
-    text-align: center;
+    text-align: left;
 }
 .centered {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 25%;
+		background-color: #00ADB5;
+    right: 0%;
+		height: 30%;
+		width: 60%;
+		padding: 20px 20px 20px 20px;
 }
