@@ -8,13 +8,13 @@
   <div class="navbar-collapse collapse" id="navbarColor01" style="">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Leaderboard</a>
+        <a class="nav-link" href="leaderboard.php">Leaderboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="signup.php">Sign Up</a>
+        <a class="nav-link" href="register.php">Register</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="login.php">Sign In</a>
