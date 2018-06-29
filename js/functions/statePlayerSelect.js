@@ -1,3 +1,10 @@
+////////////////////////*
+/* FetchQuest
+/* Created by Guy Witherow
+/* Last major update: 27/6/18
+/* This file handles the user selection stage of the battle screen
+*////////////////////////
+
 function playerSelect() {
   //left key menu handling
     if (input.isDown('LEFT') || menuLeft == true) {
@@ -122,9 +129,12 @@ function playerSelect() {
       }
       var difX = 0;
       var difY = 0;
+      //find path function
       if (menu[i].dx == 0 && menu[i].dy == 0) {
+        //find the difference in x & y between current and end
         difX = endX - presetX;
         difY = endY - presetY;
+        //move however fast it takes to get to that point in a sum of time
         menu[i].dx = difX / menu[i].speed;
         menu[i].dy = difY / menu[i].speed;
       }
@@ -193,6 +203,6 @@ function playerSelect() {
       hero.currentPawPower -= 2;
     }
   }
-  hero.shadow.pos[0] = hero.pos[0];
-  hero.shadow.pos[1] = 554
+  hero.shadow.pos[0] = hero.pos[0] - 3;
+  hero.shadow.pos[1] = 554;
 }

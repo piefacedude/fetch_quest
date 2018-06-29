@@ -239,9 +239,11 @@ function render() {
   //then add background first
   renderEntity(background);
   //then the rest in order
-  renderEntities(menu);
-  if (menuLeft != true && menuRight != true) {
-    renderEntities(shade);
+  if (stdJumpAnim  != true) {
+    renderEntities(menu);
+    if (menuLeft != true && menuRight != true) {
+      renderEntities(shade);
+    }
   }
   renderEntity(indicator);
   renderEntity(hero);
@@ -249,10 +251,7 @@ function render() {
   renderEntities(enemies);
   for (var i = 0; i < enemies.length; i++) {
     if (enemies[i].currentHp > 0) {
-      gameCanvas.context.fillStyle="#FF0000";
-      gameCanvas.context.fillRect(enemies[i].pos[0] + ((enemies[i].sprite.size[0] * enemies[i].sprite.scale.x) / 2) - 50, enemies[i].pos[1] + (enemies[i].sprite.size[1] * enemies[i].sprite.scale.y), 100, 10);
-      gameCanvas.context.fillStyle="#00FF00";
-      gameCanvas.context.fillRect(enemies[i].pos[0] + ((enemies[i].sprite.size[0] * enemies[i].sprite.scale.x) / 2) - 50, enemies[i].pos[1] + (enemies[i].sprite.size[1] * enemies[i].sprite.scale.y), 100 * (enemies[i].currentHp/enemies[i].maxHp), 10)
+      renderHPBar(enemies[i]);
     }
   }
 }

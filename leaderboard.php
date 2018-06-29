@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta charset="utf-8">
-    <title>FetchQuest Homepage</title>
+    <title>FetchQuest Leaderboard</title>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|PT+Sans|Raleway" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/homepageStyle.css?3" type="text/css">
@@ -12,12 +12,12 @@
   <body>
     <div class="container-fluid">
       <?php
-      $activePage = "home";
+      session_start();
+      $activePage = "leaderboard";
       require 'snippets/navbar.php';
-      include 'snippets/featureImage.php';
       ?>
       <div id="body" class="pt-5">
-
+        <img src="imgs/leaderboard.png" alt="Cave Background Feature Image" style="width:50%; margin-left:25%">
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

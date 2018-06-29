@@ -93,10 +93,11 @@ body {
 }
 .centered {
     position: absolute;
-    top: 25%;
+    top: 40px;
 		background-color: #00ADB5;
     right: 0%;
-		height: 30%;
+		height: auto;
 		width: 60%;
 		padding: 20px 20px 20px 20px;
+		margin-top: 10px
 }
