@@ -286,6 +286,9 @@ function handleInput(dt) {
   else if (gameState == "attackSelect") {
     attackSelect();
   }
+  else if (gameState == "attackSelect") {
+    attackSelect();
+  }
 
   //attack animation
   if (stdJumpAnim == true) {
