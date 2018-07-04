@@ -274,6 +274,7 @@ var gameState;
 function handleInput(dt) {
   if (gameState == "playerSelect") {
     playerSelect(dt);
+
   }
 
   //attack animation
@@ -291,13 +292,5 @@ function handleEnemy() {
   }
 };
 var deathTimer = 0;
-function enemyDeath(i) {
-  deathTimer++;
-  if (deathTimer < 100) {
-    //img, pos_in_img[x,y], size_in_img[x,y],anim_speed, anim_frames, dir[hor default], anim_repeat[def once], opacity[def 1]
-    enemies[i].sprite.fade = "true";
-    enemies[i].sprite.facing = deathTimer / 100;
-    enemies[i].pos[0] += 1;
-    enemies[i].pos[1] += 1;
-  }
+enemyDeath(i);
 }
