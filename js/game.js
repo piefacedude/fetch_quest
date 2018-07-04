@@ -51,6 +51,7 @@ hero = {
   currentPawPower: 20,
   maxPawPower: 20,
   jmpDmg: 5,
+  attacks: [{name: "jump", action: "stdJumpAnim"}, {name: "bite", action: "stdBiteAnim"}],
   ground: {slide: "slippery"},
   jump: 'NO',
   run: false,
@@ -89,6 +90,7 @@ selector = {
 var menu = [];
 var shade = [];
 var enemies = [];
+var list = [];
 
 
 function init() {
@@ -239,11 +241,14 @@ function render() {
   //then add background first
   renderEntity(background);
   //then the rest in order
-  if (stdJumpAnim  != true) {
+  if (gameState == "playerSelect") {
     renderEntities(menu);
     if (menuLeft != true && menuRight != true) {
       renderEntities(shade);
     }
+  }
+  if (gameState == "attackSelect") {
+    renderEntities(list);
   }
   renderEntity(indicator);
   renderEntity(hero);
@@ -270,10 +275,15 @@ var menuTimer = 0;
 var yRef;
 var changeY;
 var gameState;
+var listTimer = 0;
+var selected = 0;
 
 function handleInput(dt) {
   if (gameState == "playerSelect") {
     playerSelect(dt);
+  }
+  else if (gameState == "attackSelect") {
+    attackSelect();
   }
 
   //attack animation

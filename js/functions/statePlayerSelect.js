@@ -197,12 +197,54 @@ function playerSelect() {
       }
     }
     //if the selected action is "attack"
-    if (action == "attack" && stdJumpAnim != true) {
+    if (action == "attack" && gameState == "playerSelect") {
       //activate the "attack" animation
-      stdJumpAnim = true;
-      hero.currentPawPower -= 2;
+      gameState = "attackSelect";
     }
   }
   hero.shadow.pos[0] = hero.pos[0] - 3;
   hero.shadow.pos[1] = 554;
+}
+
+function attackSelect() {
+  if (listTimer == 0) {
+    for (var i = 0; i < hero.attacks.length; i++) {
+      var X = 100;
+      var Y = (i * 22) + 200;
+      var sprite = new Sprite('images/Prompts/attack.png', [0, 0], [121, 19]);
+      var action = hero.attacks[i].action;
+      list.push({
+      pos: [X, Y],
+      dx: 0,
+      dy: 0,
+      speed: 12,
+      renderOrder:i,
+      action: action,
+      sprite: sprite,
+      
+      });
+    }
+  }
+  if (listTimer <= 10) {
+
+  }
+  else {
+    if (input.isDown('UP')) {
+      selected--;
+      if (selected <= -1) {
+        selected = list.length - 1;
+      }
+    }
+    if (input.isDown('DOWN')) {
+      selected++;
+      if (selected >= list.length) {
+        selected = 0;
+      }
+    }
+    if (input.isDown('ENTER')) {
+      list = [];
+      listTimer = 0;
+    }
+  }
+  listTimer++;
 }
