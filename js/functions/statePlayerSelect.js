@@ -196,23 +196,51 @@ function playerSelect() {
         }
       }
     }
-    //if the selected action is "attack"
+
     if (action == "attack" && gameState == "playerSelect") {
-      //activate the "attack" animation
+      //activate the "attack" menu
       gameState = "attackSelect";
+      selectMode = "attack";
+    }
+    else if (action == "items" && gameState == "playerSelect") {
+      //activate the "item" menu
+      gameState = "attackSelect";
+      selectMode = "items";
+    }
+    if (action == "special" && gameState == "playerSelect") {
+      //activate the "special" menu
+      gameState = "attackSelect";
+      selectMode = "special";
     }
   }
   hero.shadow.pos[0] = hero.pos[0] - 3;
   hero.shadow.pos[1] = 554;
 }
 
-function attackSelect() {
+function attackSelect(selectMode) {
   if (listTimer == 0) {
-    for (var i = 0; i < hero.attacks.length; i++) {
+    switch (selectMode) {
+      case "attack":
+          var lessThan = hero.attacks.length;
+          var actionList = hero.attacks;
+        break;
+      case "items":
+          var lessThan = hero.items.length;
+          var actionList = hero.items;
+        break;
+      case "special":
+          var lessThan = hero.special.length;
+          var actionList = hero.special;
+        break;
+      default:
+
+    }
+    for (var i = 0; i < lessThan; i++) {
       var X = 100;
       var Y = (i * 22) + 200;
       var sprite = new Sprite('images/Prompts/attack.png', [0, 0], [121, 19]);
-      var action = hero.attacks[i].action;
+      var action = actionList[i].action;
+
       list.push({
       pos: [X, Y],
       dx: 0,
@@ -221,10 +249,14 @@ function attackSelect() {
       renderOrder:i,
       action: action,
       sprite: sprite,
-      
+      shade: {
+        pos: [X, Y],
+        sprite: new Sprite('images/Prompts/shade.png', [0, 0], [121, 19])
+      }
       });
     }
   }
+
   if (listTimer <= 10) {
 
   }
@@ -234,16 +266,19 @@ function attackSelect() {
       if (selected <= -1) {
         selected = list.length - 1;
       }
+      listTimer = 0;
     }
     if (input.isDown('DOWN')) {
       selected++;
       if (selected >= list.length) {
         selected = 0;
       }
+      listTimer = 0;
     }
     if (input.isDown('ENTER')) {
-      list = [];
+      eval(list[selected].action + " = true");
       listTimer = 0;
+      gameState = "animRunning";
     }
   }
   listTimer++;

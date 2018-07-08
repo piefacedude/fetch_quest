@@ -51,11 +51,13 @@ hero = {
   currentPawPower: 20,
   maxPawPower: 20,
   jmpDmg: 5,
-  attacks: [{name: "jump", action: "stdJumpAnim"}, {name: "bite", action: "stdBiteAnim"}],
+  attacks: [{name: "Jump", action: "stdJumpAnim"}, {name: "Bite", action: "stdBiteAnim"}],
+  items: [{name: "Healing Potion", action: "healingPotion"}, {name: "Fright Mask", action: "frightMask"}],
+  special: [{name: "jump", action: "stdJumpAnim"}, {name: "bite", action: "stdBiteAnim"}],
   ground: {slide: "slippery"},
   jump: 'NO',
   run: false,
-  bounce: false,
+  bounce: "unset",
   sprite: new Sprite('images/HeroStuff/heroStand.png', [0, 0], [64, 64]),
   shadow: {
             pos: [100,554],
@@ -159,22 +161,19 @@ function reset() {
       case 0:
         X = (800 / 4) + (26 * 3);
         Y = (600 / 2) - 30;
-        sprite = new Sprite('images/Prompts/shade.png', [0, 0], [121, 19]);
       break;
       case 1:
         X = (800 / 4) - (26 * 3);
         Y = (600 / 2) - 30;
-        sprite = new Sprite('images/Prompts/shade.png', [0, 0], [121, 19]);
       break;
       case 2:
         X = (800 / 4);
         Y = (600 / 2) - 60;
-        sprite = new Sprite('images/Prompts/shade.png', [0, 0], [121, 19]);
       break;
     }
     shade.push({
       pos: [X, Y],
-      sprite: sprite
+      sprite: new Sprite('images/Prompts/shade.png', [0, 0], [121, 19])
     });
   }
   var numOfEnemies = Math.floor(Math.random() * 0) + 1;
@@ -232,6 +231,12 @@ function update(dt) {
   //handle inputs
   // - apart from click which comes elsewhere
   handleInput(dt);
+  if (enemies.length <= 0) {
+    playerWin();
+  }
+  else if (hero.currentHp <= 0) {
+    playerLose();
+  }
 }
 
 //what to render
@@ -247,9 +252,16 @@ function render() {
       renderEntities(shade);
     }
   }
+
   if (gameState == "attackSelect") {
     renderEntities(list);
+    for (var i = 0; i < list.length; i++) {
+      if (selected != i) {
+        renderEntity(list[i].shade);
+      }
+    }
   }
+
   renderEntity(indicator);
   renderEntity(hero);
   renderEntity(hero.shadow);
@@ -277,23 +289,25 @@ var changeY;
 var gameState;
 var listTimer = 0;
 var selected = 0;
+var deathTimer = 0;
+var numOfEnemies = enemies.length;
+var selectMode;
 
 function handleInput(dt) {
-  if (gameState == "playerSelect") {
-    playerSelect(dt);
-
-  }
-  else if (gameState == "attackSelect") {
-    attackSelect();
-  }
-  else if (gameState == "attackSelect") {
-    attackSelect();
-  }
 
   //attack animation
   if (stdJumpAnim == true) {
     stdJumpAnimfunction(dt);
   }
+
+  else if (gameState == "playerSelect") {
+    playerSelect(dt);
+
+  }
+  else if (gameState == "attackSelect") {
+    attackSelect(selectMode);
+  }
+
   handleEnemy();
 }
 
@@ -304,6 +318,3 @@ function handleEnemy() {
     }
   }
 };
-var deathTimer = 0;
-enemyDeath(i);
-}

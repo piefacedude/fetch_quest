@@ -68,11 +68,17 @@ function stdJumpAnimfunction(dt) {
       else {
         stdJumpAnimTimer = 250;
       }
+      if (stdJumpAnimTimer == 200) {
+        enemies[0].currentHp -= hero.jmpDmg;
+      }
     }
   //bounce2
     else if (stdJumpAnimTimer <= 250) {
       stdJumpAnimTimeRef = stdJumpAnimTimer - 200;
       hero.pos[1] += .001 * (Math.pow(stdJumpAnimTimeRef - 25, 3));
+      if (stdJumpAnimTimer == 250) {
+        enemies[0].currentHp -= hero.jmpDmg;
+      }
     }
   //bounce back
     else if (stdJumpAnimTimer <= 300) {
@@ -119,7 +125,17 @@ function stdJumpAnimfunction(dt) {
     stdJumpAnimTimer = 0;
     indicator.pos[0] = 800;
     indicator.pos[1] = 600;
+    gameState = "playerSelect";
   }
   hero.shadow.pos[0] = hero.pos[0] - 3;
   hero.shadow.pos[1] = 554;
 }
+
+function playerWin() {
+  gameState = "win";
+}
+
+
+
+
+

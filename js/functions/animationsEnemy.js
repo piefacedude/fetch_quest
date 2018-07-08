@@ -14,3 +14,8 @@ function enemyDeath(i) {
     enemies[i].pos[0] += 1;
     enemies[i].pos[1] += 1;
   }
+  else {
+    deathTimer = 0;
+    enemies.splice(i, 1);
+  }
+}
