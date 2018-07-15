@@ -61,6 +61,7 @@ function stdJumpAnimfunction(dt) {
     //bounce1
     else if (stdJumpAnimTimer <= 200) {
       if (input.isDown('A') || hero.bounce == true) {
+        //if the person presses "a" while the indicator was green, bounce again
         hero.bounce = true;
         stdJumpAnimTimeRef = stdJumpAnimTimer - 150;
         hero.pos[1] += .001 * (Math.pow(stdJumpAnimTimeRef - 25, 3));
@@ -82,11 +83,15 @@ function stdJumpAnimfunction(dt) {
     }
   //bounce back
     else if (stdJumpAnimTimer <= 300) {
+      //change indicator sprite
       indicator.sprite = new Sprite("images/Misc/coin_green.png", [0, 0], [26, 30]);
+      //reset the bounce state
       hero.bounce = "unset";
+      //mod the standard
       stdJumpAnimTimeRef = stdJumpAnimTimer - 250;
       stdJumpAnimTimeRef = 51 - stdJumpAnimTimeRef;
       stdJumpAnimTimeRef = stdJumpAnimTimeRef * modY;
+      //jump function
       hero.pos[0] -= (100 / 50);
       hero.pos[1] -= 0.004096*(Math.pow(stdJumpAnimTimeRef - 25, 3));
       if (stdJumpAnimTimer == 300) {

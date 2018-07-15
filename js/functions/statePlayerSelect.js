@@ -218,17 +218,21 @@ function playerSelect() {
 }
 
 function attackSelect(selectMode) {
+  //this mode is for selecting the specific attack / item
   if (listTimer == 0) {
     switch (selectMode) {
+      //attack
       case "attack":
           var lessThan = hero.attacks.length;
           var actionList = hero.attacks;
         break;
       case "items":
+      //items
           var lessThan = hero.items.length;
           var actionList = hero.items;
         break;
       case "special":
+      //special
           var lessThan = hero.special.length;
           var actionList = hero.special;
         break;
@@ -236,7 +240,9 @@ function attackSelect(selectMode) {
 
     }
     for (var i = 0; i < lessThan; i++) {
+      //start of the list
       var X = 100;
+      //each item is a standard height apart
       var Y = (i * 22) + 200;
       var sprite = new Sprite('images/Prompts/attack.png', [0, 0], [121, 19]);
       var action = actionList[i].action;
@@ -256,11 +262,13 @@ function attackSelect(selectMode) {
       });
     }
   }
-
+  //give a quick moment so that the enter press to select the mode doesnt select an attack
+  //also means that each press of the left / right button only moves it one, and at a constant speed.
   if (listTimer <= 10) {
 
   }
   else {
+    //move up the list
     if (input.isDown('UP')) {
       selected--;
       if (selected <= -1) {
@@ -268,6 +276,7 @@ function attackSelect(selectMode) {
       }
       listTimer = 0;
     }
+    //move down the list
     if (input.isDown('DOWN')) {
       selected++;
       if (selected >= list.length) {
@@ -275,6 +284,7 @@ function attackSelect(selectMode) {
       }
       listTimer = 0;
     }
+    //select an option
     if (input.isDown('ENTER')) {
       eval(list[selected].action + " = true");
       listTimer = 0;

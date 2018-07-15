@@ -61,9 +61,6 @@ body {
   font-family: 'Roboto', sans-serif;
 	color: #EEEEEE;
 	background-color: #222831;
-	padding-top: 2%;
-	padding-left: 2%;
-	padding-right: 2%;
 }
 #logo {
 	display: block;
@@ -90,11 +87,14 @@ body {
 .feature-image {
     position: relative;
     text-align: left;
+		pointer-events: none;
+		top: -5px;
 }
 .centered {
+		pointer-events: none;
     position: absolute;
-    top: 40px;
-		background-color: #00ADB5;
+    top: 250px;
+		background-color: #FF5722;
     right: 0%;
 		height: auto;
 		width: 60%;

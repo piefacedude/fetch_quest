@@ -1,0 +1,130 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:800);
+.PrimaryNav {
+  list-style: none;
+  margin: 50px auto;
+  max-width: 100%;
+  padding: 0;
+  width: 100%;
+}
+
+.Nav-item {
+  background: #000;
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 25%;
+  text-align: center;
+}
+.Nav-item:first-child {
+  border-radius: 3px 0 0 3px;
+}
+.Nav-item:last-child {
+  border-radius: 0 3px 3px 0;
+}
+.Nav-item.is-active a {
+  color: #E4D718;
+}
+.Nav-item a {
+  color: #FFF;
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-decoration: none;
+}
+.Nav-item a:hover {
+  color: #E4D718;
+}
+
+.with-indicator {
+  position: relative;
+  z-index: 0;
+}
+.with-indicator .Nav-item:last-child:before, .with-indicator .Nav-item:last-child:after {
+  content: "";
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  transition: left 1.3s ease;
+}
+.with-indicator .Nav-item:last-child:before {
+  border: 6px solid transparent;
+  border-top-color: #E4D718;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 12.5%;
+  margin-left: -3px;
+}
+.with-indicator .Nav-item:last-child:after {
+  background: #E4D718;
+  top: -6px;
+  bottom: -6px;
+  left: 0;
+  width: 25%;
+  z-index: -1;
+}
+.with-indicator .Nav-item:nth-child(1).is-active ~ .Nav-item:last-child:after {
+  left: 0%;
+}
+.with-indicator .Nav-item:nth-child(1).is-active ~ .Nav-item:last-child:before {
+  left: 12.5%;
+}
+.with-indicator .Nav-item:nth-child(2).is-active ~ .Nav-item:last-child:after {
+  left: 25%;
+}
+.with-indicator .Nav-item:nth-child(2).is-active ~ .Nav-item:last-child:before {
+  left: 37.5%;
+}
+.with-indicator .Nav-item:nth-child(3).is-active ~ .Nav-item:last-child:after {
+  left: 50%;
+}
+.with-indicator .Nav-item:nth-child(3).is-active ~ .Nav-item:last-child:before {
+  left: 62.5%;
+}
+.with-indicator .Nav-item:nth-child(1):hover ~ .Nav-item:last-child:after {
+  left: 0% !important;
+}
+.with-indicator .Nav-item:nth-child(1):hover ~ .Nav-item:last-child:before {
+  left: 12.5% !important;
+}
+.with-indicator .Nav-item:nth-child(2):hover ~ .Nav-item:last-child:after {
+  left: 25% !important;
+}
+.with-indicator .Nav-item:nth-child(2):hover ~ .Nav-item:last-child:before {
+  left: 37.5% !important;
+}
+.with-indicator .Nav-item:nth-child(3):hover ~ .Nav-item:last-child:after {
+  left: 50% !important;
+}
+.with-indicator .Nav-item:nth-child(3):hover ~ .Nav-item:last-child:before {
+  left: 62.5% !important;
+}
+.with-indicator .Nav-item:last-child:hover:before, .with-indicator .Nav-item:last-child.is-active:before {
+  left: 87.5% !important;
+}
+.with-indicator .Nav-item:last-child:hover:after, .with-indicator .Nav-item:last-child.is-active:after {
+  left: 75% !important;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.PrimaryNav:before,
+.PrimaryNav:after {
+  content: " ";
+  display: table;
+}
+
+.PrimaryNav:after {
+  clear: both;
+}
+
+.toggle {
+  color: #000;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+/*# sourceMappingURL=slidingNav.css.map */

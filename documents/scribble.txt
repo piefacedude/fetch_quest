@@ -45,11 +45,15 @@ end x - current x / time as stage 1 - 20% (bounces)
 end stage 6
 
 -- COLOUR SCHEMES --
+--! #1 being used for FetchQuest Homepage
 #1:
+
+
+#1 - old
 Cool Blue
 #222831
 #393E46
-#00ADB5
+#3498DB
 #EEEEEE
 
 #2:
