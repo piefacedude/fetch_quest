@@ -1,5 +1,5 @@
 <div class="feature-image">
-  <img src="imgs/gameImage.png" alt="Cave Background Feature Image" style="width:100%;">
+  <img src="imgs/2.jpg" alt="Cave Background Feature Image">
   <div class="centered jumbotron">
     <h1>Join the Fun</h1>
     <br />
