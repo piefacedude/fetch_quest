@@ -6,32 +6,8 @@
     <title>FetchQuest Homepage</title>
     <?php
       require 'snippets/links.php';
-      
-      $data = [];
-      $error = "";
-      if (isset($_POST['submit'])) {
-        $data['username'] = filter_input(INPUT_POST, 'username');
-        $data['password'] = filter_input(INPUT_POST, 'password');
-        $data['email'] = filter_input(INPUT_POST, 'email');
-
-        $file = new SplFileObject("users.csv", "a+");
-        $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
-
-        foreach ($file as $user) {
-          if(strcasecmp($user[2], $data['email'])==0) {
-            $error = "BROKEYEN";
-            break;
-          }
-        }
-
-        if (empty($error)) {
-          $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-          $data['username'] = "BIG MEME";
-          $data['email'] = "ASDASDDA";
-          $file->fputcsv($data);
-        }
-      }
-
+      session_start();
+      $activePage = "leaderboard";
      ?>
   </head>
   <body>
@@ -40,18 +16,23 @@
       include 'snippets/navbar.php';
       ?>
       <div id="body" class="pt-5">
-        <form action="register.php" method="post">
+        <?php
+        if ($_SESSION['error'] == true) {
+          echo "Your username is taken. Please try another one."
+        }
+        ?>
+        <form action="submit.php" method="post">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="username" class="form-control" id="username" placeholder="Enter username">
+            <input type="username" class="form-control" name="username" placeholder="Enter username">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter password">
+            <input type="password" class="form-control" name="password" placeholder="Enter password">
           </div>
           <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email">
+            <input type="email" class="form-control" name="email" placeholder="Enter email">
           </div>
           <input type="hidden" name="submit" value="YEAH">
           <button type="submit" class="btn btn-primary">Submit</button>

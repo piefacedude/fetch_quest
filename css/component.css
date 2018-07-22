@@ -55,16 +55,16 @@ html, body,
 
 #fbsection1 {
 	background-image: url(../imgs/featureFieldsImage.png);
-	height: 70%;
+	height: 100%;
 }
 
 #fbsection2 {
 	background-image: url(../imgs/CaveBackground.png);
-	height: 70%;
+	height: 100%;
 }
 
 #fbsection3 {
 	background-image: url(../imgs/gameImage.png);
-	height: 70%;
+	height: 100%;
 }
 
