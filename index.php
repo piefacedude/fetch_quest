@@ -15,6 +15,8 @@
     <?php
     include 'snippets/navbar.php';
     include 'snippets/featureImage.php';
+    session_start();
+    $_SESSION['error'] = false;
     ?>
     <div id="cbp-fbscroller" class="cbp-fbscroller">
       <nav>
