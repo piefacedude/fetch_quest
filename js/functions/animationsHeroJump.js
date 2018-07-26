@@ -2,13 +2,13 @@
 /* Javascript animations for FetchQuest
 /* Created by Guy Witherow
 /* Last major update: 21/6/18
-/* This file handles the mathmatical mapping of the hero character
+/* This file handles the mathmatical mapping of the hero character's jumps
 *////////////////////////
 function stdJumpAnimfunction(dt) {
   stdJumpAnim = true;
   if (stdJumpAnim == true) {
   //run forward
-    if (stdJumpAnimTimer == 1) {
+    if (animTimer == 1) {
       //make sure the player is in the right spot (the animation is reletive to starting position)
       hero.pos[0] = 100;
       hero.pos[1] = 500;
@@ -18,24 +18,24 @@ function stdJumpAnimfunction(dt) {
       modY = (Math.pow((changeY-400)/-0.001024,1/4)) + 25;
       modY = modY / 50;
     }
-    if (stdJumpAnimTimer <= 50) {
-      //stdJumpAnimTimeRef is the reletive time within each "chunk" of the animation.
-      stdJumpAnimTimeRef = stdJumpAnimTimer;
+    if (animTimer <= 50) {
+      //animTimeRef is the reletive time within each "chunk" of the animation.
+      animTimeRef = animTimer;
       //move character relative to an equation (anti-derivative plus starting position x/y)
       //i need to try and make the equations work with the "dt" function for lateny reasons
       //will fix at some point??? we'll see
-      hero.pos[0] += (-.75*(Math.pow(stdJumpAnimTimeRef, 2) - (50 * stdJumpAnimTimeRef))) * dt;
+      hero.pos[0] += (-.75*(Math.pow(animTimeRef, 2) - (50 * animTimeRef))) * dt;
     }
     //wait
-    else if (stdJumpAnimTimer <= 100) {
-      stdJumpAnimTimeRef = stdJumpAnimTimer - 50;
+    else if (animTimer <= 100) {
+      animTimeRef = animTimer - 50;
     }
     //jump
-    else if (stdJumpAnimTimer <= 150) {
+    else if (animTimer <= 150) {
       indicator.sprite = new Sprite("images/Misc/coin_red.png", [0, 0], [26, 30]);
       //most complex bit yet
-      stdJumpAnimTimeRef = stdJumpAnimTimer - 100;
-      stdJumpAnimTimeRef = stdJumpAnimTimeRef * modY;
+      animTimeRef = animTimer - 100;
+      animTimeRef = animTimeRef * modY;
       //his horizontal speed won't change
       hero.pos[0] += (100 / 50);
       //his vertical jump is mapped by a -x^3 graph
@@ -46,66 +46,66 @@ function stdJumpAnimfunction(dt) {
                  \  //moves down
                   \
       */
-      hero.pos[1] += 0.004096*(Math.pow(stdJumpAnimTimeRef - 25, 3));
+      hero.pos[1] += 0.004096*(Math.pow(animTimeRef - 25, 3));
       //if the player hits "a" during the part where the hero bounces, bounce again
-      if (stdJumpAnimTimer <= 100 && input.isDown('A')) {
+      if (animTimer <= 100 && input.isDown('A')) {
         hero.bounce = false;
       }
       else if (input.isDown('A') && hero.bounce == "unset") {
         hero.bounce = true;
       }
-      if (stdJumpAnimTimer == 150) {
+      if (animTimer == 150) {
         enemies[0].currentHp -= hero.jmpDmg;
       }
     }
     //bounce1
-    else if (stdJumpAnimTimer <= 200) {
+    else if (animTimer <= 200) {
       if (input.isDown('A') || hero.bounce == true) {
         //if the person presses "a" while the indicator was green, bounce again
         hero.bounce = true;
-        stdJumpAnimTimeRef = stdJumpAnimTimer - 150;
-        hero.pos[1] += .001 * (Math.pow(stdJumpAnimTimeRef - 25, 3));
+        animTimeRef = animTimer - 150;
+        hero.pos[1] += .001 * (Math.pow(animTimeRef - 25, 3));
       }
       else {
-        stdJumpAnimTimer = 250;
+        animTimer = 250;
       }
-      if (stdJumpAnimTimer == 200) {
+      if (animTimer == 200) {
         enemies[0].currentHp -= hero.jmpDmg;
       }
     }
   //bounce2
-    else if (stdJumpAnimTimer <= 250) {
-      stdJumpAnimTimeRef = stdJumpAnimTimer - 200;
-      hero.pos[1] += .001 * (Math.pow(stdJumpAnimTimeRef - 25, 3));
-      if (stdJumpAnimTimer == 250) {
+    else if (animTimer <= 250) {
+      animTimeRef = animTimer - 200;
+      hero.pos[1] += .001 * (Math.pow(animTimeRef - 25, 3));
+      if (animTimer == 250) {
         enemies[0].currentHp -= hero.jmpDmg;
       }
     }
   //bounce back
-    else if (stdJumpAnimTimer <= 300) {
+    else if (animTimer <= 300) {
       //change indicator sprite
       indicator.sprite = new Sprite("images/Misc/coin_green.png", [0, 0], [26, 30]);
       //reset the bounce state
       hero.bounce = "unset";
       //mod the standard
-      stdJumpAnimTimeRef = stdJumpAnimTimer - 250;
-      stdJumpAnimTimeRef = 51 - stdJumpAnimTimeRef;
-      stdJumpAnimTimeRef = stdJumpAnimTimeRef * modY;
+      animTimeRef = animTimer - 250;
+      animTimeRef = 51 - animTimeRef;
+      animTimeRef = animTimeRef * modY;
       //jump function
       hero.pos[0] -= (100 / 50);
-      hero.pos[1] -= 0.004096*(Math.pow(stdJumpAnimTimeRef - 25, 3));
-      if (stdJumpAnimTimer == 300) {
+      hero.pos[1] -= 0.004096*(Math.pow(animTimeRef - 25, 3));
+      if (animTimer == 300) {
         hero.pos[1] = 500;
       }
     }
   //wait
-    else if (stdJumpAnimTimer <= 350) {
-      stdJumpAnimTimeRef = stdJumpAnimTimer - 300;
+    else if (animTimer <= 350) {
+      animTimeRef = animTimer - 300;
     }
   //run back
-    else if (stdJumpAnimTimer <= 400) {
-      stdJumpAnimTimeRef = stdJumpAnimTimer - 350;
-      hero.pos[0] -= (-.75*(Math.pow(stdJumpAnimTimeRef, 2) - (50 * stdJumpAnimTimeRef))) * dt;
+    else if (animTimer <= 400) {
+      animTimeRef = animTimer - 350;
+      hero.pos[0] -= (-.75*(Math.pow(animTimeRef, 2) - (50 * animTimeRef))) * dt;
     }
     else {
       hero.pos[0] = 100;
@@ -114,7 +114,7 @@ function stdJumpAnimfunction(dt) {
       hero.sprite = new Sprite('images/HeroStuff/heroStand.png', [0, 0], [64, 64]);
       stdJumpAnim = false;
     }
-    stdJumpAnimTimer++;
+    animTimer++;
 
     if (hero.run == false) {
       hero.sprite = new Sprite('images/HeroStuff/heromain.png', [0, 0], [64, 64], 10, [0, 1], 'vertical')
@@ -127,7 +127,7 @@ function stdJumpAnimfunction(dt) {
   if (stdJumpAnim == false) {
     hero.run = false;
     hero.sprite = new Sprite('images/HeroStuff/heroStand.png', [0, 0], [64, 64]);
-    stdJumpAnimTimer = 0;
+    animTimer = 0;
     indicator.pos[0] = 800;
     indicator.pos[1] = 600;
     gameState = "playerSelect";
@@ -139,8 +139,6 @@ function stdJumpAnimfunction(dt) {
 function playerWin() {
   gameState = "win";
 }
-
-
 
 
 

@@ -7,7 +7,7 @@
     <?php
       require 'snippets/links.php';
       session_start();
-      $activePage = "leaderboard";
+      $activePage = "signup";
      ?>
   </head>
   <body>
@@ -18,7 +18,7 @@
       <div id="body" class="pt-5">
         <?php
         if ($_SESSION['error'] == true) {
-          echo "Your username is taken. Please try another one."
+          echo "Your username is taken. Please try another one.";
         }
         ?>
         <form action="submit.php" method="post">

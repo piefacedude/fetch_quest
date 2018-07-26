@@ -28,6 +28,8 @@ resources.load([
   'images/Prompts/flee.png',
   'images/Prompts/shade.png',
   'images/Misc/shadowHero.png',
+  'images/Prompts/bite.png',
+  'images/Prompts/jump.png',
 ]);
 resources.onReady(init); //callback function which halts progress until all the images are ready
 
@@ -202,7 +204,7 @@ function reset() {
       speed: 0,
       maxHp: 20,
       currentHp: 20,
-      sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 10, [0, 1, 2, 3, 4, 5], 'vertical', false, 0),
+      sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 2, [0, 1, 2, 3, 4, 5], 'vertical', false, 0),
     })
   }
 }
@@ -260,6 +262,9 @@ function render() {
         renderEntity(list[i].shade);
       }
     }
+    if (input.isDown("ESCAPE")) {
+      gameState = "playerSelect";
+    }
   }
 
   renderEntity(indicator);
@@ -275,8 +280,9 @@ function render() {
 
 
 var stdJumpAnim = false;
-var stdJumpAnimTimer = 0;
-var stdJumpAnimTimeRef;
+var animTimer = 0;
+var animTimeRef;
+var stdBiteAnim = false;
 var rightPressTimer = 0;
 var leftPressTimer = 0;
 var upPressTimer = 0;
@@ -286,6 +292,8 @@ var menuRight = false;
 var menuTimer = 0;
 var yRef;
 var changeY;
+var xRef;
+var changeX;
 var gameState;
 var listTimer = 0;
 var selected = 0;
@@ -298,6 +306,9 @@ function handleInput(dt) {
   //attack animation
   if (stdJumpAnim == true) {
     stdJumpAnimfunction(dt);
+  }
+  if (stdBiteAnim == true) {
+    stdBiteAnimFunction();
   }
 
   else if (gameState == "playerSelect") {
