@@ -17,10 +17,7 @@ resources.load([
   'images/Backgrounds/greenBums.png',
   'images/HeroStuff/heroStand.png',
   'images/Obstacles/batFlying.png',
-  'images/Misc/coin_red.png',
-  'images/Misc/coin_yellow.png',
-  'images/Misc/coin_blue.png',
-  'images/Misc/coin_green.png',
+  'images/Misc/coins.png',
   'images/HeroStuff/dog_still_large.png',
   'images/Prompts/attack.png',
   'images/Prompts/items.png',
@@ -204,7 +201,7 @@ function reset() {
       speed: 0,
       maxHp: 20,
       currentHp: 20,
-      sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 2, [0, 1, 2, 3, 4, 5], 'vertical', false, 0),
+      sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 12, [0, 1, 2, 3, 4, 5], 'vertical', false, 0, {x: 1, y: 1}),
     })
   }
 }
@@ -300,6 +297,7 @@ var selected = 0;
 var deathTimer = 0;
 var numOfEnemies = enemies.length;
 var selectMode;
+var genericJump = false;
 
 function handleInput(dt) {
 
@@ -309,6 +307,9 @@ function handleInput(dt) {
   }
   if (stdBiteAnim == true) {
     stdBiteAnimFunction();
+  }
+  if (genericJump == true) {
+    genericJumpFunction(hero, enemies[0]);
   }
 
   else if (gameState == "playerSelect") {

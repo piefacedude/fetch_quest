@@ -32,7 +32,7 @@ function stdJumpAnimfunction(dt) {
     }
     //jump
     else if (animTimer <= 150) {
-      indicator.sprite = new Sprite("images/Misc/coin_red.png", [0, 0], [26, 30]);
+      indicator.sprite = new Sprite("images/Misc/coins.png", [0, 0], [15, 23]);
       //most complex bit yet
       animTimeRef = animTimer - 100;
       animTimeRef = animTimeRef * modY;
@@ -84,7 +84,7 @@ function stdJumpAnimfunction(dt) {
   //bounce back
     else if (animTimer <= 300) {
       //change indicator sprite
-      indicator.sprite = new Sprite("images/Misc/coin_green.png", [0, 0], [26, 30]);
+      indicator.sprite = new Sprite("images/Misc/coins.png", [15, 0], [26, 30]);
       //reset the bounce state
       hero.bounce = "unset";
       //mod the standard

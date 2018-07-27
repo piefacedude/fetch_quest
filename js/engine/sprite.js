@@ -1,10 +1,10 @@
-/* 
+/*
  * This file is used from
  * http://jlongster.com/Making-Sprite-based-Games-with-Canvas
  * Please do not re-distribute without permission
- * 
+ *
  * ARP 28/07/2014
- * 
+ *
  */
 
 var context = null;
@@ -24,7 +24,7 @@ var context = null;
 		this.facing = facing || 0; //0 = same as ORIGINAL image in radians
 		//Change the size of the sprite
 		this.scale = scale || {x:1, y:1}; //factor Eg 2=twice as big, 0.2=half size
-        
+
         //added optional functionality to fade out sprites - set to done once faded, so can be removed
         this.opacity = opacity || 1;
         this.fade = false;
@@ -37,7 +37,7 @@ var context = null;
 
         render: function(ctx, bgScroll) {
             if(this.done) return;
-            
+
             var frame;
 
             if(this.speed > 0) {
@@ -87,11 +87,11 @@ var context = null;
                           this.size[0]*this.scale.x, this.size[1]*this.scale.y);		//shrink.enlarged size
 
             if(typeof bgScroll !== 'undefined'){
-                
+
                 var xPos = this.size[0]*this.scale.x/2;
                 var yPos = this.size[1]*this.scale.y/2;
                 //one pixel overlap
-                if(bgScroll === 'R2L'){ 
+                if(bgScroll === 'R2L'){
 					xPos = this.size[0]*this.scale.x/2-1;
 					yPos *= -1;
 				}else if(bgScroll === 'L2R'){
@@ -120,7 +120,7 @@ var context = null;
 function renderEntities(list) {
     for(var i=0; i<list.length; i++) {
         renderEntity(list[i]);
-    }    
+    }
 }
 
 function renderEntity(entity, bgScroll) {
