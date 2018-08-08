@@ -84,7 +84,7 @@ function stdJumpAnimfunction(dt) {
   //bounce back
     else if (animTimer <= 300) {
       //change indicator sprite
-      indicator.sprite = new Sprite("images/Misc/coins.png", [15, 0], [26, 30]);
+      indicator.sprite = new Sprite("images/Misc/coins.png", [16, 0], [16, 23]);
       //reset the bounce state
       hero.bounce = "unset";
       //mod the standard

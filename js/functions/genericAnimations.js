@@ -70,3 +70,62 @@ function genericJumpFunction(spriteJumping, spriteJumped) {
   spriteJumping.shadow.pos[0] = spriteJumping.pos[0] - 3;
   spriteJumping.shadow.pos[1] = 554;
 }
+
+
+function ParticleGenerator(x, y, particleImage, particleNumber, particleMaxLife, particleMinLife, particleGravity, particleGroundY, srcImage, srcGravity, srcGroundY) {
+  this.x = x;
+  this.y = y;
+  this.number = particleNumber;
+  this.srcImage = srcImage;
+  this.sprite = new Sprite("images/Misc/coins.png", [16, 0], [16, 23]);
+  this.gravity = srcGravity;
+  this.ground = srcGroundY;
+  this.particles = this.particles || [];
+
+  this.draw = function() {
+    renderEntity(this);
+  }
+
+  this.update = function() {
+    while (this.particles.length < this.number) {
+      this.particles.push(
+        new Particle("this.x, this.y, particleImage, particleMaxLife, particleMinLife, particleGravity, particleGroundY;")
+      )
+    }
+
+    this.x += this.dx;
+    if (this.y > this.ground) {
+      this.y += this.dy;
+      this.dy += this.gravity;
+    }
+    else {
+      this.y = this.ground;
+    }
+
+  this.draw()
+  }
+}
+
+
+function Particle(x, y, image, maxLife, minLife, gravity, groundY) {
+  this.x = x;
+  this.y = y;
+  this.sprite = new Sprite("images/Misc/coins.png", [16, 0], [16, 23]);
+  this.maxLife = maxLife;
+  this.minLife = minLife;
+  this.gravity = gravity;
+  this.groundY = groundY;
+
+  this.draw = function() {
+    renderEntity(this);
+  }
+
+  this.update = function() {
+
+  this.draw()
+  }
+}
+
+
+
+

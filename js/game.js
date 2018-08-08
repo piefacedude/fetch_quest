@@ -92,6 +92,7 @@ var menu = [];
 var shade = [];
 var enemies = [];
 var list = [];
+var particles = [];
 
 
 function init() {
@@ -124,7 +125,7 @@ function reset() {
           X = (800 / 4);
           Y = (600 / 2) - 60;
           action = "flee";
-          sprite = new Sprite('images/Prompts/flee.png', [0, 0], [121, 19]);
+          sprite = new Sprite('images/Prompts/flee.png', [0, 0], [182, 29]);
         break;
         case 1:
           X = (800 / 4) - (26 * 3);
@@ -136,7 +137,7 @@ function reset() {
           X = (800 / 4);
           Y = (600 / 2);
           action = "attack";
-          sprite = new Sprite('images/Prompts/attack.png', [0, 0], [121, 19]);
+          sprite = new Sprite('images/Prompts/attack.png', [0, 0], [182, 29]);
         break;
         case 3:
           X = (800 / 4) + (26 * 3);
@@ -240,6 +241,9 @@ function update(dt) {
 
 //what to render
 function render() {
+  if (input.isDown('D') && particleTimer == 0) {
+
+  }
   //start by clearing the old stuff
   gameCanvas.clear();
   //then add background first
@@ -273,6 +277,12 @@ function render() {
       renderHPBar(enemies[i]);
     }
   }
+  for (var i = 0; i < particles.length; i++) {
+    particles[i].update();
+    for (var j = 0; j < particles[i].length; i++) {
+      particles[i][j].update();
+    }
+  }
 }
 
 
@@ -298,6 +308,7 @@ var deathTimer = 0;
 var numOfEnemies = enemies.length;
 var selectMode;
 var genericJump = false;
+var particleTimer = 0;
 
 function handleInput(dt) {
 

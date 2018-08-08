@@ -18,7 +18,7 @@ function makeLinkActive($page) {
   <ul>
     <li>
       <div class="title">
-        <div class="titleHolder featureText">
+        <div class="title-holder feature-text">
           FetchQuest
         </div>
       </div>

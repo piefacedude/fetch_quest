@@ -49,9 +49,9 @@ font-family: 'PT Sans', sans-serif;
 */
 
 /* non-reset styling */
-.featureText {
+.feature-text {
   font-family: 'Press Start 2P', cursive;
-	font-size: 26pt;
+	font-size: 16pt;
 }
 h1 {
 	font-family: 'Press Start 2P', cursive;
@@ -78,7 +78,7 @@ body {
 	float: left;
 }
 
-.imageHeader {
+.image-header {
   position: relative;
   text-align: left;
   color: white;
@@ -96,14 +96,14 @@ body {
 .centered {
 		pointer-events: none;
     position: absolute;
-    top: 250px;
+    top: 34%;
 		background-color: #FF5722;
-    right: 0%;
+    right: 35%;
 		height: auto;
-		width: 60%;
+		width: 30%;
 		padding: 20px 20px 20px 20px;
 		margin-top: 10px;
-		text-align: left;
+		text-align: center;
 }
 
 .centered button a {
@@ -118,17 +118,16 @@ body {
 	background-color: #393E46;
 }
 
-.titleHolder {
-	margin-top: 3%;
+.title-holder {
+	margin-top: 6%;
 	margin-left: 2%;
-	margin-bottom: 2.7%;
+	margin-bottom: 6.2%;
 	text-align: center;
 	min-width: 200px;
 }
 
 .feature-image img {
-	 height: 100%;
-	 width: 100%;
+	 height: 92%;
 }
 
 .top-nav {

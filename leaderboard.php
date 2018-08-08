@@ -47,7 +47,7 @@
             $sorted = true;
             //run through the list
             for ($i=0; $i < $count; $i++) {
-              //if the proceeding value is lower than the receeding, swap em
+              //if the before value is lower than the after, swap em
               if ($rows[$i][1] < $rows[$i + 1][1]) {
                 $temp = $rows[$i + 1];
                 $rows[$i + 1] = $rows[$i];
@@ -78,8 +78,7 @@
 
               elseif ($i == 1) {
                 echo $rows[$a][$ref];
-              }
-              //otherwise just echo the fuckin thing
+              //otherwise just echo the thing
               else {
                 echo round($rows[$a][$ref],2);
               }
