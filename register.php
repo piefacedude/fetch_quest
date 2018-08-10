@@ -35,7 +35,7 @@
             <input type="email" class="form-control" name="email" placeholder="Enter email">
           </div>
           <input type="hidden" name="submit" value="YEAH">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-lg btn-block">Submit</button>
         </form>
       </div>
     </div>

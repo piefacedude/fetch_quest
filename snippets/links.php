@@ -3,4 +3,4 @@
 <link rel="stylesheet" href="css/homepageStyle.css" type="text/css">
 <link rel="stylesheet" href="css/slidingNav.css" type="text/css">
 <link rel="icon" href="dog.ico" type="image/x-icon" />
-<meta http-equiv="refresh" content="3" >
+<!-- <meta http-equiv="refresh" content="3" > -->

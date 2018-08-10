@@ -309,9 +309,13 @@ var numOfEnemies = enemies.length;
 var selectMode;
 var genericJump = false;
 var particleTimer = 0;
+var itemList = {Mushroom: 1000, Wand: 10}
 
 function handleInput(dt) {
 
+  if (input.isDown("9")) {
+    saveGame();
+  }
   //attack animation
   if (stdJumpAnim == true) {
     stdJumpAnimfunction(dt);
@@ -340,4 +344,23 @@ function handleEnemy() {
       enemyDeath(i);
     }
   }
-};
+}
+
+function saveGame() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      game = [itemList]
+    }
+  };
+  xmlhttp.open("GET", "../save.php?file=" + game, true);
+  xmlhttp.send();
+}
+
+
+
+
+
+
+
+

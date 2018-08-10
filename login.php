@@ -9,14 +9,34 @@
      session_start();
      $activePage = "login";
      ?>
+     <style>
+     body,html {
+       height: 100%;
+     }
+     </style>
   </head>
-  <body>
-    <div class="container-fluid">
+  <body class="h-100">
+    <div class="container-fluid h-75 w-100 text-center">
       <?php
       include 'snippets/navbar.php';
       ?>
-      <div id="body" class="pt-5">
-
+      <div class="d-flex align-items-center flex-column justify-content-center w-100 h-100 text-white" id="header">
+        <h1>Hey.</h1>
+        <br>
+        <form>
+          <div class="form-group">
+            <input class="form-control form-control-lg" placeholder="Email" type="text">
+          </div>
+          <div class="form-group">
+            <input class="form-control form-control-lg" placeholder="Password" type="text">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-info btn-lg btn-block">Sign In</button>
+          </div>
+        </form>
+        <p>
+          <a href="index.php">Don't have an account?</a>
+        </p>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
