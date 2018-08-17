@@ -78,6 +78,7 @@
 
               elseif ($i == 1) {
                 echo $rows[$a][$ref];
+              }
               //otherwise just echo the thing
               else {
                 echo round($rows[$a][$ref],2);

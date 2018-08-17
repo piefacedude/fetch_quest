@@ -1,9 +1,10 @@
 /*
  * Game.js
- * script file for game tutorial
+ * core file of game
  * This version uses the gameUtils.js file
  * This version uses the input.js, resources.js and sprite.js
  *  from http://jlongster.com/Making-Sprite-based-Games-with-Canvas
+ * edits for FetchQuest Game made by Guy Witherow
  */
 
 //Global vars so we can use them within functions

@@ -9,35 +9,19 @@
       session_start();
       $activePage = "signup";
      ?>
+     <style>
+     body,html {
+       height: 100%;
+     }
+     </style>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
-  <body>
-    <div class="container-fluid">
+  <body class="h-100">
+    <div class="container-fluid h-75 w-100 text-center">
       <?php
       include 'snippets/navbar.php';
       ?>
-      <div id="body" class="pt-5">
-        <?php
-        if ($_SESSION['error'] == true) {
-          echo "Your username is taken. Please try another one.";
-        }
-        ?>
-        <form action="submit.php" method="post">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="username" class="form-control" name="username" placeholder="Enter username">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" placeholder="Enter password">
-          </div>
-          <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" name="email" placeholder="Enter email">
-          </div>
-          <input type="hidden" name="submit" value="YEAH">
-          <button type="submit" class="btn btn-lg btn-block">Submit</button>
-        </form>
-      </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

@@ -3,6 +3,6 @@
   <div class="centered jumbotron">
     <h1>Have a nice day</h1>
     <br />
-    <button class="btn btn-lg btn-block"><a href="register.php">SIGN UP!</a></button>
+    <a href="register.php" role="button" class="btn btn-light btn-lg btn-block">SIGN UP!</a>
   </div>
 </div>

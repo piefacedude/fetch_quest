@@ -14,6 +14,7 @@
       $username = filter_input(INPUT_POST, 'username');
       $password = filter_input(INPUT_POST, 'password');
       $email = filter_input(INPUT_POST, 'email');
+      $mode = $_POST['mode'];
       $_SESSION['error'] = false;
 
       //creating rows 2d array of csv file
@@ -37,42 +38,43 @@
       //creating csv line
       //index is the next blank line
       //array is index,date,height,weight,bmi (previously calculated)
+      if ($mode = "register") {
+        $password = password_hash($password,PASSWORD_DEFAULT);
 
-      $password = password_hash($password,PASSWORD_DEFAULT);
-
-      $list = array
-      (
-        $username . "," . $password . "," . $email
-      );
+        $list = array
+        (
+          $username . "," . $password . "," . $email
+        );
 
 
-      //opens file in chosen mode
-      $file = fopen("users.csv",'a');
+        //opens file in chosen mode
+        $file = fopen("users.csv",'a');
 
-      //records variables to csv, sepetating by recorded ","s
-      //if we're editing or adding
-        foreach ($list as $line) {
-          //and the line isnt empty
-          if ($line != null && $_SESSION['error'] == false) {
-            //explode just makes the text into an array (see above)
-            $data = explode(',',$line);
-            //puts data from line into file
-            fputcsv($file,$data);
+        //records variables to csv, sepetating by recorded ","s
+        //if we're editing or adding
+          foreach ($list as $line) {
+            //and the line isnt empty
+            if ($line != null && $_SESSION['error'] == false) {
+              //explode just makes the text into an array (see above)
+              $data = explode(',',$line);
+              //puts data from line into file
+              fputcsv($file,$data);
+            }
           }
-        }
-      //closes file, politely
-      fclose($file);
+        //closes file, politely
+        fclose($file);
+      }
 
       if ($_SESSION['error'] == false) {
         header('Location: index.php');
       }
+
       else {
-        header('Location: register.php');
+        header('Location: login.php');
       }
        ?>
        </h1>
     </div>
-    <a href="pep_1_3.php">Return to PEP</a>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

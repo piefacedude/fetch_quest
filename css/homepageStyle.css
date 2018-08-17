@@ -69,10 +69,12 @@ body {
 #container {
 	width: 100%;
 }
+
 #nav {
 	height: 10%
 	border: 1px;
 }
+
 #nav-block {
 	display: inline;
 	float: left;
@@ -87,14 +89,16 @@ body {
 .feature-image {
     position: relative;
     text-align: left;
-		pointer-events: none;
-		height: 100%;
-		padding-bottom: 5px;
+		height: 92%;
 		text-align: center;
 		background-color: #222831;
 }
+
+.feature-image img {
+	 height: 100%;
+}
+
 .centered {
-		pointer-events: none;
     position: absolute;
     top: 34%;
 		background-color: #FF5722;
@@ -119,20 +123,17 @@ body {
 }
 
 .title-holder {
-	margin-top: 6%;
+	margin-top: 5%;
 	margin-left: 2%;
-	margin-bottom: 6.2%;
 	text-align: center;
 	min-width: 200px;
-}
-
-.feature-image img {
-	 height: 92%;
+	font-size: 26px;
 }
 
 .top-nav {
 	background-color: #393E46;
-	height: auto;
+	height: 10%;
+	font-size: 16pt;
 }
 
 .content {
