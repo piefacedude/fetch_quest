@@ -310,12 +310,17 @@ var numOfEnemies = enemies.length;
 var selectMode;
 var genericJump = false;
 var particleTimer = 0;
-var itemList = {Mushroom: 1000, Wand: 10}
+var itemList = {Mushroom: 1000, Wand: 10};
+var testArray = ["yeet", "banana"];
 
 function handleInput(dt) {
 
   if (input.isDown("9")) {
     saveGame();
+  }
+
+  if (input.isDown("8")) {
+    loadGame();
   }
   //attack animation
   if (stdJumpAnim == true) {
@@ -351,11 +356,20 @@ function saveGame() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      game = [itemList]
+      console.log(this.responseText);
     }
   };
-  xmlhttp.open("GET", "../save.php?file=" + game, true);
+  xmlhttp.open("GET", "save.php?mode=save&save=" + testArray, true);
   xmlhttp.send();
+}
+
+function loadGame() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      request = date('Y-m-d-h-i-s');
+    }
+  }
 }
 
 
