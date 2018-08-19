@@ -20,16 +20,16 @@
       <?php
       include 'snippets/navbar.php';
       ?>
-      <div class="modal" id="login">
+      <div class="jumbotron" id="login">
         <h1 class="login">Hey.</h1>
         <br>
-        <form class="login">
+        <form action="submit.php" method="post" class="login">
           <input type="hidden" name="mode" value="login" />
           <div class="form-group">
-            <input class="form-control form-control-lg" placeholder="Username" type="text">
+            <input name="username" required class="form-control form-control-lg" placeholder="Username" type="text">
           </div>
           <div class="form-group">
-            <input class="form-control form-control-lg" placeholder="Password" type="text">
+            <input name="password" required class="form-control form-control-lg" placeholder="Password" type="text">
           </div>
           <div class="form-group">
             <button class="btn btn-info btn-lg btn-block">Sign In</button>
@@ -39,26 +39,26 @@
           <a href="#" class="login" id="l2r">Don't have an account?</a>
         </p>
       </div>
-      <div class="modal" id="register">
+      <div class="jumbotron" id="register">
         <h1 class="register">PLAY GAME</h1>
         <br>
-        <form action="submit.php" method="post" class="register" style="display: none;">
+        <form action="submit.php" method="post" class="register">
           <input type="hidden" name="mode" value="register" />
           <div class="form-group">
-            <input class="form-control form-control-lg" placeholder="Username" type="text">
+            <input name="username" required class="form-control form-control-lg" placeholder="Username" type="text">
           </div>
           <div class="form-group">
-            <input class="form-control form-control-lg" placeholder="Email" type="email">
+            <input name="email" required class="form-control form-control-lg" placeholder="Email" type="email">
           </div>
           <div class="form-group">
-            <input class="form-control form-control-lg" placeholder="Password" type="password">
+            <input name="password" required class="form-control form-control-lg" placeholder="Password" type="password">
           </div>
           <div class="form-group">
             <button class="btn btn-info btn-lg btn-block">Sign In</button>
           </div>
         </form>
         <p>
-          <a class="register" id="r2l" style="display: none;">Don't have an account?</a>
+          <a class="register" id="r2l">Don't have an account?</a>
         </p>
       </div>
     </div>

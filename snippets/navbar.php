@@ -16,7 +16,7 @@ function makeLinkActive($page) {
     <li>
       <div class="title">
         <div class="title-holder feature-text">
-          FetchQuest
+          <a href="index.php">FetchQuest</a>
         </div>
       </div>
     </li>
@@ -29,7 +29,7 @@ function makeLinkActive($page) {
           <a class="nav-link" href="leaderboard.php">Leaderboard<?php echo $pageReader?></a>
         </li>
         <li class=<?php makeLinkActive("login");?>>
-          <a class="nav-link" href="login.php">Log In<?php echo $pageReader?></a>
+          <a class="nav-link" href="login.php">Play<?php echo $pageReader?></a>
         </li>
       </ul>
     </li>

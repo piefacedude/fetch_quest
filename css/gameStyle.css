@@ -38,11 +38,11 @@ section{
 	background: linear-gradient(white, grey); /* Standard syntax */
 }
 
-#instructions{
+#stats{
 	float: right;
 }
 
-#stats{
+#profile{
 	float: left;
 }
 

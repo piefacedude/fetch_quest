@@ -5,8 +5,14 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans" rel="stylesheet">
     <!--Font does not work offline-->
     <link rel="icon" href="dog.ico" type="image/x-icon" />
+
   </head>
   <body>
+    <?php
+      if (!empty($_SESSION['username'])) {
+        header('Location: login.php');
+      }
+    ?>
     <div id="container">
       <!-- game canvas container -->
       <div id="game">
@@ -15,12 +21,12 @@
       </div>
 
       <div id="stats">
-        <a href="leaderboard.php">leaderboard and stats</a>
+        <a href="leaderboard.php">homepage</a>
       </div>
 
-      <!-- instructions link -->
-      <div id="instructions">
-        <a href="instructions.html">instructions</a>
+      <!-- profile link -->
+      <div id="profile">
+        <a href="instructions.html">profile</a>
       </div>
 
       <!-- sounds for game -->

@@ -130,6 +130,11 @@ body {
 	font-size: 26px;
 }
 
+.title-holder a {
+	text-decoration: none;
+	color: white;
+}
+
 .top-nav {
 	background-color: #393E46;
 	height: 10%;

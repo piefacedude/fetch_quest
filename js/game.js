@@ -311,7 +311,7 @@ var selectMode;
 var genericJump = false;
 var particleTimer = 0;
 var itemList = {Mushroom: 1000, Wand: 10};
-var testArray = ["yeet", "banana"];
+var testArray = [enemies];
 
 function handleInput(dt) {
 
@@ -359,7 +359,16 @@ function saveGame() {
       console.log(this.responseText);
     }
   };
-  xmlhttp.open("GET", "save.php?mode=save&save=" + testArray, true);
+  //prepare save
+  var toSend = [];
+
+  for (var i = 0; i < enemies.length; i++) {
+    var workingData = [enemies[i].id,enemies[i].maxHp,enemies[i].currentHp];
+    toSend.push(workingData);
+  }
+
+  save = JSON.stringify(toSend);
+  xmlhttp.open("GET", "save.php?mode=save&save=" + save, true);
   xmlhttp.send();
 }
 

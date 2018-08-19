@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $mode = $_REQUEST["mode"];
 if ($mode == "save") {
   // get the q parameter from URL
@@ -7,18 +7,25 @@ if ($mode == "save") {
   $date = date('Y-m-d-h-i-s');
 
   //opens file in chosen mode
-  $file = fopen("data/saves/" . $date . ".csv",'w');
-  //records variables to csv, sepetating by recorded ","s
-  //if we're editing or adding
-  //  foreach ($list as $line) {
+  if (is_dir("data/saves/" . $_SESSION['username'])) {
+    $file = fopen("data/saves/" . $_SESSION['username'] . "/" . $date . ".csv",'w');
+  }
+  else {
+    mkdir("data/saves/" . $_SESSION['username']);
+    $file = fopen("data/saves/" . $_SESSION['username'] . "/" . $date . ".csv",'w');
+  }
 
-      //explode just makes the text into an array (see above)
-      $data = $save;
-      echo $save;
-      //puts data from line into file
-      fputcsv($file,$data);
 
-    //}
+  $toReplace = array('"',"]","[","}","{");
+  str_replace($toReplace,"",$save);
+  echo $save;
+  $data = explode(',',$save);
+
+  foreach ($data as $line) {
+    $newLine = explode('.',$line);
+    fputcsv($file,$newLine);
+  }
+
   //closes file, politely
   fclose($file);
 }
