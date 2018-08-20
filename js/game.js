@@ -53,7 +53,7 @@ hero = {
   jmpDmg: 5,
   attacks: [{name: "Jump", action: "stdJumpAnim"}, {name: "Bite", action: "stdBiteAnim"}],
   items: [{name: "Healing Potion", action: "healingPotion"}, {name: "Fright Mask", action: "frightMask"}],
-  special: [{name: "jump", action: "stdJumpAnim"}, {name: "bite", action: "stdBiteAnim"}],
+  special: [{name: "Bark", action: "stdJumpAnim"}, {name: "Howl", action: "stdBiteAnim"}],
   ground: {slide: "slippery"},
   jump: 'NO',
   run: false,
@@ -360,10 +360,37 @@ function saveGame() {
     }
   };
   //prepare save
-  var toSend = "";
+  var toSend = "Save file from FetchQuest-Hero data follows structure of:-MaxHp.CurrentHp.MaxPP.CurrentPP-Attacks:*attacks*-Items:*items*-Specials:*specials*-"
+
+  toSend += "HeroData:-" + hero.maxHp + "." + hero.currentHp + "." + hero.maxPawPower + "." + hero.currentPawPower + "-";
+  var listCheck;
+  for (var i = 0; i < 3; i++) {
+    switch (i) {
+      case 0:
+        toSend += "Attacks:-";
+        listCheck = hero.attacks;
+        break;
+      case 1:
+        listCheck = hero.items;
+        toSend += "Items:-";
+        break;
+      case 2:
+        listCheck = hero.special;
+        toSend += "Specials:-";
+        break;
+    }
+    for (var j = 0; j < listCheck.length; j++) {
+      console.log(listCheck[j]);
+      toSend += listCheck[j].name;
+      if (j !== listCheck.length - 1) {
+        toSend += ".";
+      }
+    }
+    toSend += "-"
+  }
 
   for (var i = 0; i < enemies.length; i++) {
-    var workingData = enemies[i].id + "." + enemies[i].maxHp + "." + enemies[i].currentHp;
+    var workingData = "EnemyNo" + i + ":-" + enemies[i].id + "." + enemies[i].maxHp + "." + enemies[i].currentHp;
     toSend += workingData + "-";
   }
 
