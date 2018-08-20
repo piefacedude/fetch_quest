@@ -310,15 +310,15 @@ var numOfEnemies = enemies.length;
 var selectMode;
 var genericJump = false;
 var particleTimer = 0;
-var itemList = {Mushroom: 1000, Wand: 10};
-var testArray = [enemies];
 
 function handleInput(dt) {
 
+  //user presses 9, save the game (will tie to button on screen)
   if (input.isDown("9")) {
     saveGame();
   }
 
+  //user presses 8, load the game (maybe make a load screen?)
   if (input.isDown("8")) {
     loadGame();
   }
@@ -326,9 +326,11 @@ function handleInput(dt) {
   if (stdJumpAnim == true) {
     stdJumpAnimfunction(dt);
   }
+  //bite anim
   if (stdBiteAnim == true) {
     stdBiteAnimFunction();
   }
+  //generic jump ((((TEST))))
   if (genericJump == true) {
     genericJumpFunction(hero, enemies[0]);
   }
@@ -352,22 +354,32 @@ function handleEnemy() {
   }
 }
 
+//csv game file export
 function saveGame() {
+  //ajax request setup
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
+      //whatever gets echo'd in the php shows in the console
       console.log(this.responseText);
     }
   };
   //prepare save
+  //sends as a long string, "-" seperates lines, "." seperates values
+  //initial blah for context
   var toSend = "Save file from FetchQuest-Hero data follows structure of:-MaxHp.CurrentHp.MaxPP.CurrentPP-Attacks:*attacks*-Items:*items*-Specials:*specials*-"
 
+  //add hero's data
   toSend += "HeroData:-" + hero.maxHp + "." + hero.currentHp + "." + hero.maxPawPower + "." + hero.currentPawPower + "-";
+  //create list to be added to file var
   var listCheck;
+  //for attacks, items and specials
   for (var i = 0; i < 3; i++) {
     switch (i) {
       case 0:
+        //add a title (used to ID the list below)
         toSend += "Attacks:-";
+        //set list to relevent
         listCheck = hero.attacks;
         break;
       case 1:
@@ -379,33 +391,52 @@ function saveGame() {
         toSend += "Specials:-";
         break;
     }
+    //while there's more in the list
     for (var j = 0; j < listCheck.length; j++) {
-      console.log(listCheck[j]);
+      //add the name of the thing to the string
+      //on load, the name is used to find stats
       toSend += listCheck[j].name;
+      //if its not the last, seperate value
       if (j !== listCheck.length - 1) {
         toSend += ".";
       }
     }
-    toSend += "-"
+    //break to next line
+    toSend += "-";
   }
 
+  //enemies stats
   for (var i = 0; i < enemies.length; i++) {
+    //for each enemy, add ID, name, and current HP
     var workingData = "EnemyNo" + i + ":-" + enemies[i].id + "." + enemies[i].maxHp + "." + enemies[i].currentHp;
+    //break for next enemy
     toSend += workingData + "-";
   }
 
+  //turns the object into a long string
   save = JSON.stringify(toSend);
+  //send to "save.php", with mode set to "save", and with the save data
   xmlhttp.open("GET", "save.php?mode=save&save=" + save, true);
   xmlhttp.send();
 }
 
+//game loading
 function loadGame() {
+  //ajax request
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      request = date('Y-m-d-h-i-s');
+      var array = this.responseText;
+      array = array.split(",");
+      array.splice(-1,1)
+      console.log(array);
+      enemies[array[0]].maxHp = array[1];
+      enemies[array[0]].currentHp = array[2];
     }
   }
+  //mode set to "load", currently pulls most recent file
+  xmlhttp.open("GET", "save.php?mode=load", true);
+  xmlhttp.send();
 }
 
 
