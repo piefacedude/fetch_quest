@@ -360,11 +360,11 @@ function saveGame() {
     }
   };
   //prepare save
-  var toSend = [];
+  var toSend = "";
 
   for (var i = 0; i < enemies.length; i++) {
-    var workingData = [enemies[i].id,enemies[i].maxHp,enemies[i].currentHp];
-    toSend.push(workingData);
+    var workingData = enemies[i].id + "." + enemies[i].maxHp + "." + enemies[i].currentHp;
+    toSend += workingData + "-";
   }
 
   save = JSON.stringify(toSend);

@@ -17,12 +17,13 @@ if ($mode == "save") {
 
 
   $toReplace = array('"',"]","[","}","{");
+  echo $save;
   str_replace($toReplace,"",$save);
   echo $save;
-  $data = explode(',',$save);
+  $data = explode('-',$save);
 
   foreach ($data as $line) {
-    $newLine = explode('.',$line);
+    $newLine = explode(',',$line);
     fputcsv($file,$newLine);
   }
 
