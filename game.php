@@ -37,17 +37,21 @@
       </div>
 
       <!-- links for javascript -->
+      <!-- engine links -->
       <script src="js/engine/resources.js"></script>
       <script src="js/engine/input.js"></script>
       <script src="js/engine/sprite.js"></script>
       <script src="js/engine/gameUtils.js"></script>
       <script src="js/engine/webAudio.js"></script>
+      <!-- animations -->
       <script src="js/functions/animationsHeroJump.js"></script>
       <script src="js/functions/genericAnimations.js"></script>
       <script src="js/functions/animationsHeroBite.js"></script>
       <script src="js/functions/animationsEnemy.js"></script>
+      <!-- functionality -->
       <script src="js/functions/statePlayerSelect.js"></script>
       <script src="js/functions/uiFunctions.js"></script>
+      <script src="js/functions/battleFunctions.js"></script>
       <!-- game must be loaded last, otherwise it has reference errors -->
       <script src="js/game.js"></script>
     </div>

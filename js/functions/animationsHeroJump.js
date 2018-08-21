@@ -17,6 +17,7 @@ function stdJumpAnimfunction(dt) {
       changeY = hero.pos[1] - enemies[0].pos[1];
       modY = (Math.pow((changeY-400)/-0.001024,1/4)) + 25;
       modY = modY / 50;
+      hero.currentPawPower -= 2;
     }
     if (animTimer <= 50) {
       //animTimeRef is the reletive time within each "chunk" of the animation.

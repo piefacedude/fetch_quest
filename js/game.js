@@ -28,19 +28,47 @@ resources.load([
   'images/Misc/shadowHero.png',
   'images/Prompts/bite.png',
   'images/Prompts/jump.png',
+  'images/Prompts/shadeBig.png',
+  'images/Prompts/hp.png',
+  'images/Prompts/pp.png',
 ]);
 resources.onReady(init); //callback function which halts progress until all the images are ready
 
-//Game state - include player objects, arrays for enemies, enemies, explosions etc...
-/*
-var player = {
-    pos: [0, 0],
-    sprite: new Sprite('img/sprites.png', [0, 0], [39, 39], 16, [0, 1])
-};
-*/
+//variable declaration
+//arrays
+var menu = [];
+var shade = [];
+var enemies = [];
+var list = [];
+var particles = [];
+var hud = [];
 
-//('images/player.png', [0, 0], [64, 123], 10, [0, 1, 2, 1])
-//img, pos_in_img[x,y], size_in_img[x,y],anim_speed, anim_frames, dir[hor default], anim_repeat[def once], opacity[def 1]
+//vars
+var stdJumpAnim = false;
+var animTimer = 0;
+var animTimeRef;
+var stdBiteAnim = false;
+var rightPressTimer = 0;
+var leftPressTimer = 0;
+var upPressTimer = 0;
+var downPressTimer = 0;
+var menuLeft = false;
+var menuRight = false;
+var menuTimer = 0;
+var yRef;
+var changeY;
+var xRef;
+var changeX;
+var gameState;
+var listTimer = 0;
+var selected = 0;
+var deathTimer = 0;
+var numOfEnemies = enemies.length;
+var selectMode;
+var genericJump = false;
+var particleTimer = 0;
+
+//objects
 hero = {
   pos: [100, 500],
   speed: 10,
@@ -48,8 +76,8 @@ hero = {
   dy: 0,
   maxHp: 20,
   currentHp: 20,
-  currentPawPower: 20,
-  maxPawPower: 20,
+  currentPawPower: 10,
+  maxPawPower: 10,
   jmpDmg: 5,
   attacks: [{name: "Jump", action: "stdJumpAnim"}, {name: "Bite", action: "stdBiteAnim"}],
   items: [{name: "Healing Potion", action: "healingPotion"}, {name: "Fright Mask", action: "frightMask"}],
@@ -73,7 +101,7 @@ background = {
 
 battle = {
   possibleEnemies: ["bat", 200, "dp", 1],
-  battleAreaWidth: 800,
+  battleAreaWidth: 600,
 }
 
 indicator = {
@@ -88,14 +116,6 @@ selector = {
   attackType: "any",
   sprite: new Sprite('images/Misc/coin_red.png', [0, 0], [26, 30])
 }
-
-var menu = [];
-var shade = [];
-var enemies = [];
-var list = [];
-var particles = [];
-var hud = [];
-
 
 function init() {
 
@@ -114,102 +134,17 @@ function reset() {
   //function runs once at the start of each game
   gameState = "playerSelect";
   for (var i = 0; i < 4; i++) {
-      //x display location (top left pixel)
-      var X = 0;
-      //y display
-      var Y = 0;
-      //action taken when button is selected
-      var action = 0;
-      //sprite used for button
-      var sprite;
-      var centralXAxis = (800 / 5);
-      var centralYAxis = (600 / 2);
-      var xShift = (182 * .7);
-      var yShift = (29 * 2.3);
-      switch (i) {
-        case 0:
-          X = centralXAxis;
-          Y = centralYAxis - yShift;
-          action = "flee";
-          sprite = new Sprite('images/Prompts/flee.png', [0, 0], [182, 29]);
-        break;
-        case 1:
-          X = centralXAxis - xShift;
-          Y = centralYAxis - (yShift / 2);
-          action = "special";
-          sprite = new Sprite('images/Prompts/special.png', [0, 0], [182, 29]);
-        break;
-        case 2:
-          X = centralXAxis;
-          Y = centralYAxis;
-          action = "attack";
-          sprite = new Sprite('images/Prompts/attack.png', [0, 0], [182, 29]);
-        break;
-        case 3:
-          Y = centralYAxis - (yShift / 2);
-          X = centralXAxis + xShift;
-          action = "items";
-          sprite = new Sprite('images/Prompts/items.png', [0, 0], [182, 29]);
-        break;
-      }
-      menu.push({
-      pos: [X, Y],
-      dx: 0,
-      dy: 0,
-      speed: 12,
-      renderOrder:i,
-      action: action,
-      sprite: sprite
-    });
+    generateMenu(i);
+  }
+  for (var i = 0; i < 2; i++) {
+    generateHUD(i);
   }
   for (var i = 0; i < 3; i++) {
-    switch (i) {
-      case 0:
-        X = centralXAxis + xShift;
-        Y = centralYAxis - yShift;
-      break;
-      case 1:
-        X = centralXAxis - xShift;
-        Y = centralYAxis - yShift;
-      break;
-      case 2:
-        X = centralXAxis;
-        Y = centralYAxis - yShift;
-      break;
-    }
-    shade.push({
-      pos: [X, Y],
-      sprite: new Sprite('images/Prompts/shade.png', [0, 0], [121, 19])
-    });
+    generateShade(i);
   }
   var numOfEnemies = Math.floor(Math.random() * 0) + 1;
   for (var i = 0; i < numOfEnemies; i++) {
-    var potEnem = battle.possibleEnemies;
-    var totalChance = 0;
-    for (var j = 0; j < potEnem.length / 2; j++) {
-      totalChance += potEnem[(2 * j) + 1];
-    }
-    var monsterCheck = Math.random() * totalChance;
-    var scaleCheck = 0;
-    var enemyType;
-    for (var j = 0; j < potEnem.length / 2; j++) {
-      scaleCheck += potEnem[2*j + 1];
-      if (monsterCheck <= scaleCheck) {
-        enemyType = potEnem[2*j];
-        j = potEnem.length;
-      }
-    }
-
-    var enemyType = "esch";
-    var xPos = battle.battleAreaWidth / (numOfEnemies + 1);
-    enemies.push({
-      id: enemies.length,
-      pos: [xPos * (i+1),200],
-      speed: 0,
-      maxHp: 20,
-      currentHp: 20,
-      sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 12, [0, 1, 2, 3, 4, 5], 'vertical', false, 0, {x: 1, y: 1}),
-    })
+    generateMonster(i, numOfEnemies);
   }
 }
 
@@ -247,14 +182,15 @@ function update(dt) {
 
 //what to render
 function render() {
-  if (input.isDown('D') && particleTimer == 0) {
-
-  }
   //start by clearing the old stuff
   gameCanvas.clear();
   //then add background first
   renderEntity(background);
+
+  renderEntities(hud);
+  renderHUD();
   //then the rest in order
+  //if the player's selecting their action
   if (gameState == "playerSelect") {
     renderEntities(menu);
     if (menuLeft != true && menuRight != true) {
@@ -262,6 +198,7 @@ function render() {
     }
   }
 
+  //if the player's selecting an attack
   if (gameState == "attackSelect") {
     renderEntities(list);
     for (var i = 0; i < list.length; i++) {
@@ -274,6 +211,12 @@ function render() {
     }
   }
 
+  //particle system test
+  if (input.isDown('D') && particleTimer == 0) {
+
+  }
+
+  //other
   renderEntity(indicator);
   renderEntity(hero);
   renderEntity(hero.shadow);
@@ -290,31 +233,6 @@ function render() {
     }
   }
 }
-
-
-var stdJumpAnim = false;
-var animTimer = 0;
-var animTimeRef;
-var stdBiteAnim = false;
-var rightPressTimer = 0;
-var leftPressTimer = 0;
-var upPressTimer = 0;
-var downPressTimer = 0;
-var menuLeft = false;
-var menuRight = false;
-var menuTimer = 0;
-var yRef;
-var changeY;
-var xRef;
-var changeX;
-var gameState;
-var listTimer = 0;
-var selected = 0;
-var deathTimer = 0;
-var numOfEnemies = enemies.length;
-var selectMode;
-var genericJump = false;
-var particleTimer = 0;
 
 function handleInput(dt) {
 
@@ -348,6 +266,28 @@ function handleInput(dt) {
     attackSelect(selectMode);
   }
 
+  else if (gameState == "enemyAttack") {
+    for (var i = 0; i < enemies.length; i++) {
+      if (enemyAttackTimer == -1) {
+        var attacks = enemies[i].attacks;
+        var totalChance = 0;
+        for (var j = 0; j < attacks.length / 2; j++) {
+          totalChance += attacks[(2 * j) + 1];
+        }
+        var chosenChance = Math.random() * totalChance;
+        var scaleCheck = 0;
+        var attackChosen;
+        for (var j = 0; j < attacks.length / 2; j++) {
+          scaleCheck += attacks[2*j + 1];
+          if (chosenChance <= scaleCheck) {
+            attackChosen = attacks[2*j];
+            j = attacks.length;
+          }
+        }
+      }
+      else if
+    }
+  }
   handleEnemy();
 }
 

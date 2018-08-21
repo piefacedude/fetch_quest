@@ -47,15 +47,29 @@ else {
     while(!$file->eof()) {
       $rows[] = $file->fgetcsv();
     }
+    $enemiesDone = false;
+    $heroDone = false;
     $done = false;
     while ($done == false) {
       for ($i=0; $i < count($rows); $i++) {
-         if($rows[$i][0] == "EnemyNo0:") {
-          $done = true;
+
+        if ($rows[$i][0] == "EnemyNo0:") {
+          $enemiesDone = true;
           foreach ($rows[$i + 1] as $key => $value) {
             echo $value . ",";
           }
-         }
+        }
+
+        if ($rows[$i][0] == "HeroData:") {
+          $heroDone = true;
+          foreach ($rows[$i + 1] as $key => $value) {
+            echo $value . ",";
+          }
+        }
+
+        if ($enemiesDone == true && $heroDone == true) {
+         $done = true;
+        }
       }
     }
   }

@@ -5,7 +5,7 @@ Attacks:*attacks*
 Items:*items*
 Specials:*specials*
 HeroData:
-20,20,20,20
+20,20,10,5
 Attacks:
 Jump,Bite
 Items:
@@ -13,5 +13,5 @@ Items:
 Specials:
 Bark,Howl
 EnemyNo0:
-0,20,20
+0,20,10
 

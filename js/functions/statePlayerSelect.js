@@ -10,41 +10,18 @@ function playerSelect() {
   if (input.isDown('RIGHT') || menuLeft == true) {
     if (menuRight != true) {
       //for each menu icon
-      var centralXAxis = (800 / 5);
-      var centralYAxis = (600 / 2);
-      var xShift = (182 * .7);
-      var yShift = (29 * 2.3);
       for (var i = 0; i < menu.length; i++) {
 
-        //find start & end point
-        switch (menu[i].renderOrder) {
-          case 0:
-            presetX = centralXAxis;
-            presetY = centralYAxis - yShift;
-            endY = centralYAxis - (yShift / 2);
-            endX = centralXAxis + xShift;
-
-            break;
-          case 1:
-            presetX = (800 / 4) - (26 * 3);
-            presetY = (600 / 2) - (30);
-            endX = (800 / 4);
-            endY = (600 / 2) - (30 * 2);
-            break;
-          case 2:
-            presetX = (800 / 4);
-            presetY = (600 / 2);
-            endX = (800 / 4) - (26 * 3);
-            endY = (600 / 2) - (30);
-            break;
-          case 3:
-            presetX = (800 / 4) + (26 * 3);
-            presetY = (600 / 2) - (30);
-            endX = (800 / 4);
-            endY = (600 / 2);
-            break;
-          default:
+        var inc = menu[i].renderOrder - 1;
+        if (inc == -1) {
+          inc = 3;
         }
+
+        //find start & end point
+        presetX = menuX(menu[i].renderOrder);
+        presetY = menuY(menu[i].renderOrder);
+        endX = menuX(inc);
+        endY = menuY(inc);
 
         //find difference
         var difX = 0;
@@ -108,33 +85,17 @@ function playerSelect() {
     if (menuLeft != true) {
       for (var i = 0; i < menu.length; i++) {
 
-        switch (menu[i].renderOrder) {
-          case 0:
-            presetX = (800 / 4);
-            presetY = (600 / 2) - (30 * 2);
-            endX = (800 / 4) - (26 * 3);
-            endY = (600 / 2) - (30);
-            break;
-          case 1:
-            presetX = (800 / 4) - (26 * 3);
-            presetY = (600 / 2) - (30);
-            endX = (800 / 4);
-            endY = (600 / 2);
-            break;
-          case 2:
-            presetX = (800 / 4);
-            presetY = (600 / 2);
-            endX = (800 / 4) + (26 * 3);
-            endY = (600 / 2) - (30);
-            break;
-          case 3:
-            presetX = (800 / 4) + (26 * 3);
-            presetY = (600 / 2) - (30);
-            endX = (800 / 4);
-            endY = (600 / 2) - (30 * 2);
-            break;
-          default:
+        var inc = menu[i].renderOrder + 1;
+        if (inc == 4) {
+          inc = 0;
         }
+
+        //find start & end point
+        presetX = menuX(menu[i].renderOrder);
+        presetY = menuY(menu[i].renderOrder);
+        endX = menuX(inc);
+        endY = menuY(inc);
+
         var difX = 0;
         var difY = 0;
         //find path function
