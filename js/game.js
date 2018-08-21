@@ -94,6 +94,7 @@ var shade = [];
 var enemies = [];
 var list = [];
 var particles = [];
+var hud = [];
 
 
 function init() {
@@ -121,30 +122,34 @@ function reset() {
       var action = 0;
       //sprite used for button
       var sprite;
+      var centralXAxis = (800 / 5);
+      var centralYAxis = (600 / 2);
+      var xShift = (182 * .7);
+      var yShift = (29 * 2.3);
       switch (i) {
         case 0:
-          X = (800 / 4);
-          Y = (600 / 2) - 60;
+          X = centralXAxis;
+          Y = centralYAxis - yShift;
           action = "flee";
           sprite = new Sprite('images/Prompts/flee.png', [0, 0], [182, 29]);
         break;
         case 1:
-          X = (800 / 4) - (26 * 3);
-          Y = (600 / 2) - 30;
+          X = centralXAxis - xShift;
+          Y = centralYAxis - (yShift / 2);
           action = "special";
-          sprite = new Sprite('images/Prompts/special.png', [0, 0], [121, 19]);
+          sprite = new Sprite('images/Prompts/special.png', [0, 0], [182, 29]);
         break;
         case 2:
-          X = (800 / 4);
-          Y = (600 / 2);
+          X = centralXAxis;
+          Y = centralYAxis;
           action = "attack";
           sprite = new Sprite('images/Prompts/attack.png', [0, 0], [182, 29]);
         break;
         case 3:
-          X = (800 / 4) + (26 * 3);
-          Y = (600 / 2) - 30;
+          Y = centralYAxis - (yShift / 2);
+          X = centralXAxis + xShift;
           action = "items";
-          sprite = new Sprite('images/Prompts/items.png', [0, 0], [121, 19]);
+          sprite = new Sprite('images/Prompts/items.png', [0, 0], [182, 29]);
         break;
       }
       menu.push({
@@ -160,16 +165,16 @@ function reset() {
   for (var i = 0; i < 3; i++) {
     switch (i) {
       case 0:
-        X = (800 / 4) + (26 * 3);
-        Y = (600 / 2) - 30;
+        X = centralXAxis + xShift;
+        Y = centralYAxis - yShift;
       break;
       case 1:
-        X = (800 / 4) - (26 * 3);
-        Y = (600 / 2) - 30;
+        X = centralXAxis - xShift;
+        Y = centralYAxis - yShift;
       break;
       case 2:
-        X = (800 / 4);
-        Y = (600 / 2) - 60;
+        X = centralXAxis;
+        Y = centralYAxis - yShift;
       break;
     }
     shade.push({
@@ -426,6 +431,7 @@ function loadGame() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
       var array = this.responseText;
       array = array.split(",");
       array.splice(-1,1)

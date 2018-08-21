@@ -10,15 +10,20 @@ function playerSelect() {
   if (input.isDown('RIGHT') || menuLeft == true) {
     if (menuRight != true) {
       //for each menu icon
+      var centralXAxis = (800 / 5);
+      var centralYAxis = (600 / 2);
+      var xShift = (182 * .7);
+      var yShift = (29 * 2.3);
       for (var i = 0; i < menu.length; i++) {
 
         //find start & end point
         switch (menu[i].renderOrder) {
           case 0:
-            presetX = (800 / 4);
-            presetY = (600 / 2) - (30 * 2);
-            endX = (800 / 4) + (26 * 3);
-            endY = (600 / 2) - (30);
+            presetX = centralXAxis;
+            presetY = centralYAxis - yShift;
+            endY = centralYAxis - (yShift / 2);
+            endX = centralXAxis + xShift;
+
             break;
           case 1:
             presetX = (800 / 4) - (26 * 3);
