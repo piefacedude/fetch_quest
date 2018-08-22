@@ -114,6 +114,7 @@ function stdJumpAnimfunction(dt) {
       hero.bounce = "unset";
       hero.sprite = new Sprite('images/HeroStuff/heroStand.png', [0, 0], [64, 64]);
       stdJumpAnim = false;
+      gameState = "enemyAttack";
     }
     animTimer++;
 
@@ -131,7 +132,6 @@ function stdJumpAnimfunction(dt) {
     animTimer = 0;
     indicator.pos[0] = 800;
     indicator.pos[1] = 600;
-    gameState = "playerSelect";
   }
   hero.shadow.pos[0] = hero.pos[0] - 3;
   hero.shadow.pos[1] = 554;

@@ -54,22 +54,22 @@ else {
       for ($i=0; $i < count($rows); $i++) {
 
         if ($rows[$i][0] == "EnemyNo0:") {
-          $enemiesDone = true;
+          $done = true;
           foreach ($rows[$i + 1] as $key => $value) {
             echo $value . ",";
           }
         }
-
-        if ($rows[$i][0] == "HeroData:") {
-          $heroDone = true;
-          foreach ($rows[$i + 1] as $key => $value) {
-            echo $value . ",";
-          }
-        }
-
-        if ($enemiesDone == true && $heroDone == true) {
-         $done = true;
-        }
+        //
+        // if ($rows[$i][0] == "HeroData:") {
+        //   $heroDone = true;
+        //   foreach ($rows[$i + 1] as $key => $value) {
+        //     echo $value . ",";
+        //   }
+        // }
+        //
+        // if ($enemiesDone == true && $heroDone == true) {
+        //  $done = true;
+        // }
       }
     }
   }

@@ -52,6 +52,7 @@ var rightPressTimer = 0;
 var leftPressTimer = 0;
 var upPressTimer = 0;
 var downPressTimer = 0;
+var enemyAttackTimer = -1;
 var menuLeft = false;
 var menuRight = false;
 var menuTimer = 0;
@@ -101,7 +102,7 @@ background = {
 
 battle = {
   possibleEnemies: ["bat", 200, "dp", 1],
-  battleAreaWidth: 600,
+  battleAreaWidth: 800,
 }
 
 indicator = {
@@ -268,6 +269,7 @@ function handleInput(dt) {
 
   else if (gameState == "enemyAttack") {
     for (var i = 0; i < enemies.length; i++) {
+      //inital attack selection
       if (enemyAttackTimer == -1) {
         var attacks = enemies[i].attacks;
         var totalChance = 0;
@@ -284,8 +286,15 @@ function handleInput(dt) {
             j = attacks.length;
           }
         }
+        enemyAttackTimer++;
       }
-      else if
+
+      //for attack
+      else if (enemyAttackTimer >= 0) {
+        hero.currentHp -= 2;
+        enemyAttackTimer = -1;
+        gameState = "playerSelect";
+      }
     }
   }
   handleEnemy();

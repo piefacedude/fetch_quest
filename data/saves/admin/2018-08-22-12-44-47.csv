@@ -1,0 +1,17 @@
+"Save file from FetchQuest"
+"Hero data follows structure of:"
+MaxHp,CurrentHp,MaxPP,CurrentPP
+Attacks:*attacks*
+Items:*items*
+Specials:*specials*
+HeroData:
+20,20,10,8
+Attacks:
+Jump,Bite
+Items:
+"Healing Potion","Fright Mask"
+Specials:
+Bark,Howl
+EnemyNo0:
+0,20,15
+
