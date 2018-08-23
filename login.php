@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <title>FetchQuest Homepage</title>
     <?php
-     require 'snippets/links.php';
      session_start();
+     require 'snippets/links.php';
      $activePage = "login";
      ?>
      <style>

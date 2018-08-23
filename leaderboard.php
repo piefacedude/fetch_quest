@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <title>FetchQuest Leaderboard</title>
     <?php
+    session_start();
      require 'snippets/links.php';
      ?>
   </head>
   <body>
     <div class="container-fluid">
       <?php
-      session_start();
       $activePage = "leaderboard";
       require 'snippets/navbar.php';
       ?>

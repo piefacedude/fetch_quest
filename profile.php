@@ -12,7 +12,7 @@
   <body>
     <div class="container-fluid">
       <?php
-      $activePage = "leaderboard";
+      $activePage = "profile";
       require 'snippets/navbar.php';
       ?>
       <div id="body" class="pt-5" style="height: 1000px;">
@@ -20,8 +20,8 @@
         <div class="across">
           <div class="down">
             <div class="profilePic"><img src="images/HeroStuff/dog_still_large.png" /></div>
-            <div class="d1-a2">DATE CREATED</div>
-            <div class="d1-a3">GAMES PLAYED</div>
+            <div class="h-25">DATE CREATED</div>
+            <div class="h-25">GAMES PLAYED</div>
           </div>
           <div class="down">
             <div class="infoTop">USERNAME</div>
@@ -30,8 +30,16 @@
             <div class="info">TRADE LINK</div>
           </div>
           <div class="down">
-            <div class="saves">SAVES</div>
-            <div class="savesTable">TABLE OF SAVES</div>
+            <div class="saves h-25">SAVES</div>
+            <div class="savesTable h-75">
+              <table class="w-100 h-75">
+                <tr class="w-100">
+                  <td class="w-100" style="background-color: yellow;">
+                    WOWO;
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
