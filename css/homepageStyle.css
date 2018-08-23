@@ -147,3 +147,41 @@ body {
 	height: 100%;
 	margin-left: 20%;
 }
+
+.buffer {
+	height: 2%;
+	background-color: #393E46;
+}
+
+.across {
+	width: 100%;
+	height: 80%;
+	background-color: red;
+}
+
+.down {
+	width: 33.333333333%;
+	height: 100%;
+	background-color: blue;
+	float: left;
+}
+
+.infoTop {
+	height: 40%;
+	background-color: orange;
+}
+
+.info {
+	height: 20%;
+	background-color: orange;
+}
+
+.profilePic {
+	height: 40%;
+}
+
+.d1-a1 {
+
+}
+
+

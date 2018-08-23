@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>FetchQuest Home</title>
     <?php
+      session_start();
       include 'snippets/links.php';
     ?>
     <link rel="shortcut icon" href="../favicon.ico">
@@ -15,7 +16,6 @@
     <?php
     include 'snippets/navbar.php';
     include 'snippets/featureImage.php';
-    session_start();
     $_SESSION['error'] = false;
     ?>
     <div id="cbp-fbscroller" class="cbp-fbscroller">

@@ -31,6 +31,13 @@ function makeLinkActive($page) {
         <li class=<?php makeLinkActive("login");?>>
           <a class="nav-link" href="login.php">Play<?php echo $pageReader?></a>
         </li>
+        <?php
+        if (!empty($_SESSION['username'])) {
+          echo '<li class=';
+          echo makeLinkActive("profile");
+          echo '><a class="nav-link" href="profile.php">Profile' . $pageReader . '</a></li>';
+        }
+         ?>
       </ul>
     </li>
   </ul>

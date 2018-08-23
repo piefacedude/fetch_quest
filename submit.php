@@ -86,7 +86,7 @@
         }
 
         if ($_SESSION['error'] == false) {
-          header('Location: game.php');
+          header('Location: index.php');
         }
 
         else {

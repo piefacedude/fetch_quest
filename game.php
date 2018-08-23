@@ -4,7 +4,7 @@
     <link href="css/gameStyle.css?1" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans" rel="stylesheet">
     <!--Font does not work offline-->
-    <link rel="icon" href="dog.ico" type="image/x-icon" />
+    <link rel="icon" href="imgs/dog.ico" type="image/x-icon" />
 
   </head>
   <body>
@@ -21,12 +21,12 @@
       </div>
 
       <div id="stats">
-        <a href="leaderboard.php">homepage</a>
+        <a href="index.php">homepage</a>
       </div>
 
       <!-- profile link -->
       <div id="profile">
-        <a href="instructions.html">profile</a>
+        <a href="profile.php">profile</a>
       </div>
 
       <!-- sounds for game -->
