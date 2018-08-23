@@ -57,6 +57,9 @@ function stdJumpAnimfunction(dt) {
       }
       if (animTimer == 150) {
         enemies[0].currentHp -= hero.jmpDmg;
+        if (enemies[0].currentHp <= 0) {
+          animTimer = 250;
+        }
       }
     }
     //bounce1
@@ -72,6 +75,9 @@ function stdJumpAnimfunction(dt) {
       }
       if (animTimer == 200) {
         enemies[0].currentHp -= hero.jmpDmg;
+        if (enemies[0].currentHp <= 0) {
+          animTimer = 250;
+        }
       }
     }
   //bounce2
