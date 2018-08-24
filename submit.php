@@ -73,7 +73,6 @@
           while (isset($rows[$count])) {
             $count++;
             if ($rows[$count][0] == $username) {
-              echo $password;
               //found the username
               if (hash_equals($rows[$count][1], crypt($password,$rows[$count][1]))) {
                 $_SESSION['username'] = $username;

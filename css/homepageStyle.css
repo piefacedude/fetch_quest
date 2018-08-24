@@ -180,8 +180,12 @@ body {
 	height: 50%;
 }
 
-.d1-a1 {
+.saves tr td {
+	background-color: violet;
+}
 
+.saves tr {
+	background-color: white;
 }
 
 

@@ -14,6 +14,26 @@
       <?php
       $activePage = "profile";
       require 'snippets/navbar.php';
+      if (empty($_SESSION['username'])) {
+        header('Location: login.php');
+      }
+      else {
+        //load users file for reading
+        $file = new SplFileObject("data/users.csv");
+        $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
+
+        //transfer user data into array to be read
+        $rows = [];
+        while(!$file->eof()) {
+          $rows[] = $file->fgetcsv();
+        }
+
+        foreach ($rows as $key) {
+          if ($key[0] == $_SESSION['username']) {
+            $username = $key[0];
+          }
+        }
+      }
       ?>
       <div id="body" class="pt-5" style="height: 1000px;">
         <div class="buffer"></div>
@@ -21,10 +41,19 @@
           <div class="down">
             <div class="profilePic"><img src="images/HeroStuff/dog_still_large.png" /></div>
             <div class="h-25">DATE CREATED</div>
-            <div class="h-25">GAMES PLAYED</div>
+            <div class="h-25">
+              <?php
+              $saveDirectory = "data/saves/" . $username;
+              $fi = new FilesystemIterator($saveDirectory, FilesystemIterator::SKIP_DOTS);
+              printf("%d saves made", iterator_count($fi));
+              $count = count(scandir($saveDirectory)) - 2;
+              $saves = scandir($saveDirectory);
+              $find = array(".csv");
+              ?>
+            </div>
           </div>
           <div class="down">
-            <div class="infoTop">USERNAME</div>
+            <div class="infoTop">Username: <?php echo $username; ?></div>
             <div class="info">SCORE</div>
             <div class="info">DATE LAST LOGGED IN</div>
             <div class="info">TRADE LINK</div>
@@ -32,12 +61,19 @@
           <div class="down">
             <div class="saves h-25">SAVES</div>
             <div class="savesTable h-75">
-              <table class="w-100 h-75">
-                <tr class="w-100">
-                  <td class="w-100" style="background-color: yellow;">
-                    WOWO;
-                  </td>
-                </tr>
+              <table class="w-100 h-75 saves">
+                 <?php
+                  for ($i=0; $i < $count; $i++) {
+                    echo "<tr>";
+                    echo "<td>";
+                    $name = $saves[$i + 2];
+                    $name = str_replace($find,"",$name);
+                    echo $name;
+                    echo "</td>";
+                    echo "</tr>";
+                  }
+
+                ?>
               </table>
             </div>
           </div>
