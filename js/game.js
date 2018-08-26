@@ -260,9 +260,10 @@ function handleInput(dt) {
   }
 
   if (input.isDown("1")) {
-    gameState = "attackSelect";
+    gameState = "playerSelect";
     hero.currentHp = 20;
-    generateMonster();
+    hero.currentPawPower = 10;
+    enemies[0].currentHp = 20;
   }
 
   //attack animation

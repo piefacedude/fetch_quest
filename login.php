@@ -45,7 +45,7 @@
       <div class="jumbotron" id="register">
         <h1 class="register">PLAY GAME</h1>
         <br>
-        <form action="submit.php" method="post" class="register">
+        <form action="submit.php?mode=login" method="post" class="register">
           <input type="hidden" name="mode" value="register" />
           <div class="form-group">
             <input name="username" required class="form-control form-control-lg" placeholder="Username" type="text">

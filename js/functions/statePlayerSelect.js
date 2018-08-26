@@ -215,6 +215,10 @@ function attackSelect(selectMode) {
       //each item is a standard height apart
       var Y = (i * 22) + 200;
       var action = actionList[i].action;
+      list.push({
+
+      })
+      /*
       switch (action) {
         case "stdJumpAnim":
           var sprite = new Sprite('images/Prompts/jump.png', [0, 0], [121, 19]);
@@ -237,7 +241,9 @@ function attackSelect(selectMode) {
         pos: [X, Y],
         sprite: new Sprite('images/Prompts/shade.png', [0, 0], [121, 19])
       }
-      });
+
+    });
+    */
     }
   }
   //give a quick moment so that the enter press to select the mode doesnt select an attack

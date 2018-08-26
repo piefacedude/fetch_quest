@@ -5,13 +5,7 @@ Attacks:*attacks*
 Items:*items*
 Specials:*specials*
 HeroData:
-20,20,10,5
-Attacks:
-Jump,Bite
-Items:
-"Healing Potion","Fright Mask"
-Specials:
-Bark,Howl
+20,20,10,10
 EnemyNo0:
-0,20,10
+0,20,20
 

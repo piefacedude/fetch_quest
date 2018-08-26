@@ -61,7 +61,12 @@ body {
   font-family: 'Roboto', sans-serif;
 	color: #EEEEEE;
 	background-color: #393E46;
+	height: 100%;
 }
+html {
+	height: 100%;
+}
+
 #logo {
 	display: block;
 	margin: auto;
@@ -159,6 +164,20 @@ body {
 	background-color: red;
 }
 
+.down2 {
+	width: 50%;
+	height: 100%;
+	background-color: blue;
+	float: left;
+}
+
+.jumbotron table tr td {
+	border-bottom: 1px solid #ddd;
+	height: 24px;
+	width: 150px;
+	vertical-align: bottom;
+}
+
 .down {
 	width: 33.333333333%;
 	height: 100%;
@@ -176,6 +195,10 @@ body {
 	background-color: orange;
 }
 
+.black {
+	color: black;
+}
+
 .profilePic {
 	height: 50%;
 }
@@ -188,4 +211,8 @@ body {
 	background-color: black;
 }
 
-
+h2 {
+	font-family: 'Raleway', sans-serif;
+	font-size: 24px;
+	color: black;
+}

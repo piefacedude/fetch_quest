@@ -6,14 +6,14 @@
     <title>FetchQuest Leaderboard</title>
     <?php
       session_start();
+      $activePage = "profile";
       require 'snippets/links.php';
     ?>
   </head>
   <body>
-    <div class="container-fluid">
+    <?php require 'snippets/navbar.php'; ?>
+    <div class="container-fluid h-75">
       <?php
-      $activePage = "profile";
-      require 'snippets/navbar.php';
       if (empty($_SESSION['username'])) {
         header('Location: login.php');
       }
@@ -37,7 +37,7 @@
         }
       }
       ?>
-      <div id="body" class="pt-5" style="height: 1000px;">
+      <div id="body" class="h-100">
         <div class="buffer"></div>
         <div class="across">
           <div class="down">
@@ -58,7 +58,10 @@
             <div class="infoTop">Username: <?php echo $username; ?></div>
             <div class="info">SCORE</div>
             <div class="info">DATE LAST LOGGED IN <?php echo $lastLoggedIn ?> </div>
-            <div class="info">TRADE LINK</div>
+            <div class="info">
+              <a href="tradingRequest.php?from=<?php echo $_SESSION['username']; ?>">TRADE LINK</a>
+              <a href="offers.php">OFFERS</a>
+            </div>
           </div>
           <div class="down">
             <div class="saves h-25">SAVES</div>

@@ -9,9 +9,11 @@
   </head>
   <body>
     <?php
-      echo '<input id="fileLoad" type="hidden" value="' . $_GET['toLoad'] . '" />';
       if (!empty($_SESSION['username'])) {
         header('Location: login.php');
+      }
+      if (!empty($_GET['toLoad'])) {
+        echo '<input id="fileLoad" type="hidden" value="' . $_GET['toLoad'] . '" />';
       }
     ?>
     <div id="container">

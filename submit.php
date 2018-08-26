@@ -14,7 +14,13 @@
         $username = filter_input(INPUT_POST, 'username');
         $password = filter_input(INPUT_POST, 'password');
         $email = filter_input(INPUT_POST, 'email');
-        $mode = $_POST['mode'];
+        if (!empty($_POST['mode'])) {
+          $mode = $_POST['mode'];
+        }
+        else {
+          $mode = $_GET['mode'];
+        }
+
         $_SESSION['error'] = false;
 
         //creating rows 2d array of csv file
@@ -65,18 +71,30 @@
             }
           //closes file, politely
           fclose($file);
+
+          $file = fopen("data/characters/" . $username . ".csv", "w");
+
+          $toAdd = "Profile for FetchQuest User-Attacks:-Jump.Bite-Items:- -Specials:-Bark.Howl";
+          $first = explode('-',$toAdd);
+          foreach ($first as $line) {
+            $input = explode('.', $line);
+            fputcsv($file,$input);
+          }
+
+          fclose($file);
         }
 
 
-        else {
+        elseif ($mode == "login") {
+          $_SESSION['test'] = "yes";
           //finding next unset line for var to go into, also acts as index number
-          $file = fopen("data/users.csv",'w');
           $count = 0;
           while (isset($rows[$count])) {
             $count++;
             if ($rows[$count][0] == $username) {
               //found the username
               if (hash_equals($rows[$count][1], crypt($password,$rows[$count][1]))) {
+                $file = fopen("data/users.csv",'w');
                 $_SESSION['username'] = $username;
                 $fileRedo = $rows;
                 $fileRedo[$count][4] = date('Y/m/d');
@@ -91,6 +109,61 @@
             }
           }
           fclose($file);
+        }
+
+
+        elseif ($mode == "trade") {
+          if (empty($_POST['to']) || empty($_POST['from'])) {
+            $_SESSION['error'] = "No item selected to/from.";
+            header('Location: tradingRequest.php');
+          }
+          $gotten = true;
+          $check = 0;
+          $from = $_POST['from'];
+          $to = $_POST['to'];
+          //
+          // $file = new SplFileObject("data/trades.csv");
+          // $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
+          //
+          // $rows = [];
+          // while(!$file->eof()) {
+          //   $rows[] = $file->fgetcsv();
+          // }
+
+          $file = fopen("data/trades.csv",'a');
+          $input = [];
+          $jnput = [];
+
+          for ($i=0; $i < 4; $i++) {
+            switch ($i) {
+              case 0:
+                $input[] = $_POST['userTo'];
+                break;
+
+              case 1:
+                foreach ($_POST['to'] as $value) {
+                  $input[] = $value;
+                }
+                break;
+
+              case 2:
+                $jnput[] = $_POST['userFrom'];
+                break;
+
+
+              case 3:
+              foreach ($_POST['from'] as $value) {
+                $jnput[] = $value;
+              }
+                break;
+            }
+          }
+          print_r($input);
+          print_r($jnput);
+          fputcsv($file, $input);
+          fputcsv($file, $jnput);
+          fclose($file);
+
         }
 
         if ($_SESSION['error'] == false) {

@@ -39,8 +39,17 @@ if ($mode == "save") {
   //profile saving
   ///////////////////////////////////////////////////////////////////////////
 
+  // $file = new SplFileObject("data/characters/" . $_SESSION['username'] . ".csv");
+  // $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
+  //
+  // //transfer user data into array to be read
+  // $rows = [];
+  // while(!$file->eof()) {
+  //   $rows[] = $file->fgetcsv();
+  // }
+
   $profile = $_REQUEST['profile'];
-  $file = fopen("data/characters/" . $_SESSION['username'] . ".csv",'w');
+  $file = fopen("data/characters/" . $_SESSION['username'] . ".csv",'w+');
 
   //breaks data by -'s, into array
   $data = explode('-',$profile);
