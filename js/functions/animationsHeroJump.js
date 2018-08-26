@@ -75,6 +75,7 @@ function stdJumpAnimfunction(dt) {
       }
       if (animTimer == 200) {
         enemies[0].currentHp -= hero.jmpDmg;
+        totalDamageDone += hero.jmpDmg;
         if (enemies[0].currentHp <= 0) {
           animTimer = 250;
         }

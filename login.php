@@ -6,6 +6,9 @@
     <title>FetchQuest Homepage</title>
     <?php
      session_start();
+     if (!empty($_SESSION['username'])) {
+       unset($_SESSION['username']);
+     }
      require 'snippets/links.php';
      $activePage = "login";
      ?>

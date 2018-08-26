@@ -9,6 +9,7 @@
   </head>
   <body>
     <?php
+      echo '<input id="fileLoad" type="hidden" value="' . $_GET['toLoad'] . '" />';
       if (!empty($_SESSION['username'])) {
         header('Location: login.php');
       }

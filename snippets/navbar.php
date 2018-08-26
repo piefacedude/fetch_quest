@@ -28,14 +28,22 @@ function makeLinkActive($page) {
         <li class=<?php makeLinkActive("leaderboard");?>>
           <a class="nav-link" href="leaderboard.php">Leaderboard<?php echo $pageReader?></a>
         </li>
-        <li class=<?php makeLinkActive("login");?>>
-          <a class="nav-link" href="login.php">Play<?php echo $pageReader?></a>
-        </li>
         <?php
         if (!empty($_SESSION['username'])) {
           echo '<li class=';
+          echo makeLinkActive("play");
+          echo '><a class="nav-link" href="game.php">Play' . $pageReader . '</a></li>';
+          echo '<li class=';
           echo makeLinkActive("profile");
           echo '><a class="nav-link" href="profile.php">Profile' . $pageReader . '</a></li>';
+          echo '<li class=';
+          echo makeLinkActive("logOut");
+          echo '><a class="nav-link" href="login.php">Log Out' . $pageReader . '</a></li>';
+        }
+        else {
+          echo '<li class=';
+          echo makeLinkActive("login");
+          echo '><a class="nav-link" href="login.php">Log In and Play!' . $pageReader . '</a></li>';
         }
          ?>
       </ul>

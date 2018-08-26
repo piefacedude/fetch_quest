@@ -44,7 +44,7 @@
 
           $list = array
           (
-            $username . "," . $password . "," . $email
+            $username . "," . $password . "," . $email . "," . date('Y/m/d') . "," . date('Y/m/d')
           );
 
 
@@ -60,6 +60,7 @@
                 $data = explode(',',$line);
                 //puts data from line into file
                 fputcsv($file,$data);
+                $_SESSION['username'] = $username;
               }
             }
           //closes file, politely
@@ -69,6 +70,7 @@
 
         else {
           //finding next unset line for var to go into, also acts as index number
+          $file = fopen("data/users.csv",'w');
           $count = 0;
           while (isset($rows[$count])) {
             $count++;
@@ -76,12 +78,19 @@
               //found the username
               if (hash_equals($rows[$count][1], crypt($password,$rows[$count][1]))) {
                 $_SESSION['username'] = $username;
+                $fileRedo = $rows;
+                $fileRedo[$count][4] = date('Y/m/d');
+
+                foreach ($fileRedo as $line) {
+                  fputcsv($file,$line);
+                }
               }
               else {
                 $_SESSION['error'] = 'Username or password was incorrect';
               }
             }
           }
+          fclose($file);
         }
 
         if ($_SESSION['error'] == false) {

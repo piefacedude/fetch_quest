@@ -180,12 +180,12 @@ body {
 	height: 50%;
 }
 
-.saves tr td {
+.saves tbody tr td {
 	background-color: violet;
 }
 
-.saves tr {
-	background-color: white;
+.saves tbody tr {
+	background-color: black;
 }
 
 

@@ -10,6 +10,10 @@
 //Global vars so we can use them within functions
 var gameCanvas = new myCanvas('game_canvas');
 var lastTime = 0; //game clock
+if (document.getElementById("fileLoad") != null) {
+  var loadFile = document.getElementById("fileLoad").value;
+  var savedFile = true;
+}
 
 //Load the sprite sheets and images
 resources.load([
@@ -68,6 +72,8 @@ var numOfEnemies = enemies.length;
 var selectMode;
 var genericJump = false;
 var particleTimer = 0;
+var currentGameLevel = 1;
+var totalDamageDone = 0;
 
 //objects
 hero = {
@@ -146,6 +152,12 @@ function reset() {
   var numOfEnemies = Math.floor(Math.random() * 0) + 1;
   for (var i = 0; i < numOfEnemies; i++) {
     generateMonster(i, numOfEnemies);
+  }
+  if (savedFile == true) {
+    loadGame(loadFile);
+  }
+  else {
+    loadGame();
   }
 }
 
@@ -246,6 +258,13 @@ function handleInput(dt) {
   if (input.isDown("8")) {
     loadGame();
   }
+
+  if (input.isDown("1")) {
+    gameState = "attackSelect";
+    hero.currentHp = 20;
+    generateMonster();
+  }
+
   //attack animation
   if (stdJumpAnim == true) {
     stdJumpAnimfunction(dt);
@@ -321,61 +340,109 @@ function saveGame() {
   //prepare save
   //sends as a long string, "-" seperates lines, "." seperates values
   //initial blah for context
-  var toSend = "Save file from FetchQuest-Hero data follows structure of:-MaxHp.CurrentHp.MaxPP.CurrentPP-Attacks:*attacks*-Items:*items*-Specials:*specials*-"
+  var toSendSave = "Save file from FetchQuest-Hero data follows structure of:-MaxHp.CurrentHp.MaxPP.CurrentPP-Attacks:*attacks*-Items:*items*-Specials:*specials*-"
 
   //add hero's data
-  toSend += "HeroData:-" + hero.maxHp + "." + hero.currentHp + "." + hero.maxPawPower + "." + hero.currentPawPower + "-";
-  //create list to be added to file var
-  var listCheck;
-  //for attacks, items and specials
-  for (var i = 0; i < 3; i++) {
-    switch (i) {
-      case 0:
-        //add a title (used to ID the list below)
-        toSend += "Attacks:-";
-        //set list to relevent
-        listCheck = hero.attacks;
-        break;
-      case 1:
-        listCheck = hero.items;
-        toSend += "Items:-";
-        break;
-      case 2:
-        listCheck = hero.special;
-        toSend += "Specials:-";
-        break;
-    }
-    //while there's more in the list
-    for (var j = 0; j < listCheck.length; j++) {
-      //add the name of the thing to the string
-      //on load, the name is used to find stats
-      toSend += listCheck[j].name;
-      //if its not the last, seperate value
-      if (j !== listCheck.length - 1) {
-        toSend += ".";
-      }
-    }
-    //break to next line
-    toSend += "-";
-  }
+  toSendSave += "HeroData:-" + hero.maxHp + "." + hero.currentHp + "." + hero.maxPawPower + "." + hero.currentPawPower + "-";
 
   //enemies stats
   for (var i = 0; i < enemies.length; i++) {
     //for each enemy, add ID, name, and current HP
     var workingData = "EnemyNo" + i + ":-" + enemies[i].id + "." + enemies[i].maxHp + "." + enemies[i].currentHp;
     //break for next enemy
-    toSend += workingData + "-";
+    toSendSave += workingData + "-";
   }
-
   //turns the object into a long string
-  save = JSON.stringify(toSend);
+  save = JSON.stringify(toSendSave);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //now the hero's stats
+  var toSendProfile = "Profile for FetchQuest User-";
+
+  //create list to be added to file var
+    var listCheck;
+    //for attacks, items and specials
+    for (var i = 0; i < 3; i++) {
+      switch (i) {
+        case 0:
+          //add a title (used to ID the list below)
+          toSendProfile += "Attacks:-";
+          //set list to relevent
+          listCheck = hero.attacks;
+          break;
+        case 1:
+          listCheck = hero.items;
+          toSendProfile += "Items:-";
+          break;
+        case 2:
+          listCheck = hero.special;
+          toSendProfile += "Specials:-";
+          break;
+      }
+      //while there's more in the list
+      for (var j = 0; j < listCheck.length; j++) {
+        //add the name of the thing to the string
+        //on load, the name is used to find stats
+        toSendProfile += listCheck[j].name;
+        //if its not the last, seperate value
+        if (j !== listCheck.length - 1) {
+          toSendProfile += ".";
+        }
+      }
+      //break to next line
+      toSendProfile += "-";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  profile = JSON.stringify(toSendProfile);
   //send to "save.php", with mode set to "save", and with the save data
-  xmlhttp.open("GET", "save.php?mode=save&save=" + save, true);
+  xmlhttp.open("GET", "save.php?mode=save&save=" + save + "&profile=" + profile, true);
   xmlhttp.send();
 }
 
 //game loading
-function loadGame() {
+function loadGame(file) {
+  if (file == null) {
+    file = "";
+  }
   //ajax request
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
@@ -390,7 +457,7 @@ function loadGame() {
     }
   }
   //mode set to "load", currently pulls most recent file
-  xmlhttp.open("GET", "save.php?mode=load", true);
+  xmlhttp.open("GET", "save.php?mode=load&file=" + file, true);
   xmlhttp.send();
 }
 

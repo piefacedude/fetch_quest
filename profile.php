@@ -31,6 +31,8 @@
         foreach ($rows as $key) {
           if ($key[0] == $_SESSION['username']) {
             $username = $key[0];
+            $dateMade = $key[3];
+            $lastLoggedIn = $key[4];
           }
         }
       }
@@ -40,7 +42,7 @@
         <div class="across">
           <div class="down">
             <div class="profilePic"><img src="images/HeroStuff/dog_still_large.png" /></div>
-            <div class="h-25">DATE CREATED</div>
+            <div class="h-25">DATE CREATED <?php echo $dateMade; ?></div>
             <div class="h-25">
               <?php
               $saveDirectory = "data/saves/" . $username;
@@ -55,25 +57,35 @@
           <div class="down">
             <div class="infoTop">Username: <?php echo $username; ?></div>
             <div class="info">SCORE</div>
-            <div class="info">DATE LAST LOGGED IN</div>
+            <div class="info">DATE LAST LOGGED IN <?php echo $lastLoggedIn ?> </div>
             <div class="info">TRADE LINK</div>
           </div>
           <div class="down">
             <div class="saves h-25">SAVES</div>
             <div class="savesTable h-75">
-              <table class="w-100 h-75 saves">
+              <table class="w-100 h-100 saves">
+                <tbody>
                  <?php
-                  for ($i=0; $i < $count; $i++) {
+                  for ($i=0; $i < 8; $i++) {
                     echo "<tr>";
                     echo "<td>";
-                    $name = $saves[$i + 2];
-                    $name = str_replace($find,"",$name);
+                    if (!empty($saves[$i + 2])) {
+                      $file = $saves[$i + 2];
+                    }
+                    else {
+                      $file = '';
+                    }
+                    $name = str_replace($find,"",$file);
                     echo $name;
+                    echo "</td>";
+
+                    echo "<td>";
+                    echo "<a href='game.php?toLoad=" . $file . "' role='button' class='btn btn-light btn-lg btn-block'>Load Game</a>";
                     echo "</td>";
                     echo "</tr>";
                   }
-
                 ?>
+                </tbody>
               </table>
             </div>
           </div>
