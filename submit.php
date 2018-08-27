@@ -112,7 +112,7 @@
         }
 
 
-        elseif ($mode == "trade") {
+        elseif ($mode == "tradeOffer") {
           if (empty($_POST['to']) || empty($_POST['from'])) {
             $_SESSION['error'] = "No item selected to/from.";
             header('Location: tradingRequest.php');
@@ -166,13 +166,43 @@
 
         }
 
-        if ($_SESSION['error'] == false) {
-          header('Location: index.php');
+        elseif ($mode == "trade") {
+          if (empty($_GET['accept'])) {
+            $_SESSION['error'] = "No item selected to/from.";
+            echo $_GET['accept'];
+            echo empty($_GET['accept']);
+            echo "<br />";
+            echo $_GET['number'];
+            echo empty($_GET['number']);
+            // header('Location: offers.php');
+          }
+          else {
+            $user = $_SESSION['username'];
+            $from = $_GET['from'];
+            $accept = $_GET['accept'];
+            $number = $_GET['number'];
+            $printNext = false;
+            echo $user;
+            echo $from;
+            echo $accept;
+            echo $number;
+            $file = fopen('data/trades.csv', "w+");
+            foreach ($file as $line) {
+              if($line[0] == $user) {
+                print_r($line);
+                $printNext = true;
+              }
+            }
+          }
         }
 
-        else {
-          header('Location: login.php');
-        }
+        // if ($_SESSION['error'] == false) {
+        //   header('Location: index.php');
+        // }
+        //
+        // else {
+        //   header('Location: login.php');
+        // }
      ?>
      </h1>
     </div>

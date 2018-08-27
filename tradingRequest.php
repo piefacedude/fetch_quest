@@ -14,10 +14,12 @@
     <?php require 'snippets/navbar.php'; ?>
     <div class="jumbotron">
       <h2>Who do you want to trade with?</h2>
-      <?php if (!empty($_SESSION['error'])) {
-        echo $_SESSION['error'];
-      };
-      echo "<br />"; ?>
+      <p class="black">
+        <?php if (!empty($_SESSION['error'])) {
+          echo $_SESSION['error'];
+        };?>
+      </p>
+      <br />
       <form method="post" action="trading.php">
         <input type="text" name="offerTo"/>
         <input type="submit" />

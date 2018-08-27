@@ -54,13 +54,17 @@
         else {
           $userTo = $_POST['offerTo'];
           $userFrom = $_SESSION['username'];
+          if ($userTo == $userFrom) {
+            $_SESSION['error'] = "Can't trade with yourself!";
+            header('Location: tradingRequest.php');
+          }
 
           if (!file_exists("data/characters/" . $userTo . ".csv")) {
             $_SESSION['error'] = "username not found";
             header('Location: tradingRequest.php');
           }
           else {
-            echo "<form action='submit.php?mode=trade' method='post'>";
+            echo "<form action='submit.php?mode=tradeOffer' method='post'>";
             echo "<div class='jumbotron black'>";
 
             echo "<table>";
