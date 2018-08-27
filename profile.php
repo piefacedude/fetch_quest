@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta charset="utf-8">
-    <title>FetchQuest Leaderboard</title>
     <?php
       session_start();
       $activePage = "profile";
       require 'snippets/links.php';
     ?>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta charset="utf-8">
+    <title>FetchQuest | <?php echo $_SESSION['username'] ?></title>
   </head>
   <body>
     <?php require 'snippets/navbar.php'; ?>
@@ -38,52 +38,50 @@
       }
       ?>
       <div id="body" class="h-100">
-        <div class="buffer"></div>
-        <div class="across">
+        <div class="h-100 p-1 profile_outer">
+          <div class="down first">
+            <div class="profilePic p-1 black"><img src="images/HeroStuff/dog_still_large.png" class="PPImage rounded mx-auto d-block"/></div>
+            <div class="h-25 p-1 black username"><h3><?php echo $username; ?></h3></div>
+          </div>
           <div class="down">
-            <div class="profilePic"><img src="images/HeroStuff/dog_still_large.png" /></div>
-            <div class="h-25">DATE CREATED <?php echo $dateMade; ?></div>
-            <div class="h-25">
+            <div class="info p-3 black">DATE CREATED <?php echo $dateMade; ?></div>
+            <div class="info p-3 black">DATE LAST LOGGED IN <?php echo $lastLoggedIn ?> </div>
+            <div class="info p-3 black"><a href="tradingRequest.php?from=<?php echo $_SESSION['username']; ?>">TRADE LINK</a></div>
+            <div class="info p-3 black"><a href="offers.php">OFFERS</a></div>
+          </div>
+          <div class="down">
+            <div class="saves h-25 p-1 black">
+              <img src="imgs/saves.jpg" /><br />
               <?php
-              $saveDirectory = "data/saves/" . $username;
-              $fi = new FilesystemIterator($saveDirectory, FilesystemIterator::SKIP_DOTS);
-              printf("%d saves made", iterator_count($fi));
-              $count = count(scandir($saveDirectory)) - 2;
-              $saves = scandir($saveDirectory);
-              $find = array(".csv");
-              ?>
-            </div>
-          </div>
-          <div class="down">
-            <div class="infoTop">Username: <?php echo $username; ?></div>
-            <div class="info">SCORE</div>
-            <div class="info">DATE LAST LOGGED IN <?php echo $lastLoggedIn ?> </div>
-            <div class="info">
-              <a href="tradingRequest.php?from=<?php echo $_SESSION['username']; ?>">TRADE LINK</a>
-              <a href="offers.php">OFFERS</a>
-            </div>
-          </div>
-          <div class="down">
-            <div class="saves h-25">SAVES</div>
+                $saveDirectory = "data/saves/" . $username;
+                $fi = new FilesystemIterator($saveDirectory, FilesystemIterator::SKIP_DOTS);
+                printf("%d saves made", iterator_count($fi));
+                $count = count(scandir($saveDirectory)) - 2;
+                $saves = scandir($saveDirectory);
+                $find = array(".csv");
+              ?></div>
             <div class="savesTable h-75">
               <table class="w-100 h-100 saves">
                 <tbody>
                  <?php
                   for ($i=0; $i < 8; $i++) {
                     echo "<tr>";
-                    echo "<td>";
+                    echo "<td class='p-1'>";
                     if (!empty($saves[$i + 2])) {
                       $file = $saves[$i + 2];
                     }
                     else {
                       $file = '';
+                      $i = 9;
                     }
                     $name = str_replace($find,"",$file);
                     echo $name;
                     echo "</td>";
 
                     echo "<td>";
-                    echo "<a href='game.php?toLoad=" . $file . "' role='button' class='btn btn-light btn-lg btn-block'>Load Game</a>";
+                    if ($file != '') {
+                      echo "<a href='game.php?toLoad=" . $file . "' role='button' class='btn btn-light btn-lg btn-block'>Load Game</a>";
+                    }
                     echo "</td>";
                     echo "</tr>";
                   }

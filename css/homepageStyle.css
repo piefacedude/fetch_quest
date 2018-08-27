@@ -153,26 +153,21 @@ html {
 	margin-left: 20%;
 }
 
-.buffer {
-	height: 2%;
-	background-color: #393E46;
-}
-
 .across {
 	width: 100%;
 	height: 80%;
-	background-color: red;
+	background-color: white;
 }
 
 .down2 {
 	width: 50%;
 	height: 100%;
-	background-color: blue;
+	background-color: white;
 	float: left;
 }
 
 .jumbotron table tr td {
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid white;
 	height: 24px;
 	width: 150px;
 	vertical-align: bottom;
@@ -181,18 +176,13 @@ html {
 .down {
 	width: 33.333333333%;
 	height: 100%;
-	background-color: blue;
+	background-color: white;
 	float: left;
 }
 
-.infoTop {
-	height: 40%;
-	background-color: orange;
-}
-
 .info {
-	height: 20%;
-	background-color: orange;
+	height: 25%;
+	background-color: white;
 }
 
 .black {
@@ -203,8 +193,22 @@ html {
 	height: 50%;
 }
 
+.PPImage {
+	height: 100%;
+}
+
+.first {
+	border-right: 3px solid #393E46;
+}
+
+.username {
+	text-align: center;
+}
+
 .saves tbody tr td {
 	background-color: violet;
+	vertical-align: middle;
+	border-bottom: 1px solid #ddd;
 }
 
 .saves tbody tr {
@@ -216,3 +220,11 @@ h2 {
 	font-size: 24px;
 	color: black;
 }
+
+h3 {
+	font-family: 'Press Start 2P', cursive;
+	font-size: 40px;
+	color: black;
+}
+
+

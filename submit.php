@@ -11,6 +11,73 @@
       <?php
         //gets vars posted on last page
         session_start();
+
+        function modifyItemsByArray($user, $array, $items) {
+
+          if ($array == 0) {
+            $other = 1;
+          }
+          else {
+            $other = 0;
+          }
+
+          $file = new SplFileObject('data/characters/' . $user . '.csv');
+          $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
+
+          $userData = [];
+          while(!$file->eof()) {
+            $userData[] = $file->fgetcsv();
+          }
+
+          $file = fopen('data/characters/' . $user . '.csv', "w");
+
+          $count = 0;
+          $next = false;
+          $notThis = false;
+          $userItemsCheck = $items[$array];
+          $userItemsPush = $items[$other];
+          $newArray = [];
+          foreach ($userData as $line) {
+
+            if ($next == true && !empty($line)) {
+              foreach ($line as $value) {
+                foreach ($userItemsCheck as $against) {
+                  if ($value == $against) {
+                    $notThis = true;
+                  }
+                }
+                if ($notThis != true) {
+                  $newArray[] = $value;
+                }
+                else {
+                  $notThis = false;
+                }
+              }
+
+              $first = true;
+              foreach ($userItemsPush as $value) {
+                if ($first == false) {
+                  $newArray[] = $value;
+                }
+                else {
+                  $first = false;
+                }
+              }
+              fputcsv($file, $newArray);
+              $next = false;
+            }
+
+            else if ($line[0] == "Items:") {
+              $next = true;
+              fputcsv($file, $line);
+            }
+            else {
+              fputcsv($file, $line);
+            }
+          }
+          print_r($newArray);
+        }
+
         $username = filter_input(INPUT_POST, 'username');
         $password = filter_input(INPUT_POST, 'password');
         $email = filter_input(INPUT_POST, 'email');
@@ -32,9 +99,6 @@
           $rows[] = $file->fgetcsv();
         }
 
-        //creating csv line
-        //index is the next blank line
-        //array is index,date,height,weight,bmi (previously calculated)
         if ($mode == "register") {
           //finding next unset line for var to go into, also acts as index number
           $count = 0;
@@ -86,19 +150,16 @@
 
 
         elseif ($mode == "login") {
-          $_SESSION['test'] = "yes";
           //finding next unset line for var to go into, also acts as index number
           $count = 0;
           while (isset($rows[$count])) {
-            $count++;
             if ($rows[$count][0] == $username) {
-              //found the username
+              // found the username
               if (hash_equals($rows[$count][1], crypt($password,$rows[$count][1]))) {
                 $file = fopen("data/users.csv",'w');
                 $_SESSION['username'] = $username;
                 $fileRedo = $rows;
                 $fileRedo[$count][4] = date('Y/m/d');
-
                 foreach ($fileRedo as $line) {
                   fputcsv($file,$line);
                 }
@@ -107,20 +168,31 @@
                 $_SESSION['error'] = 'Username or password was incorrect';
               }
             }
+            $count++;
           }
           fclose($file);
         }
 
 
         elseif ($mode == "tradeOffer") {
-          if (empty($_POST['to']) || empty($_POST['from'])) {
+          if (empty($_POST['to']) && empty($_POST['from'])) {
             $_SESSION['error'] = "No item selected to/from.";
             header('Location: tradingRequest.php');
           }
           $gotten = true;
           $check = 0;
-          $from = $_POST['from'];
-          $to = $_POST['to'];
+          if (!empty($_POST['from'])) {
+            $from = $_POST['from'];
+          }
+          else {
+            $from = [];
+          }
+          if (!empty($_POST['to'])) {
+            $to = $_POST['to'];
+          }
+          else {
+            $to = [];
+          }
           //
           // $file = new SplFileObject("data/trades.csv");
           // $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
@@ -158,12 +230,9 @@
                 break;
             }
           }
-          print_r($input);
-          print_r($jnput);
           fputcsv($file, $input);
           fputcsv($file, $jnput);
           fclose($file);
-
         }
 
         elseif ($mode == "trade") {
@@ -182,27 +251,86 @@
             $accept = $_GET['accept'];
             $number = $_GET['number'];
             $printNext = false;
-            echo $user;
-            echo $from;
-            echo $accept;
-            echo $number;
+            $file = new SplFileObject("data/trades.csv");
+            $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
+
+            $trades = [];
+            while(!$file->eof()) {
+              $trades[] = $file->fgetcsv();
+            }
+            $count = 0;
+            $checked = 0;
+            foreach ($trades as $check) {
+              if ($check[0] == $user) {
+                if ($trades[$count + 1][0] == $from) {
+                  if ($number == $checked) {
+                    $toRemove = $count;
+                  }
+                  $checked++;
+                }
+              }
+              $count++;
+            }
+
             $file = fopen('data/trades.csv', "w+");
-            foreach ($file as $line) {
-              if($line[0] == $user) {
-                print_r($line);
-                $printNext = true;
+            $offer = false;
+            $count = 0;
+            $items = [];
+            echo $toRemove;
+            echo "<br />";
+            foreach ($trades as $line) {
+
+              echo "<br />";
+              if ($toRemove != $count && $toRemove != $count - 1) {
+                echo $count;
+                if ($offer == true) {
+                  $offer = false;
+                }
+                else {
+                  $offer = true;
+                }
+
+                if ($printNext == true) {
+                  $printNext = false;
+                }
+                if ($line[0] == $user && $offer == true) {
+                  $printNext = true;
+                }
+                fputcsv($file, $line);
+              }
+              else {
+                $items[] = $line;
+              }
+              $count++;
+            }
+            fclose($file);
+            if ($accept == "yes") {
+              for ($i=0; $i < 2; $i++) {
+                switch ($i) {
+                  case 0:
+                    modifyItemsByArray($user,0,$items);
+                    break;
+
+                    case 1:
+                    modifyItemsByArray($from,1,$items);
+                    break;
+
+                  default:
+                    // code...
+                    break;
+                }
               }
             }
           }
         }
 
-        // if ($_SESSION['error'] == false) {
-        //   header('Location: index.php');
-        // }
-        //
-        // else {
-        //   header('Location: login.php');
-        // }
+        if ($_SESSION['error'] == false) {
+          header('Location: index.php');
+        }
+
+        else {
+          header('Location: login.php');
+        }
      ?>
      </h1>
     </div>
