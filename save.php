@@ -22,7 +22,7 @@ if ($mode == "save") {
   //remove any random characters that conversion from
   //  object to string to array has created.
   $toReplace = array('"',"]","[","}","{");
-    foreach($data as $key=>$value){
+  foreach($data as $key=>$value){
     $data[$key]=str_replace($toReplace,"",$value);
   }
   //put each array item into array as line
