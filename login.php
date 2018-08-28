@@ -6,6 +6,9 @@
     <title>FetchQuest Homepage</title>
     <?php
      session_start();
+     //login page acts as both log in, and out.
+     //as such, logged in users see the link to the login page as "log out"
+     //so if they're logged in, log them out
      if (!empty($_SESSION['username'])) {
        unset($_SESSION['username']);
      }
@@ -24,7 +27,7 @@
       include 'snippets/navbar.php';
       ?>
       <div class="jumbotron" id="login">
-        <h1 class="login">Hey.</h1>
+        <h2 class="login">Hey.</h2>
         <br>
         <form action="submit.php" method="post" class="login">
           <input type="hidden" name="mode" value="login" />
@@ -43,7 +46,7 @@
         </p>
       </div>
       <div class="jumbotron" id="register">
-        <h1 class="register">PLAY GAME</h1>
+        <h2 class="register">PLAY GAME</h2>
         <br>
         <form action="submit.php?mode=login" method="post" class="register">
           <input type="hidden" name="mode" value="register" />
@@ -67,8 +70,7 @@
     </div>
 
 
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="js/loginSwitch.js" type="text/javascript"></script>

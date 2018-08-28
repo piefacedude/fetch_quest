@@ -153,36 +153,27 @@ html {
 	margin-left: 20%;
 }
 
-.across {
-	width: 100%;
-	height: 80%;
-	background-color: white;
-}
-
 .down2 {
 	width: 50%;
 	height: 100%;
-	background-color: white;
 	float: left;
 }
 
 .jumbotron table tr td {
-	border-bottom: 1px solid white;
+	border-bottom: 1px solid #393E46;
 	height: 24px;
 	width: 150px;
 	vertical-align: bottom;
 }
 
 .down {
-	width: 33.333333333%;
+	width: 50%;
 	height: 100%;
-	background-color: white;
 	float: left;
 }
 
 .info {
-	height: 25%;
-	background-color: white;
+	height: 10%;
 }
 
 .black {
@@ -206,7 +197,7 @@ html {
 }
 
 .saves tbody tr td {
-	background-color: violet;
+	background-color: #FF5722;
 	vertical-align: middle;
 	border-bottom: 1px solid #ddd;
 }
@@ -224,7 +215,7 @@ h2 {
 h3 {
 	font-family: 'Press Start 2P', cursive;
 	font-size: 40px;
-	color: black;
+	color: #FF5722;
 }
 
 

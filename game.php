@@ -9,10 +9,13 @@
   </head>
   <body>
     <?php
+      //if we're not logged in, go back to the login page (we need to be for saving and loading etc)
       if (!empty($_SESSION['username'])) {
         header('Location: login.php');
       }
+      //if theres no file to be loaded, load the latest one.
       if (!empty($_GET['toLoad'])) {
+        //creates a hidden <form> item at the top of the page, so javascript can get it
         echo '<input id="fileLoad" type="hidden" value="' . $_GET['toLoad'] . '" />';
       }
     ?>

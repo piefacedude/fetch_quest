@@ -29,7 +29,7 @@ if ($mode == "save") {
   foreach ($data as $line) {
     //creates sub-array,
     $newLine = explode('.',$line);
-
+    //puts it in the file
     fputcsv($file,$newLine);
   }
   // print_r($data);

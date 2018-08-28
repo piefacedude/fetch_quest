@@ -74,6 +74,8 @@ var genericJump = false;
 var particleTimer = 0;
 var currentGameLevel = 1;
 var totalDamageDone = 0;
+var saveAlert = false;
+var saveTimer = 201;
 
 //objects
 hero = {
@@ -199,9 +201,24 @@ function render() {
   gameCanvas.clear();
   //then add background first
   renderEntity(background);
-
   renderEntities(hud);
   renderHUD();
+
+  if (saveTimer < 50) {
+    gameCanvas.context.fillStyle="rgba(0, 0, 255, 1)";
+    gameCanvas.context.font = "24px 'Press Start 2P'";
+    gameCanvas.context.fillText("Save Made!", 300, 100);
+    saveTimer++;
+  }
+  else if (saveTimer < 100) {
+    gameCanvas.context.fillStyle="rgba(0, 0, 255, " + (1 / (saveTimer - 50)) +")";
+    gameCanvas.context.font = "24px 'Press Start 2P'";
+    gameCanvas.context.fillText("Save Made!", 300, 100);
+    saveTimer++;
+  }
+  else if (saveTimer < 150) {
+    saveTimer++;
+  }
   //then the rest in order
   //if the player's selecting their action
   if (gameState == "playerSelect") {
@@ -330,113 +347,76 @@ function handleEnemy() {
 
 //csv game file export
 function saveGame() {
-  //ajax request setup
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      //whatever gets echo'd in the php shows in the console
-      console.log(this.responseText);
-    }
-  };
-  //prepare save
-  //sends as a long string, "-" seperates lines, "." seperates values
-  //initial blah for context
-  var toSendSave = "Save file from FetchQuest-Hero data follows structure of:-MaxHp.CurrentHp.MaxPP.CurrentPP-Attacks:*attacks*-Items:*items*-Specials:*specials*-"
-
-  //add hero's data
-  toSendSave += "HeroData:-" + hero.maxHp + "." + hero.currentHp + "." + hero.maxPawPower + "." + hero.currentPawPower + "-";
-
-  //enemies stats
-  for (var i = 0; i < enemies.length; i++) {
-    //for each enemy, add ID, name, and current HP
-    var workingData = "EnemyNo" + i + ":-" + enemies[i].id + "." + enemies[i].maxHp + "." + enemies[i].currentHp;
-    //break for next enemy
-    toSendSave += workingData + "-";
-  }
-  //turns the object into a long string
-  save = JSON.stringify(toSendSave);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //now the hero's stats
-  var toSendProfile = "Profile for FetchQuest User-";
-
-  //create list to be added to file var
-    var listCheck;
-    //for attacks, items and specials
-    for (var i = 0; i < 3; i++) {
-      switch (i) {
-        case 0:
-          //add a title (used to ID the list below)
-          toSendProfile += "Attacks:-";
-          //set list to relevent
-          listCheck = hero.attacks;
-          break;
-        case 1:
-          listCheck = hero.items;
-          toSendProfile += "Items:-";
-          break;
-        case 2:
-          listCheck = hero.special;
-          toSendProfile += "Specials:-";
-          break;
+  if (saveTimer > 149) {
+    //ajax request setup
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        //whatever gets echo'd in the php shows in the console
+        console.log(this.responseText);
+        saveTimer = 0;
       }
-      //while there's more in the list
-      for (var j = 0; j < listCheck.length; j++) {
-        //add the name of the thing to the string
-        //on load, the name is used to find stats
-        toSendProfile += listCheck[j].name;
-        //if its not the last, seperate value
-        if (j !== listCheck.length - 1) {
-          toSendProfile += ".";
+    };
+    //prepare save
+    //sends as a long string, "-" seperates lines, "." seperates values
+    //initial blah for context
+    var toSendSave = "Save file from FetchQuest-Hero data follows structure of:-MaxHp.CurrentHp.MaxPP.CurrentPP-Then the enemies"
+
+    //add hero's data
+    toSendSave += "HeroData:-" + hero.maxHp + "." + hero.currentHp + "." + hero.maxPawPower + "." + hero.currentPawPower + "-";
+
+    //enemies stats
+    for (var i = 0; i < enemies.length; i++) {
+      //for each enemy, add ID, name, and current HP
+      var workingData = "EnemyNo" + i + ":-" + enemies[i].id + "." + enemies[i].maxHp + "." + enemies[i].currentHp;
+      //break for next enemy
+      toSendSave += workingData + "-";
+    }
+    //turns the object into a long string
+    save = JSON.stringify(toSendSave);
+
+    //now the hero's stats
+    var toSendProfile = "Profile for FetchQuest User-";
+
+    //create list to be added to file var
+      var listCheck;
+      //for attacks, items and specials
+      for (var i = 0; i < 3; i++) {
+        switch (i) {
+          case 0:
+            //add a title (used to ID the list below)
+            toSendProfile += "Attacks:-";
+            //set list to relevent
+            listCheck = hero.attacks;
+            break;
+          case 1:
+            listCheck = hero.items;
+            toSendProfile += "Items:-";
+            break;
+          case 2:
+            listCheck = hero.special;
+            toSendProfile += "Specials:-";
+            break;
         }
+        //while there's more in the list
+        for (var j = 0; j < listCheck.length; j++) {
+          //add the name of the thing to the string
+          //on load, the name is used to find stats
+          toSendProfile += listCheck[j].name;
+          //if its not the last, seperate value
+          if (j !== listCheck.length - 1) {
+            toSendProfile += ".";
+          }
+        }
+        //break to next line
+        toSendProfile += "-";
       }
-      //break to next line
-      toSendProfile += "-";
-    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  profile = JSON.stringify(toSendProfile);
-  //send to "save.php", with mode set to "save", and with the save data
-  xmlhttp.open("GET", "save.php?mode=save&save=" + save + "&profile=" + profile, true);
-  xmlhttp.send();
+    profile = JSON.stringify(toSendProfile);
+    //send to "save.php", with mode set to "save", and with the save data
+    xmlhttp.open("GET", "save.php?mode=save&save=" + save + "&profile=" + profile, true);
+    xmlhttp.send();
+  }
 }
 
 //game loading

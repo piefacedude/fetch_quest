@@ -158,3 +158,7 @@ function generateShade(i) {
     sprite: new Sprite('images/Prompts/shadeBig.png', [0, 0], [185, 29])
   });
 }
+
+
+
+

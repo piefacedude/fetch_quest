@@ -12,6 +12,7 @@
   <body>
     <div class="container-fluid h-100">
     <?php require 'snippets/navbar.php'; ?>
+    <!-- simple jumbotron used to make request to create a trade offer -->
     <div class="jumbotron">
       <h2>Who do you want to trade with?</h2>
       <p class="black">
@@ -20,6 +21,7 @@
         };?>
       </p>
       <br />
+      <!-- trading form -->
       <form method="post" action="trading.php">
         <input type="text" name="offerTo"/>
         <input type="submit" />

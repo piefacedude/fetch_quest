@@ -38,20 +38,18 @@
       }
       ?>
       <div id="body" class="h-100">
-        <div class="h-100 p-1 profile_outer">
+        <div class="h-100 p-1 jumbotron bg-dark">
           <div class="down first">
             <div class="profilePic p-1 black"><img src="images/HeroStuff/dog_still_large.png" class="PPImage rounded mx-auto d-block"/></div>
-            <div class="h-25 p-1 black username"><h3><?php echo $username; ?></h3></div>
-          </div>
-          <div class="down">
+            <div class="info p-1 black username"><h3><?php echo $username; ?></h3></div>
             <div class="info p-3 black">DATE CREATED <?php echo $dateMade; ?></div>
             <div class="info p-3 black">DATE LAST LOGGED IN <?php echo $lastLoggedIn ?> </div>
-            <div class="info p-3 black"><a href="tradingRequest.php?from=<?php echo $_SESSION['username']; ?>">TRADE LINK</a></div>
-            <div class="info p-3 black"><a href="offers.php">OFFERS</a></div>
+            <div class="info p-3 black"><a href='tradingRequest.php?from=<?php echo $_SESSION['username']; ?>' role='button' class='btn btn-light btn-lg btn-block'>Offer a trade!</a></div>
+            <div class="info p-3 black"><a href='offers.php' role='button' class='btn btn-light btn-lg btn-block'>Check Offers</a></div>
           </div>
           <div class="down">
-            <div class="saves h-25 p-1 black">
-              <img src="imgs/saves.jpg" /><br />
+            <div class="h-25 p-1 black text-center">
+              <img src="imgs/saves.jpg" class="rounded mx-auto d-block" /><br />
               <?php
                 $saveDirectory = "data/saves/" . $username;
                 $fi = new FilesystemIterator($saveDirectory, FilesystemIterator::SKIP_DOTS);
@@ -60,13 +58,13 @@
                 $saves = scandir($saveDirectory);
                 $find = array(".csv");
               ?></div>
-            <div class="savesTable h-75">
-              <table class="w-100 h-100 saves">
+            <div class="h-75">
+              <table class="w-100 h-100 table table-striped table-dark table-hover table-sm">
                 <tbody>
                  <?php
                   for ($i=0; $i < 8; $i++) {
                     echo "<tr>";
-                    echo "<td class='p-1'>";
+                    echo "<td class='p-1 align-middle'>";
                     if (!empty($saves[$i + 2])) {
                       $file = $saves[$i + 2];
                     }
@@ -78,7 +76,7 @@
                     echo $name;
                     echo "</td>";
 
-                    echo "<td>";
+                    echo "<td class='align-middle'>";
                     if ($file != '') {
                       echo "<a href='game.php?toLoad=" . $file . "' role='button' class='btn btn-light btn-lg btn-block'>Load Game</a>";
                     }

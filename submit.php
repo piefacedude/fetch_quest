@@ -11,9 +11,9 @@
       <?php
         //gets vars posted on last page
         session_start();
-
+        //used to switch a users items
         function modifyItemsByArray($user, $array, $items) {
-
+          //opposes the arrays used, as it only has to and from
           if ($array == 0) {
             $other = 1;
           }
@@ -21,97 +21,137 @@
             $other = 0;
           }
 
+          //read the user's character data into an array
           $file = new SplFileObject('data/characters/' . $user . '.csv');
           $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
-
           $userData = [];
           while(!$file->eof()) {
             $userData[] = $file->fgetcsv();
           }
 
+          // open the user's character file in write mode
           $file = fopen('data/characters/' . $user . '.csv', "w");
 
-          $count = 0;
+          //set up some variables
+          //the next line is the one with the items on it
           $next = false;
+          //used to ensure the offer is not re-written back into the trades file
           $notThis = false;
+          //the items that will be taken from the user
           $userItemsCheck = $items[$array];
+          //the items that will be given
           $userItemsPush = $items[$other];
+          //the new items line, now with the items removed or changed
           $newArray = [];
-          foreach ($userData as $line) {
 
+          //foreach of the line of the character's data
+          foreach ($userData as $line) {
+            //if this line is the items line and this line isnt empty
             if ($next == true && !empty($line)) {
+              //for each of the items on the line
               foreach ($line as $value) {
-                foreach ($userItemsCheck as $against) {
+                //check wether it matches any of the items on the removal list
+                foreach ($userItemsCheck as $key => $against) {
+                  //and if it is
                   if ($value == $against) {
+                    //make sure its not place back into the array
                     $notThis = true;
+                    //and remove this item from the removal array (allows different number of items to be traded eg 2x healing potion)
+                    unset($userItemsCheck[$key]);
                   }
                 }
+                //if we do want this item to stay
                 if ($notThis != true) {
+                  //put it back on the new line
                   $newArray[] = $value;
                 }
+                //otherwise, reset and go again
                 else {
                   $notThis = false;
                 }
               }
 
+              //and give the user all their shiney new items
               $first = true;
+              //foreach of the items removed from the other player's inventory
               foreach ($userItemsPush as $value) {
+                //if this isnt the identifying username
                 if ($first == false) {
+                  //push it into the new line
                   $newArray[] = $value;
                 }
                 else {
+                  //otherwise, ignore it
                   $first = false;
                 }
               }
+              //then put the new item line into the user's file
               fputcsv($file, $newArray);
               $next = false;
             }
 
+            //if this line has "Items:" on it, its the one before the items array
             else if ($line[0] == "Items:") {
+              //so flag the next line as the items array
               $next = true;
+              //and put this one back where ya found it
               fputcsv($file, $line);
             }
             else {
+              //otherwise it's just a random line that needs to be replaced
               fputcsv($file, $line);
             }
           }
-          print_r($newArray);
         }
 
+        //this used to be just the register and login page
+        //so all these are out here
+        //if it aint broke dont fix it
         $username = filter_input(INPUT_POST, 'username');
         $password = filter_input(INPUT_POST, 'password');
         $email = filter_input(INPUT_POST, 'email');
+        //if we have something posted in the mode slot
         if (!empty($_POST['mode'])) {
+          //thats the mode
           $mode = $_POST['mode'];
         }
         else {
+          //otherwise, its been put in the url, so get it from there
           $mode = $_GET['mode'];
         }
 
+        //start with no errors assumed
         $_SESSION['error'] = false;
 
-        //creating rows 2d array of csv file
+        //make an array from the users data
         $file = new SplFileObject("data/users.csv");
-        $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
-
+        $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);\
         $rows = [];
         while(!$file->eof()) {
           $rows[] = $file->fgetcsv();
         }
 
+        //if we're registering
         if ($mode == "register") {
-          //finding next unset line for var to go into, also acts as index number
+          //seeing if the username they wanted is taken
           $count = 0;
+          //while there's still records to work with
           while (isset($rows[$count])) {
+            //check if the username is the same as the one they submitted
             if ($rows[$count][0] == $username) {
+              //if so, error and send them home
               $_SESSION['error'] = 'Username is taken!';
               $count = 9999999999999999;
             }
             $count++;
           }
 
+          //hash the password they gave
           $password = password_hash($password,PASSWORD_DEFAULT);
 
+          //make an array to act as their user record
+          //structure:
+          //username, hashed password, email, date account created, date last logged in
           $list = array
           (
             $username . "," . $password . "," . $email . "," . date('Y/m/d') . "," . date('Y/m/d')
@@ -126,28 +166,36 @@
             foreach ($list as $line) {
               //and the line isnt empty
               if ($line != null && $_SESSION['error'] == false) {
-                //explode just makes the text into an array (see above)
+                //take the data we're given and make it into an array so the fput wont throw a hissy
                 $data = explode(',',$line);
                 //puts data from line into file
                 fputcsv($file,$data);
+                //make it alert the person when they are returned to the index page that they are now logged in
                 $_SESSION['username'] = $username;
+                $_SESSION['alert'] = "username";
               }
             }
           //closes file, politely
           fclose($file);
 
+          //also writes up a character file for them
+          //no items, basic attacks and specials
+          //create a new csv
           $file = fopen("data/characters/" . $username . ".csv", "w");
-
+          //use this string
           $toAdd = "Profile for FetchQuest User-Attacks:-Jump.Bite-Items:- -Specials:-Bark.Howl";
+          //explode into array using the "-"'s as the first layer
           $first = explode('-',$toAdd);
           foreach ($first as $line) {
+            //and then by the dots for the second layer
             $input = explode('.', $line);
             fputcsv($file,$input);
           }
-
+          //close the file quietly
           fclose($file);
         }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         elseif ($mode == "login") {
           //finding next unset line for var to go into, also acts as index number
@@ -158,6 +206,7 @@
               if (hash_equals($rows[$count][1], crypt($password,$rows[$count][1]))) {
                 $file = fopen("data/users.csv",'w');
                 $_SESSION['username'] = $username;
+                $_SESSION['alert'] = "username";
                 $fileRedo = $rows;
                 $fileRedo[$count][4] = date('Y/m/d');
                 foreach ($fileRedo as $line) {

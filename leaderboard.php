@@ -19,25 +19,13 @@
         <img src="imgs/leaderboard.png" alt="Cave Background Feature Image" style="width:50%; margin-left:25%">
         <div class="content">
           <?php
+          //create an array called $rows from the leaderboard file
           $file = new SplFileObject("data/leaderboard.csv");
           $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
-
           $rows = [];
           while(!$file->eof()) {
             $rows[] = $file->fgetcsv();
           }
-
-          //finding number of records
-          //checks if line is defined, if it is, goes one higher
-          $count = 0;
-          //while the line is set
-          while (isset($rows[$count])) {
-            //count is increased by one
-            $count++;
-          }
-          //when we exit, the line selected is blank. we want the last defined one
-
-          $count = $count - 1;
 
           //linear sort by g witherow
           //start with assumed failure
@@ -46,7 +34,7 @@
             //if no number is out of place, sorting is done
             $sorted = true;
             //run through the list
-            for ($i=0; $i < $count; $i++) {
+            for ($i=0; $i < count($rows) - 1; $i++) {
               //if the before value is lower than the after, swap em
               if ($rows[$i][1] < $rows[$i + 1][1]) {
                 $temp = $rows[$i + 1];
@@ -66,22 +54,28 @@
                 <td><b>Score</b></td>
                 </tr>";
           //for number of records
-          for ($a=0; $a <= $count; $a++) {
+          for ($i=0; $i <= count($rows) - 1; $i++) {
             echo "<tr>";
             //for number of items in row
-            for ($i=0; $i < 3; $i++) {
+            for ($j=0; $j < 3; $j++) {
+              //make a table data
               echo "<td>";
-              $ref = $i - 1;
-              if ($i == 0) {
-                echo $a + 1;
+              //as the first run echos the position, everything is offset
+              //leaderboard file follows (name, score)
+              //so ref is used to find the data we need
+              $ref = $j - 1;
+              //echoing position on leaderboard
+              if ($j == 0) {
+                echo $i + 1;
               }
-
-              elseif ($i == 1) {
-                echo $rows[$a][$ref];
+              //echos the username
+              elseif ($j == 1) {
+                echo $rows[$i][$ref];
               }
-              //otherwise just echo the thing
+              //echos the score
               else {
-                echo round($rows[$a][$ref],2);
+                //rounding for safety
+                echo round($rows[$i][$ref],2);
               }
               //end item
               echo"</td>";
