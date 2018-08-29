@@ -68,7 +68,6 @@
             echo "<br />";
             //creates the links to accept, modify and deny the offers, respectivly
             echo '<a href="submit.php?mode=trade&number=' . $offerCount . '&accept=yes&from=' . $userFrom . '" role="button" class="btn btn-success btn-sm">ACCEPT</a>';
-            echo '<a href="trading.php?number=' . $offerCount . '&from=' . $userFrom . '" role="button" class="btn btn-secondary btn-sm">MODIFY</a>';
             echo '<a href="submit.php?mode=trade&number=' . $offerCount . '&accept=no&from=' . $userFrom . '" role="button" class="btn btn-danger btn-sm">DENY</a>';
             echo '</div>';
             $first = true;
@@ -101,6 +100,10 @@
               $printNext = true;
             }
           }
+        }
+        if ($offerCount == -1) {
+          $_SESSION['alert'] = "no trades";
+          header('Location: profile.php');
         }
       ?>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

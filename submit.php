@@ -125,7 +125,7 @@
 
         //make an array from the users data
         $file = new SplFileObject("data/users.csv");
-        $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);\
+        $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
         $rows = [];
         while(!$file->eof()) {
           $rows[] = $file->fgetcsv();
@@ -140,7 +140,7 @@
             //check if the username is the same as the one they submitted
             if ($rows[$count][0] == $username) {
               //if so, error and send them home
-              $_SESSION['error'] = 'Username is taken!';
+
               $count = 9999999999999999;
             }
             $count++;
@@ -180,19 +180,23 @@
 
           //also writes up a character file for them
           //no items, basic attacks and specials
-          //create a new csv
-          $file = fopen("data/characters/" . $username . ".csv", "w");
-          //use this string
-          $toAdd = "Profile for FetchQuest User-Attacks:-Jump.Bite-Items:- -Specials:-Bark.Howl";
-          //explode into array using the "-"'s as the first layer
-          $first = explode('-',$toAdd);
-          foreach ($first as $line) {
-            //and then by the dots for the second layer
-            $input = explode('.', $line);
-            fputcsv($file,$input);
+          if ($_SESSION['error'] == false) {
+            //create a folder for their saves to be saved in
+            mkdir("data/saves/" . $_SESSION['username']);
+            //create a new csv
+            $file = fopen("data/characters/" . $username . ".csv", "w");
+            //use this string
+            $toAdd = "Profile for FetchQuest User-Attacks:-Jump.Bite-Items:- -Specials:-Bark.Howl";
+            //explode into array using the "-"'s as the first layer
+            $first = explode('-',$toAdd);
+            foreach ($first as $line) {
+              //and then by the dots for the second layer
+              $input = explode('.', $line);
+              fputcsv($file,$input);
+            }
+            //close the file quietly
+            fclose($file);
           }
-          //close the file quietly
-          fclose($file);
         }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,15 +226,16 @@
                   fputcsv($file,$line);
                 }
               }
-              //otherwise, they either put in the wrong username or password
-              else {
-                $_SESSION['error'] = 'Username or password was incorrect';
-              }
             }
+            //otherwise, they either put in the wrong username or password
             $count++;
           }
           //close the file without waking the baby
           fclose($file);
+          if (empty($_SESSION['username'])) {
+            $_SESSION['alert'] = "unpw";
+            $_SESSION['error'] = true;
+          }
         }
 
 
@@ -363,6 +368,68 @@
               $count++;
             }
 
+            //added after formal testing
+            //we're looking for invaidated offers
+            //grab a list of the items given
+            $itemsGiven = $trades[$toRemove + 1];
+            //and taken away
+            $itemsTaken = $trades[$toRemove];
+            //also create an array of the caught invalid records
+            $toRemoveArray = [];
+            //and the first record is an offer
+            $offer = false;
+            //for each line of the offers file
+            foreach ($trades as $key => $value) {
+              //if the last line was an offer, this one isnt
+              if ($offer == true) {
+                $offer = false;
+              }
+              //and vice versa
+              else {
+                $offer = true;
+              }
+              //if the username is equal to the one offering the items
+              if ($value[0] == $from) {
+                //use their array of given items to check
+                for ($i=0; $i < count($itemsGiven) - 1; $i++) {
+                  //and check it against the items in that offer
+                  for ($j=0; $j < count($value) - 1; $j++) {
+                    //if any of the items overlap, the user will (probably), no longer have that item
+                    //also checks if the key is already being removed, to avoid doubles
+                    if ($itemsGiven[$i + 1] == $value[$j + 1] && !in_array($key,$toRemoveArray)) {
+                      //and if it's an offer, the next one needs to go as well
+                      if ($offer == true) {
+                        //add their indexs to the removal array
+                        $toRemoveArray[] = $key;
+                        $toRemoveArray[] = $key + 1;
+                      }
+                      //or if it's a request, it's now invalid as they cannot give it
+                      else {
+                        $toRemoveArray[] = $key;
+                        $toRemoveArray[] = $key - 1;
+                      }
+                    }
+                  }
+                }
+              }
+              //same as but it's for the other user
+              elseif ($value[0] == $user) {
+                for ($i=0; $i < count($itemsTaken) - 1; $i++) {
+                  for ($j=0; $j < count($value) - 1; $j++) {
+                    if ($itemsTaken[$i + 1] == $value[$j + 1] && !in_array($key,$toRemoveArray)) {
+                      if ($offer == true) {
+                        $toRemoveArray[] = $key;
+                        $toRemoveArray[] = $key + 1;
+                      }
+                      else {
+                        $toRemoveArray[] = $key;
+                        $toRemoveArray[] = $key - 1;
+                      }
+                    }
+                  }
+                }
+              }
+            }
             //now we open the trades file in write mode`
             //this deletes the file, but we have all the data in the trades array
             $file = fopen('data/trades.csv', "w");
@@ -373,7 +440,7 @@
             //finds the items that are asked for
             $items = [];
             //for each line of the trade file
-            foreach ($trades as $line) {
+            foreach ($trades as $key => $line) {
               //if this isnt the line to remove, OR the line after it
               if ($toRemove != $count && $toRemove != $count - 1) {
                 //if the last line was an offer, this one isnt
@@ -385,22 +452,19 @@
                   $offer = true;
                 }
 
-                // //and if we wanted the last line
-                // if ($printNext == true) {
-                //   $printNext = false;
-                // }
-                // if ($line[0] == $user && $offer == true) {
-                //   $printNext = true;
-                // }
-                
-                //and now put this line into the file
-                fputcsv($file, $line);
+                //and if the key is not in the list of invalid records
+                if (!in_array($key, $toRemoveArray)) {
+                  //and now put this line into the file
+                  fputcsv($file, $line);
+                }
               }
               else {
                 $items[] = $line;
               }
               $count++;
             }
+
+
             fclose($file);
             if ($accept == "yes") {
               for ($i=0; $i < 2; $i++) {
@@ -414,7 +478,6 @@
                     break;
 
                   default:
-                    // code...
                     break;
                 }
               }

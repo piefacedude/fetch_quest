@@ -76,7 +76,7 @@ else {
   //if we want a specific file, make that the request
   $request = $_REQUEST['file'];
   //find the date
-  $date = date('Y-m-d-h-i-s');
+  $date = date('Y-m-d-H-i-s');
   //check if a directory exists for the user
   //if there is one, load the files
   if (is_dir("data/saves/" . $_SESSION['username'])) {
@@ -103,6 +103,8 @@ else {
     }
     //this file is only for the current adventure, as the character can be reused
     //while all the data isnt read
+    $enemiesDone = false;
+    $heroDone = false;
     $done = false;
     while ($done == false) {
       //keep looking through the data array
@@ -110,22 +112,22 @@ else {
         //until we find an enemy
         if ($rows[$i][0] == "EnemyNo0:") {
           //then echo out the data for that enemy
-          $done = true;
+          $enemiesDone = true;
           foreach ($rows[$i + 1] as $key => $value) {
             echo $value . ",";
           }
         }
-        //
-        // if ($rows[$i][0] == "HeroData:") {
-        //   $heroDone = true;
-        //   foreach ($rows[$i + 1] as $key => $value) {
-        //     echo $value . ",";
-        //   }
-        // }
-        //
-        // if ($enemiesDone == true && $heroDone == true) {
-        //  $done = true;
-        // }
+
+        if ($rows[$i][0] == "HeroData:") {
+          $heroDone = true;
+          foreach ($rows[$i + 1] as $key => $value) {
+            echo $value . ",";
+          }
+        }
+
+        if ($enemiesDone == true && $heroDone == true) {
+         $done = true;
+        }
       }
     }
   }

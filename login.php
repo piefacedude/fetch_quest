@@ -69,6 +69,20 @@
       </div>
     </div>
 
+    <?php
+    if ($_SESSION['alert'] == "unpw") {
+      //if the user just logged in, tell them with an alert
+      echo "<script type='text/javascript'>alert('Error! Username or Password is incorrect!');</script>";
+      $_SESSION['alert'] = null;
+      $_SESSION['error'] = false;
+    }
+    elseif ($_SESSION['alert'] == "nametaken") {
+      //if the user just logged in, tell them with an alert
+      echo "<script type='text/javascript'>alert('Error! Username is taken. Try a different one.');</script>";
+      $_SESSION['alert'] = null;
+      $_SESSION['error'] = false;
+    }
+     ?>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

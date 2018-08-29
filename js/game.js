@@ -360,7 +360,7 @@ function saveGame() {
     //prepare save
     //sends as a long string, "-" seperates lines, "." seperates values
     //initial blah for context
-    var toSendSave = "Save file from FetchQuest-Hero data follows structure of:-MaxHp.CurrentHp.MaxPP.CurrentPP-Then the enemies"
+    var toSendSave = "Save file from FetchQuest-Hero data follows structure of:-MaxHp.CurrentHp.MaxPP.CurrentPP-Then the enemies-"
 
     //add hero's data
     toSendSave += "HeroData:-" + hero.maxHp + "." + hero.currentHp + "." + hero.maxPawPower + "." + hero.currentPawPower + "-";
@@ -433,8 +433,12 @@ function loadGame(file) {
       array = array.split(",");
       array.splice(-1,1)
       console.log(array);
-      enemies[array[0]].maxHp = array[1];
-      enemies[array[0]].currentHp = array[2];
+      hero.maxHp = array[0];
+      hero.currentHp = array[1];
+      hero.maxPawPower = array[2];
+      hero.currentPawPower = array[3];
+      enemies[array[4]].maxHp = array[5];
+      enemies[array[4]].currentHp = array[6];
     }
   }
   //mode set to "load", currently pulls most recent file
