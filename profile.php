@@ -44,12 +44,12 @@
             <div class="info p-1 black username"><h3><?php echo $username; ?></h3></div>
             <div class="info p-3 black">DATE CREATED <?php echo $dateMade; ?></div>
             <div class="info p-3 black">DATE LAST LOGGED IN <?php echo $lastLoggedIn ?> </div>
-            <div class="info p-3 black"><a href='tradingRequest.php?from=<?php echo $_SESSION['username']; ?>' role='button' class='btn btn-light btn-lg btn-block'>Offer a trade!</a></div>
-            <div class="info p-3 black"><a href='offers.php' role='button' class='btn btn-light btn-lg btn-block'>Check Offers</a></div>
+            <div class="info p-3 black mx-auto"><a href='tradingRequest.php?from=<?php echo $_SESSION['username']; ?>' role='button' class='btn btn-light btn-md p-2'>Offer a trade!</a></div>
+            <div class="info p-3 black mx-auto"><a href='offers.php' role='button' class='btn btn-light btn-md p-2'>Check Offers</a></div>
           </div>
           <div class="down">
             <div class="h-25 p-1 black text-center">
-              <img src="imgs/saves.jpg" class="rounded mx-auto d-block" /><br />
+              <img src="imgs/saves.jpg" class="rounded mx-auto h-75" /><br />
               <?php
                 $saveDirectory = "data/saves/" . $username;
                 $fi = new FilesystemIterator($saveDirectory, FilesystemIterator::SKIP_DOTS);

@@ -200,151 +200,200 @@
         elseif ($mode == "login") {
           //finding next unset line for var to go into, also acts as index number
           $count = 0;
+          //if we've still got records to look through
           while (isset($rows[$count])) {
+            //look for the username
             if ($rows[$count][0] == $username) {
               // found the username
+              //and if the password is the same as the hashed password
               if (hash_equals($rows[$count][1], crypt($password,$rows[$count][1]))) {
+                //time for a quick modification, open user file in write
                 $file = fopen("data/users.csv",'w');
+                //change the session's username to whatever they logged in to
                 $_SESSION['username'] = $username;
+                //set up an alert so they know they've logged in
                 $_SESSION['alert'] = "username";
+                //make a new line for them
                 $fileRedo = $rows;
+                //change the date they last logged in on to today
                 $fileRedo[$count][4] = date('Y/m/d');
+                //then put all the records back
                 foreach ($fileRedo as $line) {
                   fputcsv($file,$line);
                 }
               }
+              //otherwise, they either put in the wrong username or password
               else {
                 $_SESSION['error'] = 'Username or password was incorrect';
               }
             }
             $count++;
           }
+          //close the file without waking the baby
           fclose($file);
         }
 
 
+        //making a trade offer
         elseif ($mode == "tradeOffer") {
+          //if they pressed submit without actually asking for anything
           if (empty($_POST['to']) && empty($_POST['from'])) {
+            //boot them back to the request page with an error
             $_SESSION['error'] = "No item selected to/from.";
             header('Location: tradingRequest.php');
           }
+
+          //gotten is used to
           $gotten = true;
+          //check is used to
           $check = 0;
+          //if they are giving something
           if (!empty($_POST['from'])) {
+            //list the things being given
             $from = $_POST['from'];
           }
+          //otherwise
           else {
+            //create the variable, but have nothing being given
             $from = [];
           }
+          //same as for requesting
+          //allows users to either ask or give something for free
           if (!empty($_POST['to'])) {
             $to = $_POST['to'];
           }
           else {
             $to = [];
           }
-          //
-          // $file = new SplFileObject("data/trades.csv");
-          // $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
-          //
-          // $rows = [];
-          // while(!$file->eof()) {
-          //   $rows[] = $file->fgetcsv();
-          // }
 
+          //open the trades file in append mode
           $file = fopen("data/trades.csv",'a');
+          //lines for the trade file:
+          //input = *username of user for*,*item list*
+          //jnput = *username of user from*,*item list*
           $input = [];
           $jnput = [];
 
-          for ($i=0; $i < 4; $i++) {
+          //two distinct data types to be added
+          for ($i=0; $i < 2; $i++) {
             switch ($i) {
+              //first data piece is the username as above
               case 0:
+                //user it's being given to
                 $input[] = $_POST['userTo'];
-                break;
-
-              case 1:
-                foreach ($_POST['to'] as $value) {
-                  $input[] = $value;
-                }
-                break;
-
-              case 2:
+                //user it's being offered from
                 $jnput[] = $_POST['userFrom'];
                 break;
 
-
-              case 3:
-              foreach ($_POST['from'] as $value) {
-                $jnput[] = $value;
-              }
+              //item lists
+              case 1:
+                //items being asked
+                foreach ($_POST['to'] as $value) {
+                  $input[] = $value;
+                }
+                //items being given
+                foreach ($_POST['from'] as $value) {
+                  $jnput[] = $value;
+                }
                 break;
             }
           }
+          //then, put the items into their respective lines
+          //trades file is alternating wanted items and offered items
           fputcsv($file, $input);
           fputcsv($file, $jnput);
+          //close the file with the finesse of a super spy
           fclose($file);
         }
 
+
+        //if the person has accepted the trade
         elseif ($mode == "trade") {
+          //if the user somehow gets here without the needed vars
           if (empty($_GET['accept'])) {
-            $_SESSION['error'] = "No item selected to/from.";
-            echo $_GET['accept'];
-            echo empty($_GET['accept']);
-            echo "<br />";
-            echo $_GET['number'];
-            echo empty($_GET['number']);
-            // header('Location: offers.php');
+            //send back to the offers page
+            $_SESSION['error'] = "Error occured, please try again later.";
+            header('Location: offers.php');
           }
+          //otherwise
           else {
+            //the user is the logged in user, ensures you can't just
+            //force accept an offer using the "get" variables in the url
             $user = $_SESSION['username'];
+            //who the offer came from
             $from = $_GET['from'];
+            //if they are accepting or denying
             $accept = $_GET['accept'];
+            //which number offer this is from the person
+            //as people may send the same person multiple requests
             $number = $_GET['number'];
+            //and if this line has the second part of the request on it
             $printNext = false;
+
+            //making an array from the trades file
             $file = new SplFileObject("data/trades.csv");
             $file->setFlags(SplFileObject::READ_CSV|SplFileObject::SKIP_EMPTY|SplFileObject::READ_AHEAD);
-
             $trades = [];
             while(!$file->eof()) {
               $trades[] = $file->fgetcsv();
             }
+
+            //just used to find the next line, and the username on it
             $count = 0;
+            //counts how many offers between the same people there are
             $checked = 0;
+            //for each of the trades
             foreach ($trades as $check) {
-              if ($check[0] == $user) {
-                if ($trades[$count + 1][0] == $from) {
-                  if ($number == $checked) {
-                    $toRemove = $count;
-                  }
-                  $checked++;
+              //if the person it's offered to it the current user
+              //AND the person it was offered from is the person who's
+              //offer we're accepting
+              if ($check[0] == $user && $trades[$count + 1][0] == $from) {
+                //see if this is the right one (if there are two trades offers from
+                //the same user, we need to make sure it's the right one)
+                if ($number == $checked) {
+                  //and if it is, this is the one we want to remove
+                  //(record gets removed reguardless of if they are accepting
+                  //or denying)
+                  $toRemove = $count;
                 }
+                //if it's not the right one, increment the count and move on
+                $checked++;
               }
+              //another record checked
               $count++;
             }
 
-            $file = fopen('data/trades.csv', "w+");
+            //now we open the trades file in write mode`
+            //this deletes the file, but we have all the data in the trades array
+            $file = fopen('data/trades.csv', "w");
+            //the first line IS an offer, but we toggle at the start
             $offer = false;
+            //counter for reference
             $count = 0;
+            //finds the items that are asked for
             $items = [];
-            echo $toRemove;
-            echo "<br />";
+            //for each line of the trade file
             foreach ($trades as $line) {
-
-              echo "<br />";
+              //if this isnt the line to remove, OR the line after it
               if ($toRemove != $count && $toRemove != $count - 1) {
-                echo $count;
+                //if the last line was an offer, this one isnt
                 if ($offer == true) {
                   $offer = false;
                 }
+                //and vice versa
                 else {
                   $offer = true;
                 }
 
-                if ($printNext == true) {
-                  $printNext = false;
-                }
-                if ($line[0] == $user && $offer == true) {
-                  $printNext = true;
-                }
+                // //and if we wanted the last line
+                // if ($printNext == true) {
+                //   $printNext = false;
+                // }
+                // if ($line[0] == $user && $offer == true) {
+                //   $printNext = true;
+                // }
+                
+                //and now put this line into the file
                 fputcsv($file, $line);
               }
               else {
