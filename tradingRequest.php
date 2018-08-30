@@ -24,7 +24,9 @@
       <!-- trading form -->
       <form method="post" action="trading.php">
         <input type="text" name="offerTo"/>
-        <input type="submit" />
+        <br />
+        <br />
+        <input type="submit" class="btn bg-dark text-light" />
       </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -58,7 +58,7 @@ h1 {
 	font-size: 24pt;
 }
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'PT Sans', sans-serif;
 	color: #EEEEEE;
 	background-color: #393E46;
 	height: 100%;
@@ -128,7 +128,8 @@ html {
 }
 
 .title-holder {
-	margin-top: 5%;
+	padding-top: 17px;
+	padding-bottom: 10px;
 	margin-left: 2%;
 	text-align: center;
 	min-width: 200px;
@@ -142,15 +143,16 @@ html {
 
 .top-nav {
 	background-color: #393E46;
-	height: 10%;
+	height: 8%;
 	font-size: 16pt;
 }
 
 .content {
 	background-color: #393E46;
-	width: 60%;
+	width: 50%;
 	height: 100%;
-	margin-left: 20%;
+	margin-left: 25%;
+	box-sizing: border-box;
 }
 
 .down2 {
@@ -218,4 +220,15 @@ h3 {
 	color: #FF5722;
 }
 
+h4 {
+	color: white;
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
+}
+
+h5 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #FF5722;
+}
 

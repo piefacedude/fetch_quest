@@ -23,7 +23,7 @@
       include 'snippets/navbar.php';
       ?>
       <div class="jumbotron" id="login">
-        <h2 class="login">Log In.</h2>
+        <h2 class="login">Log In</h2>
         <br>
         <form action="submit.php" method="post" class="login">
           <input type="hidden" name="mode" value="login" />
@@ -31,7 +31,7 @@
             <input name="username" required class="form-control form-control-lg" placeholder="Username" type="text">
           </div>
           <div class="form-group">
-            <input name="password" required class="form-control form-control-lg" placeholder="Password" type="text">
+            <input name="password" required class="form-control form-control-lg" placeholder="Password" type="password">
           </div>
           <div class="form-group">
             <button class="btn btn-info btn-lg btn-block">Log In</button>

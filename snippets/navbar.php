@@ -14,7 +14,7 @@ function makeLinkActive($page) {
 <div class="sticky-top top-nav">
   <ul>
     <li>
-      <div class="title">
+      <div class="title h-100">
         <div class="title-holder feature-text">
           <a href="index.php">FetchQuest</a>
         </div>

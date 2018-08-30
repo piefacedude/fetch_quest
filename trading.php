@@ -90,15 +90,15 @@
                 scrapeItems($userFrom, "from");
               echo "</table>";
               echo "<br />";
-                echo "<table>";
-                  echo "<th>Their Items:</th>";
-                  //list their items
-                  scrapeItems($userTo, "to");
-                  echo "<tr><td></td></tr>";
-                  echo "<tr><td>";
-                    echo "<input type='submit' value='Send Offer'/>";
-                  echo "</td></tr>";
-                echo "</table>";
+              echo "<table>";
+                echo "<th>Their Items:</th>";
+                //list their items
+                scrapeItems($userTo, "to");
+                echo "<br />";
+              echo "</table>";
+              echo "<br />
+                    <br />
+                    <input type='submit' value='Send Offer' class='btn bg-dark text-light'/>";
               echo "</div>";
               //hidden extra info for submit to use, who it's from and to
               echo "<input type='hidden' name='userTo' value='" . $userTo . "' />";
