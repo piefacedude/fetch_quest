@@ -15,19 +15,15 @@
      require 'snippets/links.php';
      $activePage = "login";
      ?>
-     <style>
-     body,html {
-       height: 100%;
-     }
-     </style>
   </head>
   <body class="h-100">
-    <div class="container-fluid h-75 w-100 text-center">
+    <div class="container-fluid h-75">
+      <div id="body" class="h-100">
       <?php
       include 'snippets/navbar.php';
       ?>
       <div class="jumbotron" id="login">
-        <h2 class="login">Hey.</h2>
+        <h2 class="login">Log In.</h2>
         <br>
         <form action="submit.php" method="post" class="login">
           <input type="hidden" name="mode" value="login" />
@@ -38,15 +34,12 @@
             <input name="password" required class="form-control form-control-lg" placeholder="Password" type="text">
           </div>
           <div class="form-group">
-            <button class="btn btn-info btn-lg btn-block">Sign In</button>
+            <button class="btn btn-info btn-lg btn-block">Log In</button>
           </div>
         </form>
-        <p>
-          <a href="#" class="login" id="l2r">Don't have an account?</a>
-        </p>
       </div>
       <div class="jumbotron" id="register">
-        <h2 class="register">PLAY GAME</h2>
+        <h2 class="register">Register</h2>
         <br>
         <form action="submit.php?mode=login" method="post" class="register">
           <input type="hidden" name="mode" value="register" />
@@ -60,27 +53,27 @@
             <input name="password" required class="form-control form-control-lg" placeholder="Password" type="password">
           </div>
           <div class="form-group">
-            <button class="btn btn-info btn-lg btn-block">Sign In</button>
+            <button class="btn btn-info btn-lg btn-block">Sign Up</button>
           </div>
         </form>
-        <p>
-          <a class="register" id="r2l">Don't have an account?</a>
-        </p>
       </div>
     </div>
+  </div>
 
     <?php
-    if ($_SESSION['alert'] == "unpw") {
-      //if the user just logged in, tell them with an alert
-      echo "<script type='text/javascript'>alert('Error! Username or Password is incorrect!');</script>";
-      $_SESSION['alert'] = null;
-      $_SESSION['error'] = false;
-    }
-    elseif ($_SESSION['alert'] == "nametaken") {
-      //if the user just logged in, tell them with an alert
-      echo "<script type='text/javascript'>alert('Error! Username is taken. Try a different one.');</script>";
-      $_SESSION['alert'] = null;
-      $_SESSION['error'] = false;
+    if (!empty($_SESSION['alert'])) {
+      if ($_SESSION['alert'] == "unpw") {
+        //if the user just logged in, tell them with an alert
+        echo "<script type='text/javascript'>alert('Error! Username or Password is incorrect!');</script>";
+        $_SESSION['alert'] = null;
+        $_SESSION['error'] = false;
+      }
+      elseif ($_SESSION['alert'] == "nametaken") {
+        //if the user just logged in, tell them with an alert
+        echo "<script type='text/javascript'>alert('Error! Username is taken. Try a different one.');</script>";
+        $_SESSION['alert'] = null;
+        $_SESSION['error'] = false;
+      }
     }
      ?>
 

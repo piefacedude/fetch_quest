@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <title>FetchQuest | <?php echo $_SESSION['username'] ?></title>
   </head>
-  <body>
+  <body class="h-100">
     <?php require 'snippets/navbar.php'; ?>
     <div class="container-fluid h-75">
       <?php
@@ -73,7 +73,7 @@
                       $i = 9;
                     }
                     $name = str_replace($find,"",$file);
-                    
+
                     echo $name;
                     echo "</td>";
 
