@@ -76,6 +76,7 @@ var currentGameLevel = 1;
 var totalDamageDone = 0;
 var saveAlert = false;
 var saveTimer = 201;
+var loaded = false;
 
 //objects
 hero = {
@@ -155,8 +156,9 @@ function reset() {
   for (var i = 0; i < numOfEnemies; i++) {
     generateMonster(i, numOfEnemies);
   }
-  if (savedFile == true) {
+  if (savedFile == true && loaded == false) {
     loadGame(loadFile);
+    loaded = true;
   }
   else {
     loadGame();
@@ -421,6 +423,7 @@ function saveGame() {
 
 //game loading
 function loadGame(file) {
+  console.log(file);
   if (file == null) {
     file = "";
   }
