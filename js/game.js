@@ -111,7 +111,7 @@ background = {
 
 battle = {
   possibleEnemies: ["bat", 200, "dp", 1],
-  battleAreaWidth: 800,
+  battleAreaWidth: 600,
 }
 
 indicator = {
@@ -152,7 +152,7 @@ function reset() {
   for (var i = 0; i < 3; i++) {
     generateShade(i);
   }
-  var numOfEnemies = Math.floor(Math.random() * 0) + 1;
+  var numOfEnemies = Math.floor(Math.random() * 2) + 1;
   for (var i = 0; i < numOfEnemies; i++) {
     generateMonster(i, numOfEnemies);
   }
@@ -240,6 +240,8 @@ function render() {
     }
     if (input.isDown("ESCAPE")) {
       gameState = "playerSelect";
+      listTimer = -1;
+      list = [];
     }
   }
 
@@ -440,8 +442,12 @@ function loadGame(file) {
       hero.currentHp = array[1];
       hero.maxPawPower = array[2];
       hero.currentPawPower = array[3];
-      enemies[array[4]].maxHp = array[5];
-      enemies[array[4]].currentHp = array[6];
+      var i = 1;
+      while (array[3*i + 1] != null) {
+        enemies[array[3*i + 1]].maxHp = array[3*i + 2];
+        enemies[array[3*i + 1]].currentHp = array[3*i + 3];
+        i++;
+      }
     }
   }
   //mode set to "load", currently pulls most recent file

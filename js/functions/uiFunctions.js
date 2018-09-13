@@ -7,20 +7,32 @@
 *////////////////////////
 
 function renderHPBar(currentEnemy) {
+  //underbar, revealed when health is lost
   gameCanvas.context.fillStyle="#FF0000";
   gameCanvas.context.fillRect(currentEnemy.pos[0] + ((currentEnemy.sprite.size[0] * currentEnemy.sprite.scale.x) / 2) - 50, currentEnemy.pos[1] + (currentEnemy.sprite.size[1] * currentEnemy.sprite.scale.y), 100, 10);
+  //overlay, starts all green
   gameCanvas.context.fillStyle="#00FF00";
   gameCanvas.context.fillRect(currentEnemy.pos[0] + ((currentEnemy.sprite.size[0] * currentEnemy.sprite.scale.x) / 2) - 50, currentEnemy.pos[1] + (currentEnemy.sprite.size[1] * currentEnemy.sprite.scale.y), 100 * (currentEnemy.currentHp/currentEnemy.maxHp), 10);
+  //text underneath with drop shadow, for more literal reading
   gameCanvas.context.fillStyle="#0000FF";
-  gameCanvas.context.font = "24px 'Press Start 2P'";
-  gameCanvas.context.fillText(currentEnemy.currentHp,currentEnemy.pos[0] + ((currentEnemy.sprite.size[0] * currentEnemy.sprite.scale.x) / 2) + 5, currentEnemy.pos[1] + (currentEnemy.sprite.size[1] * currentEnemy.sprite.scale.y) + 40);
+  gameCanvas.context.shadowOffsetX = 3;
+  gameCanvas.context.shadowOffsetY = 3;
+  gameCanvas.context.shadowColor = "rgba(0,0,0,1)";
+  gameCanvas.context.font = "30px 'Press Start 2P'";
+  gameCanvas.context.fillText(currentEnemy.currentHp,currentEnemy.pos[0] + ((currentEnemy.sprite.size[0] * currentEnemy.sprite.scale.x) / 2) + 7, currentEnemy.pos[1] + (currentEnemy.sprite.size[1] * currentEnemy.sprite.scale.y) + 45);
+  //resetting drop shadow settings
+  gameCanvas.context.shadowOffsetX = 0;
+  gameCanvas.context.shadowOffsetY = 0;
+  gameCanvas.context.shadowColor = "rgba(0,0,0,0)";
 }
 
 function renderHUD() {
+  //current hero HP
   gameCanvas.context.fillStyle="#FF0000";
   gameCanvas.context.font = "24px 'Press Start 2P'";
   text = hero.currentHp + "/" + hero.maxHp;
   gameCanvas.context.fillText(text,140,34);
+  //current hero PP
   gameCanvas.context.fillStyle="#FF00FF";
   gameCanvas.context.font = "24px 'Press Start 2P'";
   text = hero.currentPawPower + "/" + hero.maxPawPower;
@@ -158,7 +170,6 @@ function generateShade(i) {
     sprite: new Sprite('images/Prompts/shadeBig.png', [0, 0], [185, 29])
   });
 }
-
 
 
 

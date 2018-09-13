@@ -103,34 +103,31 @@ else {
     }
     //this file is only for the current adventure, as the character can be reused
     //while all the data isnt read
-    $enemiesDone = false;
+    $enemies = false;
     $heroDone = false;
     $done = false;
-    while ($done == false) {
       //keep looking through the data array
       for ($i=0; $i < count($rows); $i++) {
         //until we find an enemy
-        if ($rows[$i][0] == "EnemyNo0:") {
+        if ($rows[$i][0] == "EnemyData:") {
           //then echo out the data for that enemy
-          $enemiesDone = true;
-          foreach ($rows[$i + 1] as $key => $value) {
-            echo $value . ",";
+          $j = 1;
+          while (!empty($rows[$i + $j])) {
+            foreach ($rows[$i + $j] as $key => $value) {
+              echo $value . ",";
+            }
+            $j++;
           }
         }
 
-        if ($rows[$i][0] == "HeroData:") {
+        else if ($rows[$i][0] == "HeroData:") {
           $heroDone = true;
           foreach ($rows[$i + 1] as $key => $value) {
             echo $value . ",";
           }
         }
-
-        if ($enemiesDone == true && $heroDone == true) {
-         $done = true;
-        }
       }
     }
-  }
   //if there are no saves, echo failure
   else {
     echo "No saves found!";

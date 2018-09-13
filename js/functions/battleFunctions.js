@@ -17,11 +17,11 @@ function generateMonster(i, numOfEnemies) {
   }
 
   var enemyType = "esch";
-  var xPos = battle.battleAreaWidth / (numOfEnemies + 1);
+  var xPos = (battle.battleAreaWidth / (numOfEnemies + 2));
 
   enemies.push({
     id: enemies.length,
-    pos: [xPos * (i+1),200],
+    pos: [xPos * (i+1) + 200,200],
     speed: 0,
     maxHp: 20,
     currentHp: 20,

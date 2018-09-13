@@ -1,8 +1,0 @@
-"Save file from FetchQuest"
-"Hero data follows structure of:"
-MaxHp,CurrentHp,MaxPP,CurrentPP
-"Then the enemiesHeroData:"
-20,20,10,10
-EnemyNo0:
-0,10,10
-

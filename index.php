@@ -105,10 +105,12 @@
       });
     </script>
     <?php
-    if ($_SESSION['alert'] == "username") {
-      //if the user just logged in, tell them with an alert
-      echo "<script type='text/javascript'>alert('Success! Logged in as " . $_SESSION['username'] . "');</script>";
-      $_SESSION['alert'] = null;
+    if (!empty($_SESSION['alert'])) {
+      if ($_SESSION['alert'] == "username") {
+        //if the user just logged in, tell them with an alert
+        echo "<script type='text/javascript'>alert('Success! Logged in as " . $_SESSION['username'] . "');</script>";
+        $_SESSION['alert'] = null;
+      }
     }
      ?>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

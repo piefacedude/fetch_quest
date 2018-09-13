@@ -2,6 +2,7 @@
 Attacks:
 Jump,Bite
 Items:
-Pen,"Fright Mask","Giraffe Pencil Holder", "goog memem"
+"Healing Potion","Fright Mask"
 Specials:
-Moon,Howl
+Bark,Howl
+

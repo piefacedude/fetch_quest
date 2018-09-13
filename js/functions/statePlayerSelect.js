@@ -272,3 +272,41 @@ function attackSelect(selectMode) {
   }
   listTimer++;
 }
+
+function renderSelector() {
+  selector.selectedEnemy = 0;
+  if (listTimer <= 10) {
+
+  }
+  else {
+    //move up the list
+    if (input.isDown('LEFT')) {
+      selected--;
+      if (selected <= -1) {
+        selected = enemies.length - 1;
+      }
+      listTimer = 0;
+    }
+    //move down the list
+    if (input.isDown('RIGHT')) {
+      selected++;
+      if (selected >= enemies.length) {
+        selected = 0;
+      }
+      if (enemies[selected].type != attack.type) {
+        selected++;
+      }
+      listTimer = 0;
+    }
+    //select an option
+    if (input.isDown('ENTER') && gameState == "enemySelect") {
+      listTimer = 0;
+      gameState = "animRunning";
+    }
+  }
+  listTimer++;
+}
+
+
+
+
