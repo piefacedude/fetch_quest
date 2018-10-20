@@ -16,18 +16,29 @@ function generateMonster(i, numOfEnemies) {
     }
   }
 
-  var enemyType = "esch";
+  var enemyType = "bat";
   var xPos = (battle.battleAreaWidth / (numOfEnemies + 2));
 
-  enemies.push({
-    id: enemies.length,
-    pos: [xPos * (i+1) + 200,200],
-    speed: 0,
-    maxHp: 20,
-    currentHp: 20,
-    sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 12, [0, 1, 2, 3, 4, 5], 'vertical', false, 0, {x: 1, y: 1}),
-    attacks: ['Swoop', 1, 'Screech', 2],
-  })
+  switch (enemyType) {
+    case "bat":
+    enemy = {
+      id: enemies.length,
+      name: "Bat",
+      pos: [xPos * (i+1) + 200,300],
+      speed: 0,
+      type: "flying",
+      maxHp: 20,
+      currentHp: 20,
+      sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 12, [0, 1, 2, 3, 4, 5], 'vertical', false, 0, {x: .5, y: .5}),
+      attacks: ['Swoop', 1, 'Screech', 2],
+    }
+
+      break;
+    default:
+
+  }
+
+  enemies.push()
 }
 
 function healingPotionEffect() {

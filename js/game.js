@@ -131,7 +131,7 @@ selector = {
   pos: [800, 600],
   selectedEnemy: 0,
   attackType: "any",
-  sprite: new Sprite('images/Misc/coin_red.png', [0, 0], [26, 30])
+  sprite: new Sprite('images/Misc/coins.png', [0, 0], [16, 23])
 }
 
 function init() {
@@ -159,7 +159,7 @@ function reset() {
   for (var i = 0; i < 3; i++) {
     generateShade(i);
   }
-  var numOfEnemies = Math.floor(Math.random() * 0) + 1;
+  var numOfEnemies = Math.floor(Math.random() * 0) + 2;
   for (var i = 0; i < numOfEnemies; i++) {
     generateMonster(i, numOfEnemies);
   }
@@ -258,7 +258,7 @@ function render() {
   }
 
   //other
-  renderEntity(indicator);
+  renderEntity(selector);
   renderEntity(hero);
   renderEntity(hero.shadow);
   renderEntities(enemies);
@@ -324,6 +324,10 @@ function handleInput(dt) {
   }
   else if (gameState == "attackSelect") {
     attackSelect(selectMode);
+  }
+
+  else if (gameState == "enemySelect") {
+    renderSelector();
   }
 
   else if (gameState == "enemyAttack") {
