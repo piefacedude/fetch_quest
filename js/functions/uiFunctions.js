@@ -15,8 +15,8 @@ function renderHPBar(currentEnemy) {
   gameCanvas.context.fillRect(currentEnemy.pos[0] + ((currentEnemy.sprite.size[0] * currentEnemy.sprite.scale.x) / 2) - 50, currentEnemy.pos[1] + (currentEnemy.sprite.size[1] * currentEnemy.sprite.scale.y), 100 * (currentEnemy.currentHp/currentEnemy.maxHp), 10);
   //text underneath with drop shadow, for more literal reading
   gameCanvas.context.fillStyle="#0000FF";
-  gameCanvas.context.shadowOffsetX = 3;
-  gameCanvas.context.shadowOffsetY = 3;
+  gameCanvas.context.shadowOffsetX = 2.5;
+  gameCanvas.context.shadowOffsetY = 2.5;
   gameCanvas.context.shadowColor = "rgba(0,0,0,1)";
   gameCanvas.context.font = "30px 'Press Start 2P'";
   gameCanvas.context.fillText(currentEnemy.currentHp,currentEnemy.pos[0] + ((currentEnemy.sprite.size[0] * currentEnemy.sprite.scale.x) / 2) + 7, currentEnemy.pos[1] + (currentEnemy.sprite.size[1] * currentEnemy.sprite.scale.y) + 45);
@@ -28,6 +28,9 @@ function renderHPBar(currentEnemy) {
 
 function renderHUD() {
   //current hero HP
+  gameCanvas.context.shadowOffsetX = 2.5;
+  gameCanvas.context.shadowOffsetY = 2.5;
+  gameCanvas.context.shadowColor = "rgba(0,0,0,1)";
   gameCanvas.context.fillStyle="#FF0000";
   gameCanvas.context.font = "24px 'Press Start 2P'";
   text = hero.currentHp + "/" + hero.maxHp;
@@ -37,6 +40,9 @@ function renderHUD() {
   gameCanvas.context.font = "24px 'Press Start 2P'";
   text = hero.currentPawPower + "/" + hero.maxPawPower;
   gameCanvas.context.fillText(text,390,34);
+  gameCanvas.context.shadowOffsetX = 0;
+  gameCanvas.context.shadowOffsetY = 0;
+  gameCanvas.context.shadowColor = "rgba(0,0,0,0)";
 }
 
 function menuX(i) {

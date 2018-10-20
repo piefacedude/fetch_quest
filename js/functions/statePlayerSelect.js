@@ -222,9 +222,13 @@ function attackSelect(selectMode) {
         case "stdBiteAnim":
           var sprite = new Sprite('images/Prompts/bite.png', [0, 0], [121, 19]);
           break;
+        case "healingPotion":
+         var sprite = new Sprite('images/Prompts/flee.png', [0, 0], [121, 19]);
+         break;
         default:
-
+          var sprite = new Sprite('images/Prompts/jump.png', [0, 0], [121, 19]);
       }
+
       list.push({
       pos: [X, Y],
       dx: 0,

@@ -4,71 +4,62 @@
 /* Last major update: 21/6/18
 /* This file handles the mathmatical mapping of the some generic animations
 *////////////////////////
-function genericJumpFunction(spriteJumping, spriteJumped) {
-  spriteJumping.jump = true;
-  if (spriteJumping.jump == true) {
-  //run forward
-    if (animTimer == 1) {
-      console.log(spriteJumping.pos[1]);
-      console.log(spriteJumped.pos[1]);
-      changeY = spriteJumping.pos[1] - spriteJumped.pos[1];
-      modY = (Math.pow((changeY-400)/-0.001024,1/4)) + 25;
-      modY = modY / 50;
-      changeX = spriteJumping.pos[0] - spriteJumped.pos[0];
+function genericRunToFunction(spriteRunning, spriteTarget, percent) {
+  if (genericRunTo == true) {
+    //walk
+    if (animTimer == 0) {
+      distanceMod = (spriteRunning.pos[0] - spriteTarget.pos[0]) / (62500 / 3);
     }
-    //jump
-    else if (animTimer <= 150) {
-      //most complex bit yet
-      animTimeRef = animTimer - 100;
-      animTimeRef = animTimeRef * modY;
-      //his horizontal speed won't change
-      spriteJumping.pos[0] += (100 / 50);
-      //his vertical jump is mapped by a -x^3 graph
-      spriteJumping.pos[1] += 0.004096*(Math.pow(animTimeRef - 25, 3));
-      if (animTimer == 150) {
-        spriteJumped.currentHp -= spriteJumping.jmpDmg;
+
+    if (animTimer <= 50) {
+      spriteRunning.pos[0] -= percent * (distanceMod * (-1 * animTimer) * (animTimer - 50));
+    }
+    if (animTimer > 50) {
+      genericRunTo = false;
+      animTimer = -1;
+    }
+  }
+  animTimer++;
+}
+
+function genericJumpFunction(spriteJumping, spriteJumped, percent) {
+  if (genericJump == true) {
+    if (animTimer == 0) {
+      reverseTimer = 0;
+      bounceBack = false;
+      diffX = spriteJumped.pos[0] - spriteJumping.pos[0] + (spriteJumped.sprite.size[0] / 2);
+      spriteJumpingInitX = spriteJumping.pos[0];
+      spriteJumpingInitY = spriteJumping.pos[1];
+    }
+    if (animTimer <= 200 && bounceBack == false) {
+      if (animTimer < 100) {
+        spriteJumping.pos[0] += diffX / 100;
+      }
+      spriteJumping.pos[1] += .000016 * Math.pow(animTimer - 100,3);
+      if (spriteJumping.pos[1] >= spriteJumped.pos[1] && animTimer > 100) {
+        bounceBack = true;
+        reverseTimer = animTimer;
       }
     }
-    //bounce back
-    else if (animTimer <= 300) {
-      //mod the standard
-      animTimeRef = animTimer - 250;
-      animTimeRef = 51 - animTimeRef;
-      animTimeRef = animTimeRef * modY;
-      //jump function
-      spriteJumping.pos[0] -= (100 / 50);
-      spriteJumping.pos[1] -= 0.004096*(Math.pow(animTimeRef - 25, 3));
-      if (animTimer == 300) {
-        spriteJumping.pos[1] = 500;
-      }
+    if (animTimer <= 200 && bounceBack == true) {
+
     }
-    else {
-      spriteJumping.pos[0] = 100;
-      spriteJumping.run = false;
-      spriteJumping.bounce = "unset";
-      spriteJumping.sprite = new Sprite('images/spriteJumpingStuff/spriteJumpingStand.png', [0, 0], [64, 64]);
-      spriteJumping.jump = false;
+    if (animTimer > 200 && animTimer < 200 + reverseTimer) {
+      spriteJumping.pos[1] -= .000016 * Math.pow((reverseTimer - 100) - (animTimer - 200),3);
+      if (spriteJumping.sprite.facing != -2 * Math.PI) {
+        spriteJumping.sprite.facing += (-2 * Math.PI) / reverseTimer;
+      }
+      spriteJumping.pos[0] -= diffX / reverseTimer;
+    }
+    if (animTimer >= 200 + reverseTimer) {
+      genericJump = false;
+      animTimer = -1;
+      spriteJumping.pos[0] = spriteJumpingInitX;
+      spriteJumping.pos[1] = spriteJumpingInitY;
+      spriteJumping.sprite.facing = 0;
     }
     animTimer++;
-
-    if (spriteJumping.run == false) {
-      spriteJumping.sprite = new Sprite('images/spriteJumpingStuff/spriteJumpingmain.png', [0, 0], [64, 64], 10, [0, 1], 'vertical')
-      spriteJumping.run = true;
-    }
-    else {
-      spriteJumping.run = true;
-    }
   }
-  if (spriteJumping.jump == false) {
-    spriteJumping.run = false;
-    spriteJumping.sprite = new Sprite('images/spriteJumpingStuff/spriteJumpingStand.png', [0, 0], [64, 64]);
-    animTimer = 0;
-    indicator.pos[0] = 800;
-    indicator.pos[1] = 600;
-    gameState = "playerSelect";
-  }
-  spriteJumping.shadow.pos[0] = spriteJumping.pos[0] - 3;
-  spriteJumping.shadow.pos[1] = 554;
 }
 
 

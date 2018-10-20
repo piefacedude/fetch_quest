@@ -29,3 +29,11 @@ function generateMonster(i, numOfEnemies) {
     attacks: ['Swoop', 1, 'Screech', 2],
   })
 }
+
+function healingPotionEffect() {
+  hero.currentHp += 10;
+  if (hero.currentHp > hero.maxHp) {
+    hero.currentHp = hero.maxHp;
+  }
+  gameState = "enemyAttack";
+}

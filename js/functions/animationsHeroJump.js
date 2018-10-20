@@ -14,9 +14,13 @@ function stdJumpAnimfunction(dt) {
       hero.pos[1] = 500;
       indicator.pos[0] = 700;
       indicator.pos[1] = 300;
+      //find the y change modifiers and difference
       changeY = hero.pos[1] - enemies[0].pos[1];
       modY = (Math.pow((changeY-400)/-0.001024,1/4)) + 25;
       modY = modY / 50;
+      //find the same but x
+      changeX = hero.pos[0] - enemies[0].pos[0];
+      //remove the paw power to use the move
       hero.currentPawPower -= 2;
     }
     if (animTimer <= 50) {
@@ -25,7 +29,7 @@ function stdJumpAnimfunction(dt) {
       //move character relative to an equation (anti-derivative plus starting position x/y)
       //i need to try and make the equations work with the "dt" function for lateny reasons
       //will fix at some point??? we'll see
-      hero.pos[0] += (-.75*(Math.pow(animTimeRef, 2) - (50 * animTimeRef))) * dt;
+      hero.pos[0] += (-.014*(Math.pow(animTimeRef, 2) - (50 * animTimeRef)));
     }
     //wait
     else if (animTimer <= 100) {
