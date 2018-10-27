@@ -46,7 +46,7 @@ function renderHUD() {
 }
 
 function menuX(i) {
-  var centralXAxis = (800 / 6);
+  var centralXAxis = (1000 / 6);
   var xShift = (182 * .55);
   switch (i) {
     case 0:

@@ -83,6 +83,7 @@ var saveAlert = false;
 var saveTimer = 201;
 var healingPotion = false;
 var percent = 1;
+
 // var loaded = false;
 
 //objects
@@ -113,27 +114,34 @@ hero = {
 background = {
   pos: [0, 0],
   speed: 0,
-  sprite: new Sprite('images/Backgrounds/greenBums.png', [0, 0], [800, 600])
+  sprite: new Sprite('images/Backgrounds/greenBums.png', [0, 0], [1000, 600])
 }
 
 battle = {
-  possibleEnemies: ["bat", 200, "dp", 1],
+  possibleEnemies: ["bat", 1, "BAT", 1],
   battleAreaWidth: 600,
 }
 
 indicator = {
-  pos: [800,600],
+  pos: [1000,600],
   key: "null",
   sprite: new Sprite('images/Prompts/attack.png', [0, 0], [106, 14]),
 }
 
 selector = {
-  pos: [800, 600],
+  pos: [1000, 600],
   selectedEnemy: 0,
   attackType: "any",
   sprite: new Sprite('images/Misc/coins.png', [0, 0], [16, 23])
 }
 
+timer = {
+  animTimer: 0,
+  jumpTimer: 0,
+  runTimer: 0,
+  reverseTimer: 0,
+
+}
 function init() {
 
   //setup all the things we will start/re-start with each game
@@ -148,6 +156,7 @@ function init() {
 }
 
 function reset() {
+  enemyTotalWidth = 0;
   //function runs once at the start of each game
   gameState = "playerSelect";
   for (var i = 0; i < 4; i++) {
@@ -159,9 +168,22 @@ function reset() {
   for (var i = 0; i < 3; i++) {
     generateShade(i);
   }
+
+  //spawning monsters
+  //randomly decide on number of monsters
   var numOfEnemies = Math.floor(Math.random() * 0) + 2;
+  //generate that many monsters (in battleFunctions.js)
   for (var i = 0; i < numOfEnemies; i++) {
     generateMonster(i, numOfEnemies);
+  }
+  runTarget = enemies[0];
+  jumpTarget = enemies[0];
+  //move monsters to correct positions (needs to be done after so we have a total enemy width value)
+  var spawnPadding = (battle.battleAreaWidth - enemyTotalWidth) / 2;
+  enemyTotalWidth = 0;
+  for (var i = 0; i < numOfEnemies; i++) {
+    enemies[i].pos[0] = spawnPadding + enemyTotalWidth + (1000 - battle.battleAreaWidth);
+    enemyTotalWidth += enemies[i].sprite.size[0] * enemies[i].sprite.scale["x"];
   }
   // if (savedFile == true && loaded == false) {
   //   loadGame(loadFile);
@@ -302,16 +324,14 @@ function handleInput(dt) {
   if (stdBiteAnim == true) {
     stdBiteAnimFunction();
   }
-  //generic jump ((((TEST))))
+  // generic jump ((((TEST))))
   if (genericJump == true) {
-    for (i=0;i<4;i++) {
-      genericJumpFunction(hero,enemies[0],percent);
-    }
+    genericJumpFunction(enemies[0],hero,1);
   }
 
-  //generic move to (eased)
+  // generic move to (eased)
   if (genericRunTo == true) {
-    genericRunToFunction(hero,enemies[0],percent);
+    genericRunToFunction(running,runTarget,percent);
   }
 
   if (healingPotion == true) {

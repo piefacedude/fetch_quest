@@ -7,58 +7,58 @@
 function genericRunToFunction(spriteRunning, spriteTarget, percent) {
   if (genericRunTo == true) {
     //walk
-    if (animTimer == 0) {
+    if (timer.runTimer == 0) {
       distanceMod = (spriteRunning.pos[0] - spriteTarget.pos[0]) / (62500 / 3);
     }
 
-    if (animTimer <= 50) {
-      spriteRunning.pos[0] -= percent * (distanceMod * (-1 * animTimer) * (animTimer - 50));
+    if (timer.runTimer < 50) {
+      spriteRunning.pos[0] -= percent * (distanceMod * (-1 * timer.runTimer) * (timer.runTimer - 50));
     }
-    if (animTimer > 50) {
+    if (timer.runTimer == 50) {
       genericRunTo = false;
-      animTimer = -1;
+      timer.runTimer = -1;
     }
   }
-  animTimer++;
+  timer.runTimer++;
 }
 
 function genericJumpFunction(spriteJumping, spriteJumped, percent) {
   if (genericJump == true) {
-    if (animTimer == 0) {
-      reverseTimer = 0;
+    if (timer.jumpTimer == 0) {
+      timer.reverseTimer = 0;
       bounceBack = false;
       diffX = spriteJumped.pos[0] - spriteJumping.pos[0] + (spriteJumped.sprite.size[0] / 2);
       spriteJumpingInitX = spriteJumping.pos[0];
       spriteJumpingInitY = spriteJumping.pos[1];
     }
-    if (animTimer <= 200 && bounceBack == false) {
-      if (animTimer < 100) {
+    if (timer.jumpTimer <= 300 && bounceBack == false) {
+      if (timer.jumpTimer < 100) {
         spriteJumping.pos[0] += diffX / 100;
       }
-      spriteJumping.pos[1] += .000016 * Math.pow(animTimer - 100,3);
-      if (spriteJumping.pos[1] >= spriteJumped.pos[1] && animTimer > 100) {
+      spriteJumping.pos[1] += .000016 * Math.pow(timer.jumpTimer - 100,3);
+      if (spriteJumping.pos[1] >= spriteJumped.pos[1] && timer.jumpTimer > 100) {
         bounceBack = true;
-        reverseTimer = animTimer;
+        timer.reverseTimer = timer.jumpTimer;
       }
     }
-    if (animTimer <= 200 && bounceBack == true) {
+    if (timer.jumpTimer <= 300 && bounceBack == true) {
 
     }
-    if (animTimer > 200 && animTimer < 200 + reverseTimer) {
-      spriteJumping.pos[1] -= .000016 * Math.pow((reverseTimer - 100) - (animTimer - 200),3);
+    if (timer.jumpTimer > 300 && timer.jumpTimer < 300 + timer.reverseTimer) {
+      spriteJumping.pos[1] -= .000016 * Math.pow((timer.reverseTimer - 100) - (timer.jumpTimer - 300),3);
       if (spriteJumping.sprite.facing != -2 * Math.PI) {
-        spriteJumping.sprite.facing += (-2 * Math.PI) / reverseTimer;
+        spriteJumping.sprite.facing += (-2 * Math.PI) / timer.reverseTimer;
       }
-      spriteJumping.pos[0] -= diffX / reverseTimer;
+      spriteJumping.pos[0] -= diffX / timer.reverseTimer;
     }
-    if (animTimer >= 200 + reverseTimer) {
+    if (timer.jumpTimer >= 300 + timer.reverseTimer) {
       genericJump = false;
-      animTimer = -1;
+      timer.jumpTimer = -1;
       spriteJumping.pos[0] = spriteJumpingInitX;
       spriteJumping.pos[1] = spriteJumpingInitY;
       spriteJumping.sprite.facing = 0;
     }
-    animTimer++;
+    timer.jumpTimer++;
   }
 }
 
