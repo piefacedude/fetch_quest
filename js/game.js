@@ -298,7 +298,6 @@ function render() {
 }
 
 function handleInput(dt) {
-
   //user presses 9, save the game (will tie to button on screen)
   // if (input.isDown("9")) {
   //   saveGame();
@@ -326,13 +325,15 @@ function handleInput(dt) {
   }
   // generic jump ((((TEST))))
   if (genericJump == true) {
-    genericJumpFunction(enemies[0],hero,1);
+    for (var i = 0; i < 2; i++) {
+      genericJumpFunction(hero,enemies[selected]);
+    }
   }
-
-  // generic move to (eased)
-  if (genericRunTo == true) {
-    genericRunToFunction(running,runTarget,percent);
-  }
+  //
+  // // generic move to (eased)
+  // if (genericRunTo == true) {
+  //   genericRunToFunction(running,runTarget,percent);
+  // }
 
   if (healingPotion == true) {
     healingPotionEffect();

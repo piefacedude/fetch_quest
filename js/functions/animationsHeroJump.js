@@ -24,9 +24,11 @@ function stdJumpAnimfunction(dt) {
       genericRunTo = false;
     }
     //jump
-    else if (animTimer <= 150) {
-      genericJump = true;
-      genericJumpFunction(hero, enemies[selected], .75);
+    else if (animTimer <= 600) {
+      if (animTimer == 101) {
+        genericJump = true;
+      }
+      // genericJumpFunction(hero, enemies[selected], 1);
     }
   //wait
     else if (animTimer <= 350) {
