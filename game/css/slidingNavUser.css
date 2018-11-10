@@ -1,0 +1,142 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:800);
+.PrimaryNav {
+  list-style: none;
+  margin: 50px auto;
+  max-width: 720px;
+  padding: 0;
+  width: 70%;
+}
+
+.Nav-item {
+  background: #393E46;
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 14%;
+  text-align: center;
+}
+.Nav-item:first-child {
+  border-radius: 0 0 0 0;
+}
+.Nav-item:last-child {
+  border-radius: 0 0 0 0;
+}
+.Nav-item.is-active a {
+  color: #FF5722;
+}
+.Nav-item a {
+  color: #fff;
+  display: block;
+  padding-top: 17px;
+  padding-bottom: 15px;
+  text-decoration: none;
+}
+.Nav-item a:hover {
+  color: #FF5722;
+}
+
+.with-indicator {
+  position: relative;
+  z-index: 0;
+}
+.with-indicator .Nav-item:last-child:before, .with-indicator .Nav-item:last-child:after {
+  content: "";
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  transition: left 1.3s ease;
+}
+.with-indicator .Nav-item:last-child:before {
+  border: 6px solid transparent;
+  border-top-color: #FF5722;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 37%;
+  margin-left: -3px;
+}
+.with-indicator .Nav-item:last-child:after {
+  background: #FF5722;
+  top: -6px;
+  bottom: -6px;
+  left: 30;
+  width: 14%;
+  z-index: -1;
+}
+.with-indicator .Nav-item:nth-child(1).is-active ~ .Nav-item:last-child:after {
+  left: 30%;
+}
+.with-indicator .Nav-item:nth-child(1).is-active ~ .Nav-item:last-child:before {
+  left: 37%;
+}
+.with-indicator .Nav-item:nth-child(2).is-active ~ .Nav-item:last-child:after {
+  left: 44%;
+}
+.with-indicator .Nav-item:nth-child(2).is-active ~ .Nav-item:last-child:before {
+  left: 51%;
+}
+.with-indicator .Nav-item:nth-child(3).is-active ~ .Nav-item:last-child:after {
+  left: 58%;
+}
+.with-indicator .Nav-item:nth-child(3).is-active ~ .Nav-item:last-child:before {
+  left: 65%;
+}
+.with-indicator .Nav-item:nth-child(4).is-active ~ .Nav-item:last-child:after {
+  left: 72%;
+}
+.with-indicator .Nav-item:nth-child(4).is-active ~ .Nav-item:last-child:before {
+  left: 79%;
+}
+.with-indicator .Nav-item:nth-child(1):hover ~ .Nav-item:last-child:after {
+  left: 30% !important;
+}
+.with-indicator .Nav-item:nth-child(1):hover ~ .Nav-item:last-child:before {
+  left: 37% !important;
+}
+.with-indicator .Nav-item:nth-child(2):hover ~ .Nav-item:last-child:after {
+  left: 44% !important;
+}
+.with-indicator .Nav-item:nth-child(2):hover ~ .Nav-item:last-child:before {
+  left: 51% !important;
+}
+.with-indicator .Nav-item:nth-child(3):hover ~ .Nav-item:last-child:after {
+  left: 58% !important;
+}
+.with-indicator .Nav-item:nth-child(3):hover ~ .Nav-item:last-child:before {
+  left: 65% !important;
+}
+.with-indicator .Nav-item:nth-child(4):hover ~ .Nav-item:last-child:after {
+  left: 72% !important;
+}
+.with-indicator .Nav-item:nth-child(4):hover ~ .Nav-item:last-child:before {
+  left: 79% !important;
+}
+.with-indicator .Nav-item:last-child:hover:before, .with-indicator .Nav-item:last-child.is-active:before {
+  left: 93% !important;
+}
+.with-indicator .Nav-item:last-child:hover:after, .with-indicator .Nav-item:last-child.is-active:after {
+  left: 86% !important;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.PrimaryNav:before,
+.PrimaryNav:after {
+  content: " ";
+  display: table;
+}
+
+.PrimaryNav:after {
+  clear: both;
+}
+
+.toggle {
+  color: #393E46;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+/*# sourceMappingURL=slidingNavUser.css.map */

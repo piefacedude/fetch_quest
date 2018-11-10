@@ -1,0 +1,234 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*
+font-family: 'Press Start 2P', cursive;
+font-family: 'Raleway', sans-serif;
+font-family: 'PT Sans', sans-serif;
+*/
+
+/* non-reset styling */
+.feature-text {
+  font-family: 'Press Start 2P', cursive;
+	font-size: 16pt;
+}
+h1 {
+	font-family: 'Press Start 2P', cursive;
+	font-size: 24pt;
+}
+body {
+  font-family: 'PT Sans', sans-serif;
+	color: #EEEEEE;
+	background-color: #393E46;
+	height: 100%;
+}
+html {
+	height: 100%;
+}
+
+#logo {
+	display: block;
+	margin: auto;
+}
+#container {
+	width: 100%;
+}
+
+#nav {
+	height: 10%
+	border: 1px;
+}
+
+#nav-block {
+	display: inline;
+	float: left;
+}
+
+.image-header {
+  position: relative;
+  text-align: left;
+  color: white;
+}
+
+.feature-image {
+    position: relative;
+    text-align: left;
+		height: 92%;
+		text-align: center;
+		background-color: #222831;
+}
+
+.feature-image img {
+	 height: 100%;
+}
+
+.centered {
+    position: absolute;
+    top: 34%;
+		background-color: #FF5722;
+    right: 35%;
+		height: auto;
+		width: 30%;
+		padding: 20px 20px 20px 20px;
+		margin-top: 10px;
+		text-align: center;
+}
+
+.centered button a {
+	pointer-events: all;
+	color: #FF5722;
+}
+
+.title {
+	width: 30%;
+	display: inline;
+	float: left;
+	background-color: #393E46;
+}
+
+.title-holder {
+	padding-top: 17px;
+	padding-bottom: 10px;
+	margin-left: 2%;
+	text-align: center;
+	min-width: 200px;
+	font-size: 26px;
+}
+
+.title-holder a {
+	text-decoration: none;
+	color: white;
+}
+
+.top-nav {
+	background-color: #393E46;
+	height: 8%;
+	font-size: 16pt;
+}
+
+.content {
+	background-color: #393E46;
+	width: 50%;
+	height: 100%;
+	margin-left: 25%;
+	box-sizing: border-box;
+}
+
+.down2 {
+	width: 50%;
+	height: 100%;
+	float: left;
+}
+
+.jumbotron table tr td {
+	border-bottom: 1px solid #393E46;
+	height: 24px;
+	width: 150px;
+	vertical-align: bottom;
+}
+
+.down {
+	width: 50%;
+	height: 100%;
+	float: left;
+}
+
+.info {
+	height: 10%;
+}
+
+.black {
+	color: black;
+}
+
+.profilePic {
+	height: 50%;
+}
+
+.PPImage {
+	height: 100%;
+}
+
+.first {
+	border-right: 3px solid #393E46;
+}
+
+.username {
+	text-align: center;
+}
+
+.saves tbody tr td {
+	background-color: #FF5722;
+	vertical-align: middle;
+	border-bottom: 1px solid #ddd;
+}
+
+.saves tbody tr {
+	background-color: black;
+}
+
+h2 {
+	font-family: 'Raleway', sans-serif;
+	font-size: 24px;
+	color: black;
+}
+
+h3 {
+	font-family: 'Press Start 2P', cursive;
+	font-size: 40px;
+	color: #FF5722;
+}
+
+h4 {
+	color: white;
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
+}
+
+h5 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #FF5722;
+}
+

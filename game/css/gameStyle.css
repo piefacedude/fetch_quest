@@ -1,0 +1,79 @@
+@charset "UTF-8"
+
+body{
+margin: 0;
+}
+
+#container{
+	margin: 0 auto;
+	width: 1000px;
+}
+
+html{
+	background: white; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(left top, grey, white); /* For Safari */
+  background: -o-linear-gradient(bottom right, grey, white); /* For Opera */
+  background: -moz-linear-gradient(bottom right, grey, white); /* For Firefox */
+	background: linear-gradient(to bottom right, grey, white); /* Standard syntax (must be last) */
+	font-family: 'Open Sans', sans-serif;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+ overflow-y: hidden;
+}
+
+section{
+	border: 1px white solid;
+	color: black;
+	padding: 10px;
+	height: 153px;
+	width: 378px;
+	background: grey; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(white, grey); /* For Safari */
+	background: -o-linear-gradient(white, grey); /* For Opera  */
+	background: -moz-linear-gradient(white, grey); /* For Firefox  */
+	background: linear-gradient(white, grey); /* Standard syntax */
+}
+
+#stats{
+	float: right;
+}
+
+#profile{
+	float: left;
+}
+
+
+canvas{
+  background-color: black;
+  display: block;
+  margin: auto;
+	margin-top: 1%;
+
+}
+
+img{
+  display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+a:link {
+    text-decoration: none;
+		color: black;
+}
+
+a:visited {
+    text-decoration: none;
+		color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+		color: red;
+}
+
+a:active {
+    text-decoration: underline;
+}

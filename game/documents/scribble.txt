@@ -1,0 +1,193 @@
+-- Motion Planning --
+* Attack: Jump
+Character is going to move across the screen to just in front of the enemy (80%?)
+Character Jumps, traveling just above the head of the enemy before landing on it's head
+?? SPLIT ??
+Character bounces, arcing the same distance into the air as the first jump, before hitting
+the enemy's head again.
+
+OR // THEN
+
+Character bounces backwards in the same arc (backwards)
+Character runs to starting positions
+
+CODE:
+stage 1:
+find difference between character's bottom position, and the enemy's.
+distance / time to walk = speed in x
+end stage 1
+
+stage 2:
+find difference between character's bottom potion and the enemy's head
+x dif is the x speed
+y speed = difference + 10%, with acceleration pulling it down to the creature's head (10%?)
+end stage 2
+
+stage 3:
+if (QTE = done) {
+10% of screen, same as height of jump on with down acel = 10% * 2 / time OR when foot y = head y
+end stage 3
+}
+else {
+end stage 3
+}
+
+stage 4:
+diff in x & x + 10%, same acel down, x acel * -1
+end stage 4
+
+stage 5:
+end vel of 4 / 2, same down, for 3
+end stage 5
+
+stage 6:
+end x - current x / time as stage 1 - 20% (bounces)
+end stage 6
+
+-- COLOUR SCHEMES --
+--! #1 being used for FetchQuest Homepage
+#1:
+
+
+#1 - old
+Cool Blue
+#222831
+#393E46
+#3498DB
+#EEEEEE
+
+#2:
+Beach
+#33425B
+#3498DB
+#FCC29A
+#ECF0F1
+
+#3:
+Midnight
+#212121
+#323232
+#0D7377
+#14FFEC
+
+#4:
+Sunrise
+#222831
+#393E46
+#FF5722
+#EEEEEE
+
+
+
+BEGIN
+  INPUT number
+  if INPUT ! null
+    count <- count + 1
+    numberArray <- INPUT
+    INPUT number
+    sum <- sum + INPUT
+  END IF
+  average <- sum / count
+  for i <- 0 TO count - 1
+    if min > i
+      min <- i
+    END IF
+    if max < i
+      min <- i
+    END IF
+  END FOR
+  return count, average, min, max
+END
+
+BEGIN
+c <- a
+a <- b
+b <- c
+return a,b
+END
+
+BEGIN
+  INPUT number
+  if INPUT is not "="
+    count++
+    inputtedWord <- INPUT
+  END IF
+  if inputtedWord length > 18 || < 8
+    for i - inputtedWord length
+
+      if TYPE of INPUT[i] is INT:
+        sum += INPUT
+      END IF
+
+      if TYPE of INPUT[i] is ALPHA:
+        append INPUT to string
+      END IF
+
+      ELSE
+        non++
+      END
+
+    END FOR
+  END IF
+  ELSE
+    display error message
+  end else
+
+  if sum < 0
+    display "no numbers in password"
+  END IF
+
+  if string = null
+    display "no letters in password"
+  END IF
+
+  RETURN count, sum, string, non
+END
+
+BEGIN
+  FOREACH recipe AS rKey -> rValue
+
+    IF pantry[rkey] < rvalue *quantity then
+      shopping[] = {rkey, }
+    ENDIF
+    FOREACH pantry AS pKey -> pValue
+      IF rKey is same as pKey
+        IF rValue > pValue
+          return "There is not enough " + pKey
+          return "You need " + (rValue - pValue) + " more " pKey
+        END IF
+        ELSE
+          END IF
+        END ELSE
+      END IF
+    END FOREACH
+END
+
+BEGIN
+  INPUT array of numbers
+  sum = 0;
+  for i = 0; i < AoN.length; i++;
+    sum += AoN[i];
+  end FOR
+  mean = sum / AoN.length;
+  diffMeanArray = [];
+  meanDif = 0;
+  for i = 0; i < AoN.length; i++;
+    diffMean.push(mean - AoN[i])
+    diffMean[i] = diffMean[i] squared;
+    meanDif += diffMean[i];
+  end FOR
+  stdDev = sqrt(meanDif);
+  return stdDev;
+END
+
+
+
+
+
+
+
+
+
+
+// needs whitespace //
