@@ -24,11 +24,17 @@ function stdJumpAnimfunction(dt) {
       genericRunTo = false;
     }
     //jump
-    else if (animTimer <= 600) {
+    else if (animTimer <= 300) {
       if (animTimer == 101) {
         genericJump = true;
       }
-      // genericJumpFunction(hero, enemies[selected], 1);
+      else {
+        if (genericJump == false) {
+          animTimer = 350;
+        }
+      }
+      genericJumpFunction(hero, enemies[selected]);
+
     }
   //wait
     else if (animTimer <= 350) {
@@ -36,7 +42,11 @@ function stdJumpAnimfunction(dt) {
     }
   //run back
     else if (animTimer <= 400) {
-
+      var home = {
+        pos:[100,200]
+      }
+      genericRunTo = true;
+      genericRunToFunction(hero,home,1);
     }
     else {
       hero.pos[0] = 100;

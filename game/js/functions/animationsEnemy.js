@@ -19,3 +19,10 @@ function enemyDeath(i) {
     enemies.splice(i, 1);
   }
 }
+
+function batSwoopFunction(i) {
+  if (batSwoop == true) {
+    if (timer.batTimer)
+    batTimer++;
+  }
+}

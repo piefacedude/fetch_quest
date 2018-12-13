@@ -180,14 +180,3 @@ BEGIN
   stdDev = sqrt(meanDif);
   return stdDev;
 END
-
-
-
-
-
-
-
-
-
-
-// needs whitespace //

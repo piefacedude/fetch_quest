@@ -50,16 +50,20 @@ function menuX(i) {
   var xShift = (182 * .55);
   switch (i) {
     case 0:
-      X = centralXAxis;
+      scale = menuScale(i);
+      X = centralXAxis + (((1 - scale) * 182) / 2);
       break;
     case 1:
-      X = centralXAxis - xShift;
+      scale = menuScale(i);
+      X = centralXAxis - xShift + (((1 - scale) * 182) / 2);
       break;
     case 2:
-      X = centralXAxis;
+      scale = menuScale(i);
+      X = centralXAxis + (((1 - scale) * 182) / 2);
       break;
     case 3:
-      X = centralXAxis + xShift;
+      scale = menuScale(i);
+      X = centralXAxis + xShift + (((1 - scale) * 182) / 2);
       break;
   }
   return X;
@@ -70,52 +74,86 @@ function menuY(i) {
   var yShift = (29 * 1.1);
   switch (i) {
     case 0:
-      Y = centralYAxis - yShift;
+      scale = menuScale(i);
+      Y = centralYAxis - yShift + (((1 - scale) * 29) / 2);
       break;
     case 1:
-      Y = centralYAxis;
+      scale = menuScale(i);
+      Y = centralYAxis + (((1 - scale) * 29) / 2);
       break;
     case 2:
-      Y = centralYAxis + yShift;
+      scale = menuScale(i);
+      Y = centralYAxis + yShift + (((1 - scale) * 29) / 2);
       break;
     case 3:
-      Y = centralYAxis;
+      scale = menuScale(i);
+      Y = centralYAxis + (((1 - scale) * 29) / 2);
       break;
   }
   return Y;
 }
 
-function generateMenu(i) {
-  //x display location (top left pixel)
-  var X = 0;
-  //y display
-  var Y = 0;
-  //action taken when button is selected
-  var action = 0;
-  //sprite used for button
-  var sprite;
+function menuScale(i) {
   switch (i) {
     case 0:
+      newScale = .5;
+      break;
+    case 1:
+      newScale = .75;
+      break;
+    case 2:
+      newScale = 1
+      break;
+    case 3:
+      newScale = .75;
+      break;
+  }
+  return newScale;
+}
+
+function generateMenu(i) {
+  //x display location (top left pixel)
+  var X;
+  //y display
+  var Y;
+  //action taken when button is selected
+  var action;
+  //sprite used for button
+  var sprite;
+  //order to be rendered
+  var renderOrder;
+  //size, creates depth in menu
+  var scale;
+  switch (i) {
+    case 0:
+      scale = .5;
       X = menuX(i);
       Y = menuY(i);
+      renderOrder = 0;
       action = "flee";
       sprite = new Sprite('images/Prompts/flee.png', [0, 0], [182, 29]);
     break;
     case 1:
+      scale = .75;
       X = menuX(i);
       Y = menuY(i);
+      renderOrder = 2;
       action = "special";
       sprite = new Sprite('images/Prompts/special.png', [0, 0], [182, 29]);
     break;
     case 2:
+      scale = 1;
       X = menuX(i);
       Y = menuY(i);
+      renderOrder = 1;
       action = "attack";
       sprite = new Sprite('images/Prompts/attack.png', [0, 0], [182, 29]);
     break;
     case 3:
+      scale = .75;
       X = menuX(i);
       Y = menuY(i);
+      renderOrder = 3;
       action = "items";
       sprite = new Sprite('images/Prompts/items.png', [0, 0], [182, 29]);
     break;
@@ -125,10 +163,13 @@ function generateMenu(i) {
   dx: 0,
   dy: 0,
   speed: 12,
-  renderOrder:i,
+  menuPos: i,
+  renderOrder: renderOrder,
   action: action,
   sprite: sprite
   });
+  menu[i].sprite.scale['x'] = scale;
+  menu[i].sprite.scale['y'] = scale;
 }
 
 function generateHUD(i) {
@@ -167,15 +208,32 @@ function generateShade(i) {
       Y = menuY(i);
     break;
     case 2:
-      X = menuX(i + 1);
-      Y = menuY(i + 1);
+      X = menuX(i+1);
+      Y = menuY(i+1);
     break;
   }
   shade.push({
     pos: [X, Y],
     sprite: new Sprite('images/Prompts/shadeBig.png', [0, 0], [185, 29])
   });
+  shade[i].sprite.scale['x'] = scale;
+  shade[i].sprite.scale['y'] = scale;
 }
 
 
-
+function findRenderOrder(i, menuPos) {
+  switch (menuPos) {
+    case 0:
+      menu[i].renderOrder = 0;
+      break;
+    case 1:
+      menu[i].renderOrder = 2;
+      break;
+    case 2:
+      menu[i].renderOrder = 1;
+      break;
+    case 3:
+      menu[i].renderOrder = 3;
+      break;
+  }
+}

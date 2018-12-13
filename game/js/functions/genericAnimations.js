@@ -14,7 +14,7 @@ function genericRunToFunction(spriteRunning, spriteTarget, percent) {
     if (timer.runTimer < 50) {
       spriteRunning.pos[0] -= percent * (distanceMod * (-1 * timer.runTimer) * (timer.runTimer - 50));
     }
-    if (timer.runTimer == 50) {
+    if (timer.runTimer >= 50) {
       genericRunTo = false;
       timer.runTimer = -1;
     }
@@ -22,36 +22,56 @@ function genericRunToFunction(spriteRunning, spriteTarget, percent) {
   timer.runTimer++;
 }
 
+//generic working jump function (works on all sprites but is quite slow)
 function genericJumpFunction(spriteJumping, spriteJumped) {
+  //make sure that the jump has not ended
   if (genericJump == true) {
+    //begin the fuckery
+    //on init, make some checks and store some data
     if (timer.jumpTimer == 0) {
+      //the amount of time taken to get to the attacked's head
       timer.reverseTimer = 0;
+      //is it time to bounce?
       bounceBack = false;
+      //whats the x diff, and make sure it scales to the jumped party
       diffX = spriteJumped.pos[0] - spriteJumping.pos[0] + (spriteJumped.sprite.size[0] * spriteJumped.sprite.scale["x"] / 2);
+      //whats the inital x and y, so we know where to put this boi back
       spriteJumpingInitX = spriteJumping.pos[0];
       spriteJumpingInitY = spriteJumping.pos[1];
     }
-    if (timer.jumpTimer <= 200 && bounceBack == false) {
-      if (timer.jumpTimer < 100) {
-        spriteJumping.pos[0] += diffX / 100;
+    //first part, the jump there
+    //make sure that the timer is corrct, and that its not bounceback time
+    if (timer.jumpTimer <= 70 && bounceBack == false) {
+
+      //move on the x towards the bounced boi
+      if (timer.jumpTimer < 35) {
+        //changing x over a period of 70 ticks
+        spriteJumping.pos[0] += diffX / 35;
       }
-      spriteJumping.pos[1] += .000016 * Math.pow(timer.jumpTimer - 100,3);
-      if (spriteJumping.pos[1] >= spriteJumped.pos[1] && timer.jumpTimer > 100) {
+
+      //follow a general x^3 graph, with max height at (+600?)
+      spriteJumping.pos[1] += .001066 * Math.pow(timer.jumpTimer - 35,3);
+
+      //if the jump is past halfway, and the jumper is on the top of the jumped
+      if (spriteJumping.pos[1] >= spriteJumped.pos[1] - 20 && timer.jumpTimer > 35) {
+        //time to bounce
         bounceBack = true;
+        //and the time it will take to jump back, is equal to the time it took the character to jump there.
         timer.reverseTimer = timer.jumpTimer;
+
       }
     }
-    if (timer.jumpTimer <= 200 && bounceBack == true) {
+    if (timer.jumpTimer <= 70 && bounceBack == true) {
 
     }
-    if (timer.jumpTimer > 200 && timer.jumpTimer < 200 + timer.reverseTimer) {
-      spriteJumping.pos[1] -= .000016 * Math.pow((timer.reverseTimer - 100) - (timer.jumpTimer - 200),3);
+    if (timer.jumpTimer > 70 && timer.jumpTimer < 70 + timer.reverseTimer) {
+      spriteJumping.pos[1] -= .001066 * Math.pow((timer.reverseTimer - 35) - (timer.jumpTimer - 70),3);
       if (spriteJumping.sprite.facing != -2 * Math.PI) {
-        spriteJumping.sprite.facing += (-2 * Math.PI) / timer.reverseTimer;
+        spriteJumping.sprite.facing += (-20 * Math.PI) / (timer.reverseTimer);
       }
       spriteJumping.pos[0] -= diffX / timer.reverseTimer;
     }
-    if (timer.jumpTimer >= 200 + timer.reverseTimer) {
+    if (timer.jumpTimer >= 70 + timer.reverseTimer) {
       genericJump = false;
       timer.jumpTimer = -1;
       spriteJumping.pos[0] = spriteJumpingInitX;
@@ -59,6 +79,7 @@ function genericJumpFunction(spriteJumping, spriteJumped) {
       spriteJumping.sprite.facing = 0;
     }
     timer.jumpTimer++;
+    console.log(timer.jumpTimer);
   }
 }
 

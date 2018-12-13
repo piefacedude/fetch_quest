@@ -52,6 +52,7 @@ var particles = [];
 var hud = [];
 
 //vars
+var batSwoop;
 var stdJumpAnim = false;
 var animTimer = 0;
 var animTimeRef;
@@ -140,7 +141,7 @@ timer = {
   jumpTimer: 0,
   runTimer: 0,
   reverseTimer: 0,
-
+  batTimer: 0,
 }
 function init() {
 
@@ -253,7 +254,16 @@ function render() {
   //then the rest in order
   //if the player's selecting their action
   if (gameState == "playerSelect") {
-    renderEntities(menu);
+    var toRender;
+    for (var i = 0; i < menu.length; i++) {
+      for (var j = 0; j < menu.length; j++) {
+        if (menu[j].renderOrder == i) {
+          toRender = j;
+          j = 4;
+        }
+      }
+      renderEntity(menu[toRender]);
+    }
     if (menuLeft != true && menuRight != true) {
       renderEntities(shade);
     }
@@ -323,17 +333,6 @@ function handleInput(dt) {
   if (stdBiteAnim == true) {
     stdBiteAnimFunction();
   }
-  // generic jump ((((TEST))))
-  if (genericJump == true) {
-    for (var i = 0; i < 2; i++) {
-      genericJumpFunction(hero,enemies[selected]);
-    }
-  }
-  //
-  // // generic move to (eased)
-  // if (genericRunTo == true) {
-  //   genericRunToFunction(running,runTarget,percent);
-  // }
 
   if (healingPotion == true) {
     healingPotionEffect();
