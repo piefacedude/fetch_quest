@@ -32,21 +32,21 @@ function generateMonster(i, numOfEnemies) {
       attacks: ['Swoop', 1, 'Screech', 2],
     }
 
-      break;
-      case "BAT":
-      enemy = {
-        id: enemies.length,
-        name: "BAT",
-        pos: [xPos * (i+1) + 200,300],
-        speed: 0,
-        type: "flying",
-        maxHp: 20,
-        currentHp: 20,
-        sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 12, [0, 1, 2, 3, 4, 5], 'vertical', false, 0, {x: 1, y: 1}),
-        attacks: ['Swoop', 1, 'Screech', 2],
-      }
+    break;
+    case "BAT":
+    enemy = {
+      id: enemies.length,
+      name: "BAT",
+      pos: [xPos * (i+1) + 200,300],
+      speed: 0,
+      type: "flying",
+      maxHp: 20,
+      currentHp: 20,
+      sprite: new Sprite('images/Obstacles/batFlying.png', [0, 0], [256, 192], 12, [0, 1, 2, 3, 4, 5], 'vertical', false, 0, {x: 1, y: 1}),
+      attacks: ['Swoop', 1, 'Screech', 2],
+    }
 
-        break;
+    break;
     default:
 
   }

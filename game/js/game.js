@@ -39,6 +39,7 @@ resources.load([
   'images/Prompts/hp.png',
   'images/Prompts/pp.png',
   'images/HeroStuff/dog_still.png',
+  'images/Misc/indicator.png',
 ]);
 resources.onReady(init); //callback function which halts progress until all the images are ready
 
@@ -133,7 +134,7 @@ selector = {
   pos: [1000, 600],
   selectedEnemy: 0,
   attackType: "any",
-  sprite: new Sprite('images/Misc/coins.png', [0, 0], [16, 23])
+  sprite: new Sprite('images/Misc/indicator.png', [0, 0], [16, 16])
 }
 
 timer = {
@@ -143,6 +144,16 @@ timer = {
   reverseTimer: 0,
   batTimer: 0,
 }
+
+tracker = {
+  activeX: 0,
+  activeY: 0,
+  targetX: 0,
+  targetY: 0,
+  homeX: 0,
+  homeY: 0,
+}
+
 function init() {
 
   //setup all the things we will start/re-start with each game
@@ -342,6 +353,7 @@ function handleInput(dt) {
   else if (gameState == "playerSelect") {
     playerSelect(dt);
   }
+
   else if (gameState == "attackSelect") {
     attackSelect(selectMode);
   }

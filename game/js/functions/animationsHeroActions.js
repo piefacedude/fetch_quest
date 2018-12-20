@@ -10,8 +10,8 @@ function stdJumpAnimfunction(dt) {
   //run forward
     if (animTimer == 1) {
       //make sure the player is in the right spot (the animation is reletive to starting position)
-      hero.pos[0] = 100;
       hero.pos[1] = 500;
+      hero.pos[0] = 100;
       hero.currentPawPower -= 2;
       genericRunTo = true;
     }

@@ -22,7 +22,13 @@ function enemyDeath(i) {
 
 function batSwoopFunction(i) {
   if (batSwoop == true) {
-    if (timer.batTimer)
-    batTimer++;
+    if (timer.batTimer == 0) {
+      tracker.homeX = enemies[i].pos[0];
+      tracker.homeY = enemies[i].pos[1];
+      tracker.homeX = enemies[i].pos[0];
+      tracker.homeX = enemies[i].pos[1];
+
+    }
+    timer.batTimer++;
   }
 }
